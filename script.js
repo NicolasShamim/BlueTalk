@@ -3,75 +3,46 @@
    ============================================================ */
 
 /* ------------------------------------------------------------
-   WAITLIST ENDPOINT — set this before launch.
-   Any URL that accepts a JSON POST (Fourthwall, Formspree,
-   Buttondown…). While it is empty the form validates the address
-   and then says plainly that nothing was saved. Never fake a
-   success here: people would believe they were on a list that
-   does not exist.
+   WAITLIST ENDPOINT — set before launch. Any URL that accepts a
+   JSON POST. While empty the form validates the address and then
+   says nothing was saved. Never fake a success: people would
+   believe they were on a list that does not exist.
    ------------------------------------------------------------ */
 const FORM_ENDPOINT = '';
 
-/* --- the six pieces ----------------------------------------- */
+/* Each piece carries its own line, and each line is the last thing
+   said in the video that sells it. See brand/THE-LINE.md. */
 const PIECES = [
-  { name: 'Long Sleeve',   price: '€65', desc: 'Garment-dyed heavyweight cotton, boxy through the body. The line printed across the chest is the one the character says at the end of every video.' },
-  { name: 'Heavyweight Tee', price: '€55', desc: 'Same body, same print, short sleeve. The cheapest way into the brand and the piece most people will start with.' },
-  { name: 'Work Jacket',   price: '€145', desc: 'Dry canvas chore coat with deep chest pockets. Unprinted — this one is cut and colour only, and the collar stitch is the only marking.' },
-  { name: 'Quilted Vest',  price: '€95', desc: 'Sits under the jacket without fighting it. Olive drab. Made for layering in autumn, which is when the first drop lands.' },
-  { name: 'Utility Trouser', price: '€85', desc: 'Wide leg, cropped short of the boot, reinforced at the knee. Sized properly rather than in three vague bands.' },
-  { name: 'Watch Cap',     price: '€30', desc: 'Ribbed, folded once, stitch on the fold. The one piece where the marking is visible from the outside.' }
+  { name: 'Long Sleeve',      note: 'I failed inspection and shipped anyway' },
+  { name: 'Heavyweight Tee',  note: 'They stopped making people like this' },
+  { name: 'Work Jacket',      note: 'They built me for a colder year' },
+  { name: 'Quilted Vest',     note: 'I am the last one in this colour' },
+  { name: 'Utility Trouser',  note: 'Manufactured during a shortage' },
+  { name: 'Watch Cap',        note: 'No print. The collar mark only.' }
 ];
 
-/* --- render pieces ------------------------------------------ */
 (function pieces(){
-  const grid = document.getElementById('grid');
-  if (!grid) return;
+  const list = document.getElementById('piecesList');
+  if (!list) return;
 
-  grid.innerHTML = PIECES.map(p => `
-    <article class="card">
-      <div class="thumb"><span>Photography pending</span></div>
-      <div class="card-body">
-        <h3>${p.name}</h3>
-        <p>${p.desc}</p>
-        <div class="card-foot">
-          <span class="price">${p.price}</span>
-          <span class="stock">Not yet released</span>
-        </div>
-      </div>
-    </article>
+  list.innerHTML = PIECES.map((p, i) => `
+    <li>
+      <span class="n">${String(i + 1).padStart(2, '0')}</span>
+      <span class="name">${p.name}</span>
+      <span class="state">Unreleased</span>
+      <span class="note">${p.note}</span>
+    </li>
   `).join('');
 })();
 
-/* --- nav ----------------------------------------------------- */
 (function nav(){
-  const nav    = document.getElementById('nav');
-  const toggle = document.getElementById('navToggle');
-  const links  = document.getElementById('navLinks');
-  const scrim  = document.getElementById('scrim');
+  const nav = document.getElementById('nav');
   if (!nav) return;
-
-  const setMenu = open => {
-    links.classList.toggle('open', open);
-    scrim.classList.toggle('open', open);
-    toggle.setAttribute('aria-expanded', String(open));
-    document.body.style.overflow = open ? 'hidden' : '';
-  };
-
-  toggle?.addEventListener('click', () =>
-    setMenu(toggle.getAttribute('aria-expanded') !== 'true'));
-  scrim?.addEventListener('click', () => setMenu(false));
-  links?.querySelectorAll('a').forEach(a =>
-    a.addEventListener('click', () => setMenu(false)));
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') setMenu(false);
-  });
-
   const onScroll = () => nav.classList.toggle('stuck', window.scrollY > 8);
   onScroll();
   window.addEventListener('scroll', onScroll, { passive: true });
 })();
 
-/* --- waitlist ------------------------------------------------ */
 (function join(){
   const form  = document.getElementById('form');
   const input = document.getElementById('email');
@@ -96,19 +67,19 @@ const PIECES = [
 
     if (!valid(email)) {
       input.classList.add('err');
-      say('That address does not look right. Check it and try again.', 'bad');
+      say('Check that address.', 'bad');
       input.focus();
       return;
     }
 
     if (!FORM_ENDPOINT) {
-      say('The list is not open yet, so nothing was saved. Check back shortly.', 'bad');
+      say('The list is not open yet. Nothing was saved.', 'bad');
       return;
     }
 
     const button = form.querySelector('button');
     button.disabled = true;
-    say('Adding you…');
+    say('Adding…');
 
     try {
       const res = await fetch(FORM_ENDPOINT, {
@@ -118,9 +89,9 @@ const PIECES = [
       });
       if (!res.ok) throw new Error(res.status);
       form.reset();
-      say('You are on the list. We will email you once, when it drops.', 'good');
+      say('You are on the list.', 'good');
     } catch {
-      say('That did not go through. Try again in a moment.', 'bad');
+      say('That did not go through. Try again.', 'bad');
     } finally {
       button.disabled = false;
     }

@@ -4,139 +4,66 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>IRREGULAR</title>
-<meta name="description" content="A clothing label built around one character. Six pieces, made to order, shipped from the EU.">
+<meta name="description" content="I failed inspection and shipped anyway. Six pieces.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-<!-- ANNOUNCEMENT -->
-<div class="bar">
-  <p>First drop hasn't happened yet. Join the list and you'll know before anyone else.</p>
-</div>
-
-<!-- NAV -->
 <nav id="nav">
   <a href="#top" class="wordmark">IRREGULAR</a>
-  <ul class="nav-links" id="navLinks">
-    <li><a href="#pieces">Pieces</a></li>
-    <li><a href="#how">How it works</a></li>
-    <li><a href="#channel">The channel</a></li>
-    <li><a href="#join" class="nav-cta">Join the list</a></li>
-  </ul>
-  <button class="nav-toggle" id="navToggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
-    <span></span><span></span><span></span>
-  </button>
+  <a href="#list" class="nav-link">The list</a>
 </nav>
-<div class="scrim" id="scrim" aria-hidden="true"></div>
 
-<!-- HERO -->
 <header id="top" class="hero">
-  <p class="kicker">Clothing label &middot; Antwerp</p>
-  <h1>Six pieces.<br>One story.</h1>
-  <p class="hero-lead">
-    IRREGULAR is a clothing label built around a single character and the videos he appears in.
-    Everything he wears is something you can buy. Nothing is printed until you order it.
+  <p class="define">
+    <span>ir&middot;reg&middot;u&middot;lar</span>
+    <em>a garment that failed inspection and was sold anyway</em>
   </p>
-  <div class="actions">
-    <a href="#join" class="btn btn-solid">Join the list</a>
-    <a href="#pieces" class="btn btn-line">See the pieces</a>
-  </div>
+
+  <h1 class="line">
+    <span>I failed inspection</span>
+    <span>and shipped anyway</span>
+  </h1>
+
+  <p class="hero-foot">Printed across the chest. Said out loud at the end.</p>
 </header>
 
 <main>
 
-<!-- THE MARK — full-bleed accent band -->
-<section class="band">
-  <div class="band-inner">
-    <p class="band-kicker">The detail</p>
-    <p class="band-line">Four red stitches at the inside back neck.</p>
-    <p class="band-copy">
-      No logo on the outside of any piece. The only marking is on the inside of the collar,
-      where a label would normally go. You know it's there. Nobody else has to.
-    </p>
-  </div>
+<section class="pieces" id="pieces">
+  <h2 class="label">Six pieces</h2>
+  <ul class="list" id="piecesList"></ul>
 </section>
 
-<!-- PIECES -->
-<section id="pieces" class="section">
-  <div class="head">
-    <h2>The pieces</h2>
-    <p class="head-note">
-      Six, and only six. A small range means every piece gets sampled properly before it goes on
-      sale, and it's what the character actually wears in the videos.
-    </p>
-  </div>
-  <div class="grid" id="grid"></div>
+<section class="fragment">
+  <blockquote>
+    <p>Everything here was made wrong on purpose.</p>
+    <p>The seam is heavier than it needs to be. The colour is one the mill stopped
+      running. The collar is marked where the label should be.</p>
+    <p>None of it passed. All of it shipped.</p>
+  </blockquote>
 </section>
 
-<!-- HOW IT WORKS -->
-<section id="how" class="section section-alt">
-  <div class="head">
-    <h2>How it works</h2>
-  </div>
-  <ol class="steps">
-    <li>
-      <h3>You order</h3>
-      <p>Pick a piece and a size. You pay once, at checkout, with VAT already included in the price you see. No customs surprises inside the EU.</p>
-    </li>
-    <li>
-      <h3>It gets made</h3>
-      <p>Your piece is printed and finished after you order it, by a production partner in the EU. Nothing sits in a warehouse, so nothing gets dumped at the end of a season.</p>
-    </li>
-    <li>
-      <h3>It ships to you</h3>
-      <p>Straight from the EU facility, usually within a week. Tracked. If something arrives wrong, it gets replaced &mdash; you don't pay twice.</p>
-    </li>
-  </ol>
-</section>
+<section class="join" id="list">
+  <h2 class="line line-sm">Nothing is<br>for sale yet</h2>
+  <p class="join-copy">Six pieces, made once. The list hears first.</p>
 
-<!-- CHANNEL -->
-<section id="channel" class="section">
-  <div class="split">
-    <div>
-      <h2>The channel</h2>
-      <p class="lead">Short videos, one recurring character, and a joke you can wear.</p>
-      <p>Every video follows the same shape: he talks, it gets progressively more unhinged, and the last line he says is the line printed across the piece he's wearing. That's the whole format. The clothes aren't advertised in the videos &mdash; they're the punchline of them.</p>
-      <p>Posted to TikTok and YouTube Shorts. Nothing is filmed; the character is rendered, which is why he looks identical in every single video.</p>
-    </div>
-    <ul class="facts">
-      <li><span>Format</span><span>Short video, one character</span></li>
-      <li><span>Length</span><span>25&ndash;35 seconds</span></li>
-      <li><span>Posted to</span><span>TikTok, YouTube Shorts</span></li>
-      <li><span>Status</span><span>Not launched</span></li>
-    </ul>
-  </div>
-</section>
-
-<!-- JOIN -->
-<section id="join" class="section section-join">
-  <div class="join-inner">
-    <h2>Join the list</h2>
-    <p class="lead">One email when the first pieces go on sale. That's the entire purpose of this list.</p>
-    <form id="form" novalidate>
-      <label class="sr-only" for="email">Email address</label>
-      <input type="email" id="email" name="email" placeholder="you@email.com" autocomplete="email" required>
-      <button type="submit" class="btn btn-solid">Add me</button>
-      <p class="msg" id="msg" role="status" aria-live="polite"></p>
-    </form>
-    <p class="fine">No newsletter, no resale, no third parties. Unsubscribe in one click.</p>
-  </div>
+  <form id="form" novalidate>
+    <label class="sr-only" for="email">Email address</label>
+    <input type="email" id="email" placeholder="you@email.com" autocomplete="email" required>
+    <button type="submit">Add me</button>
+    <p class="msg" id="msg" role="status" aria-live="polite"></p>
+  </form>
 </section>
 
 </main>
 
 <footer>
-  <div class="foot-row">
-    <span class="wordmark wordmark-sm">IRREGULAR</span>
-    <span class="foot-dim">Antwerp, BE</span>
-  </div>
-  <div class="foot-row foot-legal">
-    <span class="foot-dim">Not yet trading. No orders are being taken.</span>
-    <span class="foot-dim">&copy; 2026</span>
-  </div>
+  <span class="wordmark wordmark-sm">IRREGULAR</span>
+  <span class="dim">Antwerp</span>
 </footer>
 
 <script src="script.js"></script>
