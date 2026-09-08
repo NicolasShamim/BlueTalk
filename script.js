@@ -103,15 +103,17 @@ const WARDROBE = [
   window.addEventListener('scroll', onScroll, { passive: true });
 })();
 
-/* --- reveal on scroll --------------------------------------- */
+/* --- reveal on scroll ---------------------------------------
+   Sections are visible at rest in CSS. Only once we know the browser
+   can observe them do we opt into the animation, so a no-JS load or a
+   static capture never shows a blank page.
+   ------------------------------------------------------------ */
 (function reveal(){
   const items = document.querySelectorAll('.reveal');
   if (!items.length) return;
+  if (!('IntersectionObserver' in window)) return;
 
-  if (!('IntersectionObserver' in window)) {
-    items.forEach(el => el.classList.add('is-in'));
-    return;
-  }
+  document.documentElement.classList.add('js-anim');
 
   const io = new IntersectionObserver((entries, obs) => {
     entries.forEach(entry => {

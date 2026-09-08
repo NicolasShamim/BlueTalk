@@ -242,17 +242,18 @@ em{ font-style:normal; color:var(--bone); }
 .stitch-svg .collar-inner{ stroke:var(--line); }
 .stitch-svg .stitches line{
   stroke:var(--red); stroke-width:3.5; stroke-linecap:round;
-  stroke-dasharray:20; stroke-dashoffset:20;
+  stroke-dasharray:20; stroke-dashoffset:0;
 }
-.reveal.is-in .stitch-svg .stitches line{ animation:sew .42s ease-out forwards; }
-.reveal.is-in .stitch-svg .stitches line:nth-child(1){ animation-delay:.15s; }
-.reveal.is-in .stitch-svg .stitches line:nth-child(2){ animation-delay:.33s; }
-.reveal.is-in .stitch-svg .stitches line:nth-child(3){ animation-delay:.51s; }
-.reveal.is-in .stitch-svg .stitches line:nth-child(4){ animation-delay:.69s; }
+html.js-anim .stitch-svg .stitches line{ stroke-dashoffset:20; }
+html.js-anim .reveal.is-in .stitch-svg .stitches line{ animation:sew .42s ease-out forwards; }
+html.js-anim .reveal.is-in .stitch-svg .stitches line:nth-child(1){ animation-delay:.15s; }
+html.js-anim .reveal.is-in .stitch-svg .stitches line:nth-child(2){ animation-delay:.33s; }
+html.js-anim .reveal.is-in .stitch-svg .stitches line:nth-child(3){ animation-delay:.51s; }
+html.js-anim .reveal.is-in .stitch-svg .stitches line:nth-child(4){ animation-delay:.69s; }
 @keyframes sew{ to{ stroke-dashoffset:0; } }
 @media (prefers-reduced-motion:reduce){
-  .stitch-svg .stitches line{ stroke-dashoffset:0; }
-  .reveal.is-in .stitch-svg .stitches line{ animation:none; }
+  html.js-anim .stitch-svg .stitches line{ stroke-dashoffset:0; }
+  html.js-anim .reveal.is-in .stitch-svg .stitches line{ animation:none; }
 }
 .mark-caption{ margin:auto 0 0; padding-top:26px; font-size:11px; letter-spacing:.1em;
   text-transform:uppercase; color:var(--dim); }
@@ -375,9 +376,9 @@ em{ font-style:normal; color:var(--bone); }
 .footer-dim{ font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--dim); }
 
 /* --- reveal ------------------------------------------------ */
-.reveal{ opacity:0; transform:translateY(22px); transition:opacity .7s ease, transform .7s ease; }
-.reveal.is-in{ opacity:1; transform:none; }
-@media (prefers-reduced-motion:reduce){ .reveal{ opacity:1; transform:none; transition:none; } }
+.reveal{ opacity:1; transform:none; }
+html.js-anim .reveal{ transition:opacity .7s ease, transform .7s ease; }
+html.js-anim .reveal:not(.is-in){ opacity:0; transform:translateY(22px); }
 
 /* --- responsive -------------------------------------------- */
 @media (max-width:900px){
