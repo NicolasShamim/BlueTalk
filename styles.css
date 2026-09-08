@@ -337,3 +337,27 @@ footer{
   #form input,
   #form button{ flex:1 1 100%; }
 }
+
+
+/* --- prose page ---------------------------------------------- */
+.prose{
+  max-width:min(68ch, 100%); margin:0 auto;
+  padding:clamp(48px,8vw,110px) var(--pad) clamp(40px,6vw,90px);
+}
+.prose h1{ margin-bottom:clamp(30px,5vw,54px); }
+.prose h2{
+  font-family:var(--f-disp); font-weight:300; font-size:clamp(19px,2.4vw,25px);
+  letter-spacing:.07em; text-transform:uppercase; color:var(--bone);
+  margin:clamp(38px,5vw,58px) 0 16px;
+}
+.prose p{ color:var(--ash); margin-bottom:1.1em; }
+.prose code{
+  font-family:var(--f-mono); font-size:.92em;
+  color:var(--bone); background:var(--ink-2);
+  border:1px solid var(--rule); padding:1px 7px;
+}
+.prose .todo{
+  color:var(--bone); border-left:2px solid var(--red);
+  padding:2px 0 2px 18px; margin-bottom:8px;
+}
+.prose .updated{ margin-top:clamp(40px,6vw,64px); font-size:12px; color:var(--dim); }
