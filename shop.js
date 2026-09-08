@@ -83,9 +83,18 @@ const Shop = (() => {
     const url = `${API}/collections/${encodeURIComponent(CONFIG.collectionSlug)}`
               + `/products?storefront_token=${encodeURIComponent(CONFIG.storefrontToken)}`;
 
-    const res = await fetch(url);
-    if (!res.ok) throw new Error(`Fourthwall responded ${res.status}`);
-    const data = await res.json();
+    // A hanging request must not hold the page hostage.
+    const abort = new AbortController();
+    const timer = setTimeout(() => abort.abort(), 8000);
+
+    let data;
+    try {
+      const res = await fetch(url, { signal: abort.signal });
+      if (!res.ok) throw new Error(`Fourthwall responded ${res.status}`);
+      data = await res.json();
+    } finally {
+      clearTimeout(timer);
+    }
 
     return (data.results || [])
       .filter(p => p.type !== 'BUNDLE')
@@ -104,10 +113,24 @@ const Shop = (() => {
       }));
   }
 
+  /* Fills the catalog with the local pieces so the page can paint
+     before any network call. init() upgrades it afterwards. */
+  function seed(){
+    catalog = fromPreview();
+    return catalog;
+  }
+
   async function init(){
     if (!live()) { catalog = fromPreview(); return catalog; }
     try {
       catalog = await fromFourthwall();
+      // A configured store with nothing published yet returns an empty
+      // list. Show the pieces as unreleased rather than an empty page —
+      // they flip to buyable on their own once products go live.
+      if (!catalog.length) {
+        console.info('[shop] store has no published products yet');
+        catalog = fromPreview();
+      }
     } catch (err) {
       // A dead store must not take the whole page down with it.
       console.error('[shop] falling back to preview:', err);
@@ -198,7 +221,7 @@ const Shop = (() => {
   function clear(){ cart = []; save(); }
 
   return {
-    init, checkout, add, setQty, remove, clear,
+    seed, init, checkout, add, setQty, remove, clear,
     lines, count, total, money, live,
     products: () => catalog
   };

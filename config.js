@@ -15,16 +15,26 @@ const CONFIG = {
 
        storefrontToken  the ptkn_… token
        collectionSlug   slug of the collection holding the pieces
-       shopDomain       the domain Fourthwall hosts checkout on,
-                        e.g. "irregular-shop.fourthwall.com", or your
-                        own domain once it is connected there
+       shopDomain       the domain Fourthwall hosts checkout on. It is
+                        the address of your own Fourthwall shop, e.g.
+                        "irregular.fourthwall.com". Still needed —
+                        checkout cannot redirect without it.
        currency         ISO code the cart is priced in
 
-     Leave storefrontToken empty and the site stays in preview
-     (see 3), so nothing here needs to exist yet.
+     These two are filled in AT DEPLOY TIME from repository secrets
+     (FOURTHWALL_STOREFRONT_TOKEN and FOURTHWALL_SHOP_DOMAIN) by
+     .github/workflows/pages.yml, so they stay out of the repository.
+     GitHub's secret scanner rejects a ptkn_ token pushed in source —
+     it reads it as a Shopify credential — and keeping credentials out
+     of version control is the right habit regardless.
+
+     They end up readable in the deployed page, which is unavoidable
+     and fine: the storefront token is read-only and scoped to the
+     public catalog. Set them locally only to test against the real
+     shop, and do not commit that.
      ---------------------------------------------------------- */
   storefrontToken: '',
-  collectionSlug:  '',
+  collectionSlug:  'all',
   shopDomain:      '',
   currency:        'EUR',
 

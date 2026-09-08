@@ -230,6 +230,12 @@ function waitlist(){
 
   waitlist();
 
+  // Paint the pieces straight away, then upgrade to the live catalog.
+  // The page is never blank while a network call is in flight.
+  Shop.seed();
+  renderPieces();
+  syncCart();
+
   await Shop.init();
   renderPieces();
   syncCart();

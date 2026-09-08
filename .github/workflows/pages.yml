@@ -39,10 +39,25 @@ jobs:
       # Ship only what the site serves — the brand docs stay in the repo
       # but are not published.
       - name: Stage site
+        env:
+          FW_TOKEN:  ${{ secrets.FOURTHWALL_STOREFRONT_TOKEN }}
+          FW_DOMAIN: ${{ secrets.FOURTHWALL_SHOP_DOMAIN }}
         run: |
           mkdir -p _site
           cp index.html styles.css script.js shop.js config.js _site/
           [ -f CNAME ] && cp CNAME _site/ || true
+
+          # Inject the shop credentials that are deliberately kept out of
+          # the repository. Both end up public in the served page, which is
+          # how a static storefront works — the storefront token is
+          # read-only and scoped to the public catalog. If a secret is
+          # unset the substitution is a no-op and the site just shows the
+          # pieces as unreleased.
+          sed -i "s|storefrontToken: ''|storefrontToken: '${FW_TOKEN}'|" _site/config.js
+          sed -i "s|shopDomain:      ''|shopDomain:      '${FW_DOMAIN}'|" _site/config.js
+
+          echo "token set: $([ -n "$FW_TOKEN" ] && echo yes || echo no)"
+          echo "domain set: $([ -n "$FW_DOMAIN" ] && echo yes || echo no)"
 
       - uses: actions/upload-pages-artifact@v3
         with:
