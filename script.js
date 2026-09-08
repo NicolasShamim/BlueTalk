@@ -1,59 +1,175 @@
 /* ============================================================
-   IRREGULAR
+   IRREGULAR — page
+   Reads CONFIG (config.js), drives Shop (shop.js).
    ============================================================ */
 
-/* ------------------------------------------------------------
-   WAITLIST ENDPOINT — set before launch. Any URL that accepts a
-   JSON POST. While empty the form validates the address and then
-   says nothing was saved. Never fake a success: people would
-   believe they were on a list that does not exist.
-   ------------------------------------------------------------ */
-const FORM_ENDPOINT = '';
+const $  = sel => document.querySelector(sel);
+const esc = str => String(str).replace(/[&<>"']/g,
+  c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
 
-/* Each piece carries its own line, and each line is the last thing
-   said in the video that sells it. See brand/THE-LINE.md. */
-const PIECES = [
-  { name: 'Long Sleeve',      note: 'I failed inspection and shipped anyway' },
-  { name: 'Heavyweight Tee',  note: 'They stopped making people like this' },
-  { name: 'Work Jacket',      note: 'They built me for a colder year' },
-  { name: 'Quilted Vest',     note: 'I am the last one in this colour' },
-  { name: 'Utility Trouser',  note: 'Manufactured during a shortage' },
-  { name: 'Watch Cap',        note: 'No print. The collar mark only.' }
-];
+/* --- pieces --------------------------------------------------- */
+const chosen = new Map();   // productId -> variantId
 
-(function pieces(){
-  const list = document.getElementById('piecesList');
+function renderPieces(){
+  const list = $('#piecesList');
   if (!list) return;
 
-  list.innerHTML = PIECES.map((p, i) => `
-    <li>
-      <span class="n">${String(i + 1).padStart(2, '0')}</span>
-      <span class="name">${p.name}</span>
-      <span class="state">Unreleased</span>
-      <span class="note">${p.note}</span>
-    </li>
-  `).join('');
-})();
+  const sellable = Shop.live() || CONFIG.previewMode;
 
-(function nav(){
-  const nav = document.getElementById('nav');
-  if (!nav) return;
-  const onScroll = () => nav.classList.toggle('stuck', window.scrollY > 8);
-  onScroll();
-  window.addEventListener('scroll', onScroll, { passive: true });
-})();
+  list.innerHTML = Shop.products().map((p, i) => {
+    const variants = p.variants || [];
+    const cheapest = variants.reduce(
+      (min, v) => (min === null || v.price < min ? v.price : min), null);
 
-(function join(){
-  const form  = document.getElementById('form');
-  const input = document.getElementById('email');
-  const msg   = document.getElementById('msg');
-  if (!form || !input || !msg) return;
+    const right = sellable && cheapest !== null
+      ? `<span class="price">${esc(Shop.money(cheapest))}</span>`
+      : `<span class="state">Unreleased</span>`;
+
+    const buy = sellable ? `
+      <div class="buy" data-product="${esc(p.id)}">
+        ${variants.map(v => `
+          <button type="button" class="size" data-variant="${esc(v.id)}"
+                  aria-pressed="false" ${v.inStock ? '' : 'disabled'}
+                  aria-label="Size ${esc(v.size)}">${esc(v.size)}</button>
+        `).join('')}
+        <button type="button" class="add" data-product="${esc(p.id)}" disabled>Add</button>
+        <span class="added" data-added="${esc(p.id)}"></span>
+      </div>` : '';
+
+    return `
+      <li>
+        <span class="n">${String(i + 1).padStart(2, '0')}</span>
+        <span class="name">${esc(p.name)}</span>
+        ${right}
+        <span class="note">${esc(p.line)}</span>
+        ${buy}
+      </li>`;
+  }).join('');
+
+  list.querySelectorAll('.size').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const group = btn.closest('.buy');
+      const productId = group.dataset.product;
+
+      group.querySelectorAll('.size').forEach(b =>
+        b.setAttribute('aria-pressed', String(b === btn)));
+
+      chosen.set(productId, btn.dataset.variant);
+      group.querySelector('.add').disabled = false;
+      group.querySelector('[data-added]').textContent = '';
+    });
+  });
+
+  list.querySelectorAll('.add').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const productId = btn.dataset.product;
+      const variantId = chosen.get(productId);
+      if (!variantId) return;
+
+      if (Shop.add(variantId)) {
+        syncCart();
+        const flag = btn.parentElement.querySelector('[data-added]');
+        flag.textContent = 'Added';
+        setTimeout(() => { flag.textContent = ''; }, 2200);
+      }
+    });
+  });
+}
+
+/* --- cart ----------------------------------------------------- */
+function renderCart(){
+  const body = $('#drawerBody');
+  const lines = Shop.lines();
+
+  body.innerHTML = lines.length ? lines.map(l => `
+    <div class="cart-line">
+      <span class="cart-line-name">${esc(l.name)}</span>
+      <span class="cart-line-price">${esc(Shop.money(l.price * l.qty, l.currency))}</span>
+      <span class="cart-line-size">${esc(l.size)}</span>
+      <div class="qty">
+        <button type="button" data-step="-1" data-id="${esc(l.variantId)}" aria-label="One fewer">&minus;</button>
+        <span>${l.qty}</span>
+        <button type="button" data-step="1" data-id="${esc(l.variantId)}" aria-label="One more">+</button>
+      </div>
+      <button type="button" class="drop" data-drop="${esc(l.variantId)}">Remove</button>
+    </div>
+  `).join('') : '<p class="drawer-empty">Nothing in the cart yet.</p>';
+
+  body.querySelectorAll('[data-step]').forEach(b => {
+    b.addEventListener('click', () => {
+      const line = Shop.lines().find(l => l.variantId === b.dataset.id);
+      if (line) { Shop.setQty(b.dataset.id, line.qty + Number(b.dataset.step)); syncCart(); }
+    });
+  });
+  body.querySelectorAll('[data-drop]').forEach(b => {
+    b.addEventListener('click', () => { Shop.remove(b.dataset.drop); syncCart(); });
+  });
+
+  $('#cartTotal').textContent = lines.length ? Shop.money(Shop.total()) : '—';
+  $('#checkoutBtn').disabled = !lines.length;
+}
+
+function syncCart(){
+  const n = Shop.count();
+  $('#cartN').textContent = n;
+  $('#cartBtn').hidden = !(Shop.live() || CONFIG.previewMode);
+  renderCart();
+}
+
+/* --- drawer --------------------------------------------------- */
+let lastFocus = null;
+
+function openDrawer(){
+  lastFocus = document.activeElement;
+  $('#drawer').hidden = false;
+  $('#drawerScrim').hidden = false;
+  requestAnimationFrame(() => {
+    $('#drawer').classList.add('open');
+    $('#drawerScrim').classList.add('open');
+  });
+  document.body.style.overflow = 'hidden';
+  $('#drawerClose').focus();
+}
+
+function closeDrawer(){
+  const drawer = $('#drawer'), scrim = $('#drawerScrim');
+  drawer.classList.remove('open');
+  scrim.classList.remove('open');
+  document.body.style.overflow = '';
+  setTimeout(() => { drawer.hidden = true; scrim.hidden = true; }, 300);
+  $('#drawerMsg').textContent = '';
+  lastFocus?.focus();
+}
+
+/* --- checkout -------------------------------------------------- */
+async function goToCheckout(){
+  const btn = $('#checkoutBtn');
+  const msg = $('#drawerMsg');
+
+  btn.disabled = true;
+  msg.className = 'drawer-msg';
+  msg.textContent = 'Opening checkout…';
+
+  try {
+    const url = await Shop.checkout();
+    // Fourthwall takes it from here — payment happens on their page.
+    window.location.href = url;
+  } catch (err) {
+    msg.className = 'drawer-msg bad';
+    msg.textContent = err.message;
+    btn.disabled = false;
+  }
+}
+
+/* --- waitlist -------------------------------------------------- */
+function waitlist(){
+  const form = $('#form'), input = $('#email'), msg = $('#msg');
+  if (!form) return;
 
   const say = (text, state) => {
     msg.textContent = text;
     msg.className = 'msg' + (state ? ' ' + state : '');
   };
-
   const valid = v => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim());
 
   input.addEventListener('input', () => {
@@ -71,18 +187,17 @@ const PIECES = [
       input.focus();
       return;
     }
-
-    if (!FORM_ENDPOINT) {
+    if (!CONFIG.waitlistEndpoint) {
       say('The list is not open yet. Nothing was saved.', 'bad');
       return;
     }
 
-    const button = form.querySelector('button');
-    button.disabled = true;
+    const btn = form.querySelector('button');
+    btn.disabled = true;
     say('Adding…');
 
     try {
-      const res = await fetch(FORM_ENDPOINT, {
+      const res = await fetch(CONFIG.waitlistEndpoint, {
         method: 'POST',
         headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
         body: JSON.stringify({ email })
@@ -93,7 +208,29 @@ const PIECES = [
     } catch {
       say('That did not go through. Try again.', 'bad');
     } finally {
-      button.disabled = false;
+      btn.disabled = false;
     }
   });
+}
+
+/* --- boot ------------------------------------------------------ */
+(async function boot(){
+  const nav = $('#nav');
+  const onScroll = () => nav.classList.toggle('stuck', window.scrollY > 8);
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  $('#cartBtn').addEventListener('click', openDrawer);
+  $('#drawerClose').addEventListener('click', closeDrawer);
+  $('#drawerScrim').addEventListener('click', closeDrawer);
+  $('#checkoutBtn').addEventListener('click', goToCheckout);
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && !$('#drawer').hidden) closeDrawer();
+  });
+
+  waitlist();
+
+  await Shop.init();
+  renderPieces();
+  syncCart();
 })();

@@ -1,55 +1,99 @@
-# IRREGULAR — Room 12
+# IRREGULAR
 
-Character-led clothing brand for a TikTok / YouTube Shorts channel, plus the
-front-of-house site.
+Character-led clothing label for a TikTok / YouTube Shorts channel, plus the site
+that sells the pieces.
 
-**`IRREGULAR` is a working name.** Domains and the TikTok handle have not been
-checked yet. Renaming touches the wordmark only — the world, the character and
-the mark all survive it.
+**`IRREGULAR` is a working name.** Domains and the handle have not been checked.
+Renaming touches the wordmark only.
 
 ## What's here
 
 | Path | What it is |
 |---|---|
-| `brand/CHARACTER-BIBLE.md` | The world, the character, the mark, the six-piece wardrobe, look/sound rules, five recurring formats, twenty video hooks (ten fully scripted), and the production pipeline |
-| `index.html` `styles.css` `script.js` | Static site. No build step, no dependencies |
+| `brand/THE-LINE.md` | Why the reference brand's slogan works, the line chosen for this one, alternates, and the rule that every piece carries its own line |
+| `brand/CHARACTER-BIBLE.md` | World, character, wardrobe, look/sound spec, video formats and hooks. **Written before the reference channel was analysed — see the note at the top of this README's last section.** |
+| `config.js` | **The only file you edit to switch the shop on** |
+| `shop.js` | Catalog, cart and checkout against the Fourthwall Storefront API |
+| `script.js` | Page and cart UI |
+| `index.html` `styles.css` | The site. No build step, no dependencies |
+
+## Switching payments on
+
+The shop is fully built and currently in preview: you can pick sizes, add to the
+cart, change quantities and press Checkout, and checkout will refuse and say why.
+Nothing can be charged. Four steps make it real.
+
+**1. Create the products in Fourthwall.** Six pieces, one collection. Note the
+collection's **slug**, and give each product the same `name` as in `config.js` —
+that's how the site knows which line belongs to which piece. (Fourthwall holds
+price and stock; it does not hold the lines.)
+
+**2. Get the Storefront API token.** Fourthwall dashboard →
+**Settings → For Developers → Headless** → copy the token. It starts with `ptkn_`.
+
+**3. Fill in `config.js`:**
+
+```js
+storefrontToken: 'ptkn_…',
+collectionSlug:  'pieces',
+shopDomain:      'irregular-shop.fourthwall.com',
+currency:        'EUR',
+previewMode:     false,      // ← the important one
+```
+
+**4. Add the waitlist endpoint** in the same file — any URL that accepts a JSON
+`POST` of `{ email }`.
+
+### How checkout actually works
+
+The site never touches a payment. On Checkout it creates a cart through the
+Storefront API, fills it with the chosen variants, and sends the customer to
+Fourthwall's hosted checkout page. Card details are entered there. Fourthwall is
+merchant of record, so they calculate and remit EU VAT per country — which is the
+main reason to use them rather than taking card payments here.
+
+```
+site → POST /v1/carts            → cart id
+     → POST /v1/carts/{id}/add   → variants + quantities
+     → redirect to {shopDomain}/checkout/?cartId=…
+```
+
+### Two things that will bite
+
+- **`previewMode: true` shows placeholder prices.** Harmless while the site is
+  unreachable, misleading the moment it isn't. Set it to `false` before going
+  public, even if the rest is configured.
+- **The `storefrontToken` is public.** It ships in the page source, which is how a
+  static storefront is meant to work — it is read-only and scoped to your public
+  catalog. Never put a Platform API key (`Settings → For Developers → API`) in
+  `config.js`; that one can write to your shop.
+
+### If Fourthwall changes shape
+
+`sizeOf()` in `shop.js` reads the size off a variant. Fourthwall's variant option
+key has moved before, so it searches for a size-ish key and falls back to the
+variant name rather than rendering blank. If sizes come through wrong, that
+function is the only place to fix.
+
+If the API call fails for any reason the catalog falls back to preview instead of
+leaving a blank page, and the console says why.
 
 ## The site
 
-Plain HTML/CSS/JS, same shape as `borreltje.cc` — push the branch, point GitHub
-Pages at it, add a `CNAME` when there's a domain.
-
-No commerce. Waitlist only, by design — the store decision is parked until the
-channel has an audience.
-
-There is **no photography yet**, so the site is built to stand on typography
-alone. Product plates render as Bureau "PENDING ISSUE" records rather than empty
-grey boxes. Once garment samples are shot, those plates take real images and
-nothing else has to change.
-
-### Before it goes live
-
-1. **Set `FORM_ENDPOINT` at the top of `script.js`.** While it is empty the
-   waitlist form validates the address and then honestly says nothing was
-   recorded. It never fakes a success — people would think they were on a list
-   that doesn't exist. Any endpoint accepting a JSON `POST` works.
-2. Add `CNAME` once a domain is registered.
-3. Add an OG image and favicon.
-
-### Local preview
+Plain HTML/CSS/JS, same shape as `borreltje.cc` — push, point GitHub Pages at the
+branch, add a `CNAME` when there's a domain. Committed dark, single theme.
 
 ```
 python3 -m http.server 8000
 ```
 
-## The one rule that decides whether this sells
+## Note on the character bible
 
-**The clothes on screen must be the clothes in the box.**
+`brand/CHARACTER-BIBLE.md` was written before the reference channel (@santeluca,
+selling childrenofkhan.com) had actually been watched. The reference turned out to
+be absurdist comedy with a stylized 3D character, where the slogan on the shirt is
+the punchline of every video — not the austere craft-drama that document describes.
 
-Design the garment, order one sample, photograph it, and use those photographs
-as the reference the character wears. Doing it in the other order — inventing a
-beautiful jacket on screen and sourcing it afterwards — is how a channel gets
-views and refunds.
-
-The wardrobe stays locked at six pieces for the same reason: consistency on
-screen is cheap when the reference set is small and expensive when it isn't.
+`brand/THE-LINE.md` is the corrected thinking and supersedes it. The bible is still
+useful for the wardrobe, the shot discipline and the production pipeline; ignore
+its tone.

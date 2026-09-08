@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>IRREGULAR</title>
-<meta name="description" content="I failed inspection and shipped anyway. Six pieces.">
+<meta name="description" content="They built me for a colder year. Six pieces.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
@@ -14,7 +14,12 @@
 
 <nav id="nav">
   <a href="#top" class="wordmark">IRREGULAR</a>
-  <a href="#list" class="nav-link">The list</a>
+  <div class="nav-right">
+    <a href="#list" class="nav-link">The list</a>
+    <button type="button" class="cart-btn" id="cartBtn" aria-haspopup="dialog" hidden>
+      Cart <span class="cart-n" id="cartN">0</span>
+    </button>
+  </div>
 </nav>
 
 <header id="top" class="hero">
@@ -24,8 +29,8 @@
   </p>
 
   <h1 class="line">
-    <span>I failed inspection</span>
-    <span>and shipped anyway</span>
+    <span>They built me</span>
+    <span>for a colder year</span>
   </h1>
 
   <p class="hero-foot">Printed across the chest. Said out loud at the end.</p>
@@ -66,6 +71,29 @@
   <span class="dim">Antwerp</span>
 </footer>
 
+<!-- CART -->
+<div class="drawer-scrim" id="drawerScrim" hidden></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle" hidden>
+  <div class="drawer-head">
+    <h2 id="drawerTitle" class="label">Cart</h2>
+    <button type="button" class="drawer-close" id="drawerClose" aria-label="Close cart">&times;</button>
+  </div>
+
+  <div class="drawer-body" id="drawerBody"></div>
+
+  <div class="drawer-foot">
+    <div class="drawer-total">
+      <span>Total</span>
+      <span id="cartTotal">&mdash;</span>
+    </div>
+    <p class="drawer-note">Shipping and tax are calculated at checkout.</p>
+    <button type="button" class="checkout" id="checkoutBtn">Checkout</button>
+    <p class="drawer-msg" id="drawerMsg" role="status" aria-live="polite"></p>
+  </div>
+</aside>
+
+<script src="config.js"></script>
+<script src="shop.js"></script>
 <script src="script.js"></script>
 </body>
 </html>
