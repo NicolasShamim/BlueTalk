@@ -24,10 +24,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # enablement asks GitHub to create the Pages site if it does not
+      # exist. The Actions token is not allowed to do that — creating a
+      # Pages site needs repo-admin rights — so Pages has to be switched
+      # on once by hand:
+      #
+      #   Settings → Pages → Build and deployment → Source: GitHub Actions
+      #
+      # After that this step finds the existing site and the deploy runs.
       - uses: actions/configure-pages@v5
         with:
-          # Turns Pages on for the repo if it is not already, so this
-          # needs no visit to Settings.
           enablement: true
 
       # Ship only what the site serves — the brand docs stay in the repo

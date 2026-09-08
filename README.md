@@ -78,10 +78,32 @@ function is the only place to fix.
 If the API call fails for any reason the catalog falls back to preview instead of
 leaving a blank page, and the console says why.
 
-## The site
+## Putting the site online
 
-Plain HTML/CSS/JS, same shape as `borreltje.cc` — push, point GitHub Pages at the
-branch, add a `CNAME` when there's a domain. Committed dark, single theme.
+A deploy workflow is in place (`.github/workflows/pages.yml`) and runs on every
+push to this branch. **It needs Pages switched on once, by hand:**
+
+> **Settings → Pages → Build and deployment → Source: `GitHub Actions`**
+
+That is the whole setup. The workflow asks GitHub to create the Pages site
+itself, but the Actions token is refused — creating a Pages site needs repo-admin
+rights that no automation token here holds. Until that dropdown is set, every run
+fails at the `configure-pages` step with *"Create Pages site failed. Resource not
+accessible by integration"*, which is the expected symptom rather than a broken
+workflow.
+
+Once set, the site is at:
+
+```
+https://nicolasshamim.github.io/BlueTalk/
+```
+
+The repository name is in that URL, so it reads `/BlueTalk/` rather than anything
+to do with the brand. Two ways to fix it: rename the repository, or connect a
+domain — add a `CNAME` file containing the domain and point the DNS at GitHub
+Pages. The workflow already copies `CNAME` into the deploy if it exists.
+
+### Local preview
 
 ```
 python3 -m http.server 8000
