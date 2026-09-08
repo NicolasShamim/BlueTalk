@@ -1,90 +1,58 @@
 /* ============================================================
-   IRREGULAR — Room 12
+   IRREGULAR
    ============================================================ */
 
 /* ------------------------------------------------------------
    WAITLIST ENDPOINT — set this before launch.
-   Paste a form endpoint that accepts a POST (Formspree, Buttondown,
-   Shopify customer form, etc.). While it is an empty string the form
-   validates but deliberately does NOT claim anyone was added — it says
-   the list is not open yet. Never fake a success state here; people
-   would think they were on a list that does not exist.
+   Any URL that accepts a JSON POST (Fourthwall, Formspree,
+   Buttondown…). While it is empty the form validates the address
+   and then says plainly that nothing was saved. Never fake a
+   success here: people would believe they were on a list that
+   does not exist.
    ------------------------------------------------------------ */
 const FORM_ENDPOINT = '';
 
-/* --- the six pieces ---------------------------------------- */
-const WARDROBE = [
-  {
-    n: '01', name: 'The Issue Tee', role: 'Hero',
-    desc: 'The state blank, heavyweight and boxy. Tag cut out, four stitches left in its place. The only thing anyone will actually notice is the thing nobody can see.',
-    colours: ['#E9E4D9', '#9C978C']
-  },
-  {
-    n: '02', name: 'Room 12 Overshirt', role: 'Signature',
-    desc: 'Dry canvas chore coat, waxed over heat on the bench. Elbow patched from a garment that expired two winters ago. Pockets deep enough for tools.',
-    colours: ['#2B2B28', '#4A4C3B']
-  },
-  {
-    n: '03', name: 'The Liner', role: 'Layer',
-    desc: 'Quilted vest, cut to sit under the overshirt without fighting it. Olive drab — the cheapest dye the Bureau ever commissioned, and still the best one.',
-    colours: ['#4A4C3B']
-  },
-  {
-    n: '04', name: 'Standard Trouser', role: 'Foundation',
-    desc: 'Wide utility trouser, cropped short of the boot. Knee reinforced, because the issued version gives out in three washes and that is the design.',
-    colours: ['#9C978C', '#2B2B28']
-  },
-  {
-    n: '05', name: 'Watch Cap', role: 'Entry',
-    desc: 'Ribbed, folded once. The stitch sits on the fold where it can be seen — the only piece where the mark is worn on the outside. He allows it.',
-    colours: ['#E9E4D9', '#2B2B28']
-  },
-  {
-    n: '06', name: 'Tool Roll', role: 'Accessory',
-    desc: 'Canvas roll, six slots. Shears, chalk, unpicker, oil. Sold empty. What goes in it is your problem and, technically, your offence.',
-    colours: ['#4A4C3B', '#9C978C']
-  }
+/* --- the six pieces ----------------------------------------- */
+const PIECES = [
+  { name: 'Long Sleeve',   price: '€65', desc: 'Garment-dyed heavyweight cotton, boxy through the body. The line printed across the chest is the one the character says at the end of every video.' },
+  { name: 'Heavyweight Tee', price: '€55', desc: 'Same body, same print, short sleeve. The cheapest way into the brand and the piece most people will start with.' },
+  { name: 'Work Jacket',   price: '€145', desc: 'Dry canvas chore coat with deep chest pockets. Unprinted — this one is cut and colour only, and the collar stitch is the only marking.' },
+  { name: 'Quilted Vest',  price: '€95', desc: 'Sits under the jacket without fighting it. Olive drab. Made for layering in autumn, which is when the first drop lands.' },
+  { name: 'Utility Trouser', price: '€85', desc: 'Wide leg, cropped short of the boot, reinforced at the knee. Sized properly rather than in three vague bands.' },
+  { name: 'Watch Cap',     price: '€30', desc: 'Ribbed, folded once, stitch on the fold. The one piece where the marking is visible from the outside.' }
 ];
 
-/* --- render wardrobe --------------------------------------- */
-(function renderWardrobe(){
-  const grid = document.getElementById('wardGrid');
+/* --- render pieces ------------------------------------------ */
+(function pieces(){
+  const grid = document.getElementById('grid');
   if (!grid) return;
 
-  grid.innerHTML = WARDROBE.map(item => `
-    <article class="ward-card">
-      <div class="ward-plate"><span class="ward-num">${item.n}</span></div>
-      <h3 class="ward-name">${item.name}</h3>
-      <p class="ward-desc">${item.desc}</p>
-      <div class="ward-foot">
-        <span class="ward-role">${item.role}</span>
-        <span class="swatches">${
-          item.colours.map(c => `<span class="swatch" style="background:${c}"></span>`).join('')
-        }</span>
+  grid.innerHTML = PIECES.map(p => `
+    <article class="card">
+      <div class="thumb"><span>Photography pending</span></div>
+      <div class="card-body">
+        <h3>${p.name}</h3>
+        <p>${p.desc}</p>
+        <div class="card-foot">
+          <span class="price">${p.price}</span>
+          <span class="stock">Not yet released</span>
+        </div>
       </div>
     </article>
   `).join('');
 })();
 
-/* --- notice bar -------------------------------------------- */
-(function notice(){
-  const bar = document.getElementById('notice');
-  const close = document.getElementById('noticeClose');
-  if (!bar || !close) return;
-  close.addEventListener('click', () => bar.classList.add('is-hidden'));
-})();
-
-/* --- nav ---------------------------------------------------- */
+/* --- nav ----------------------------------------------------- */
 (function nav(){
   const nav    = document.getElementById('nav');
   const toggle = document.getElementById('navToggle');
   const links  = document.getElementById('navLinks');
-  const scrim  = document.getElementById('navScrim');
+  const scrim  = document.getElementById('scrim');
   if (!nav) return;
 
   const setMenu = open => {
-    links.classList.toggle('is-open', open);
-    scrim.classList.toggle('is-open', open);
+    links.classList.toggle('open', open);
+    scrim.classList.toggle('open', open);
     toggle.setAttribute('aria-expanded', String(open));
     document.body.style.overflow = open ? 'hidden' : '';
   };
@@ -98,51 +66,28 @@ const WARDROBE = [
     if (e.key === 'Escape') setMenu(false);
   });
 
-  const onScroll = () => nav.classList.toggle('is-stuck', window.scrollY > 12);
+  const onScroll = () => nav.classList.toggle('stuck', window.scrollY > 8);
   onScroll();
   window.addEventListener('scroll', onScroll, { passive: true });
 })();
 
-/* --- reveal on scroll ---------------------------------------
-   Sections are visible at rest in CSS. Only once we know the browser
-   can observe them do we opt into the animation, so a no-JS load or a
-   static capture never shows a blank page.
-   ------------------------------------------------------------ */
-(function reveal(){
-  const items = document.querySelectorAll('.reveal');
-  if (!items.length) return;
-  if (!('IntersectionObserver' in window)) return;
-
-  document.documentElement.classList.add('js-anim');
-
-  const io = new IntersectionObserver((entries, obs) => {
-    entries.forEach(entry => {
-      if (!entry.isIntersecting) return;
-      entry.target.classList.add('is-in');
-      obs.unobserve(entry.target);
-    });
-  }, { rootMargin: '0px 0px -12% 0px', threshold: 0.08 });
-
-  items.forEach(el => io.observe(el));
-})();
-
-/* --- waitlist form ------------------------------------------ */
-(function waitlist(){
-  const form  = document.getElementById('listForm');
+/* --- waitlist ------------------------------------------------ */
+(function join(){
+  const form  = document.getElementById('form');
   const input = document.getElementById('email');
-  const msg   = document.getElementById('formMsg');
+  const msg   = document.getElementById('msg');
   if (!form || !input || !msg) return;
 
   const say = (text, state) => {
     msg.textContent = text;
-    msg.className = 'form-msg' + (state ? ' is-' + state : '');
+    msg.className = 'msg' + (state ? ' ' + state : '');
   };
 
-  const valid = value => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value.trim());
+  const valid = v => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim());
 
   input.addEventListener('input', () => {
-    input.classList.remove('has-error');
-    if (msg.classList.contains('is-err')) say('');
+    input.classList.remove('err');
+    if (msg.classList.contains('bad')) say('');
   });
 
   form.addEventListener('submit', async e => {
@@ -150,21 +95,20 @@ const WARDROBE = [
     const email = input.value.trim();
 
     if (!valid(email)) {
-      input.classList.add('has-error');
-      say('That address will not reach anyone.', 'err');
+      input.classList.add('err');
+      say('That address does not look right. Check it and try again.', 'bad');
       input.focus();
       return;
     }
 
     if (!FORM_ENDPOINT) {
-      // Honest no-op: nothing is stored, so do not imply otherwise.
-      say('The filing office is not open yet. Nothing was recorded.', 'err');
+      say('The list is not open yet, so nothing was saved. Check back shortly.', 'bad');
       return;
     }
 
     const button = form.querySelector('button');
     button.disabled = true;
-    say('Filing…');
+    say('Adding you…');
 
     try {
       const res = await fetch(FORM_ENDPOINT, {
@@ -174,9 +118,9 @@ const WARDROBE = [
       });
       if (!res.ok) throw new Error(res.status);
       form.reset();
-      say('Filed. You will hear before anyone else.', 'ok');
+      say('You are on the list. We will email you once, when it drops.', 'good');
     } catch {
-      say('The line is down. Try again shortly.', 'err');
+      say('That did not go through. Try again in a moment.', 'bad');
     } finally {
       button.disabled = false;
     }

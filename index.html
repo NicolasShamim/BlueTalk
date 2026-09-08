@@ -3,175 +3,139 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>IRREGULAR — Room 12</title>
-<meta name="description" content="Issued garments, altered. The tag removed, the scar left visible. Room 12.">
+<title>IRREGULAR</title>
+<meta name="description" content="A clothing label built around one character. Six pieces, made to order, shipped from the EU.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-<div class="grain" aria-hidden="true"></div>
-
-<!-- NOTICE -->
-<div class="notice" id="notice">
-  <span class="notice-dot" aria-hidden="true"></span>
-  <p class="notice-text">
-    <strong>Bureau notice 44-C</strong>
-    <span class="notice-sep">/</span>Alteration of issued garments remains an offence
-    <span class="notice-sep">/</span><span class="notice-quiet">Fine: 40 units</span>
-  </p>
-  <button class="notice-close" id="noticeClose" type="button" aria-label="Dismiss notice">&times;</button>
+<!-- ANNOUNCEMENT -->
+<div class="bar">
+  <p>First drop hasn't happened yet. Join the list and you'll know before anyone else.</p>
 </div>
 
 <!-- NAV -->
 <nav id="nav">
-  <a href="#top" class="nav-logo">Irregular<span class="nav-logo-mark" aria-hidden="true"></span></a>
+  <a href="#top" class="wordmark">IRREGULAR</a>
   <ul class="nav-links" id="navLinks">
-    <li><a href="#mark">The mark</a></li>
-    <li><a href="#world">Room 12</a></li>
-    <li><a href="#wardrobe">Wardrobe</a></li>
-    <li><a href="#list" class="nav-cta">Get on the list</a></li>
+    <li><a href="#pieces">Pieces</a></li>
+    <li><a href="#how">How it works</a></li>
+    <li><a href="#channel">The channel</a></li>
+    <li><a href="#join" class="nav-cta">Join the list</a></li>
   </ul>
   <button class="nav-toggle" id="navToggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
     <span></span><span></span><span></span>
   </button>
 </nav>
-<div class="nav-scrim" id="navScrim" aria-hidden="true"></div>
+<div class="scrim" id="scrim" aria-hidden="true"></div>
 
 <!-- HERO -->
 <header id="top" class="hero">
-  <div class="hero-inner">
-    <p class="eyebrow">Room 12 <span class="dim">/ two floors under the laundry</span></p>
-    <h1 class="hero-title" aria-label="Irregular">
-      <span class="ht-line">IRREG</span><span class="ht-line">ULAR</span>
-    </h1>
-    <p class="hero-sub">
-      They issue you three garments a year. Same cut, same colour, same tag at the neck
-      recording where you live and when it stops being yours.
-    </p>
-    <p class="hero-sub hero-sub-strong">We cut the tag out and leave the scar showing.</p>
-
-    <div class="hero-actions">
-      <a href="#list" class="btn btn-primary">Get on the list</a>
-      <a href="#wardrobe" class="btn btn-ghost">See the six pieces</a>
-    </div>
+  <p class="kicker">Clothing label &middot; Antwerp</p>
+  <h1>Six pieces.<br>One story.</h1>
+  <p class="hero-lead">
+    IRREGULAR is a clothing label built around a single character and the videos he appears in.
+    Everything he wears is something you can buy. Nothing is printed until you order it.
+  </p>
+  <div class="actions">
+    <a href="#join" class="btn btn-solid">Join the list</a>
+    <a href="#pieces" class="btn btn-line">See the pieces</a>
   </div>
-
-  <div class="hero-meta" aria-hidden="true">
-    <span>EST. UNRECORDED</span>
-    <span>NO OUTER LABEL</span>
-    <span>FOUR STITCHES</span>
-  </div>
-
-  <div class="hero-glyph" aria-hidden="true">12</div>
-  <div class="scroll-cue" aria-hidden="true"><span>Scroll</span></div>
 </header>
 
 <main>
 
-<!-- THE MARK -->
-<section id="mark" class="section section-mark reveal">
-  <div class="section-head">
-    <span class="section-index">01</span>
-    <h2 class="section-title">The mark</h2>
-  </div>
-
-  <div class="mark-grid">
-    <div class="mark-visual">
-      <svg viewBox="0 0 320 200" class="stitch-svg" role="img" aria-label="Four red stitches at the inside back neck of a collar">
-        <path class="collar" d="M40 118 C 78 74, 242 74, 280 118" />
-        <path class="collar-inner" d="M40 132 C 78 90, 242 90, 280 132" />
-        <g class="stitches">
-          <line x1="128" y1="98" x2="140" y2="112" />
-          <line x1="146" y1="96" x2="158" y2="110" />
-          <line x1="164" y1="96" x2="176" y2="110" />
-          <line x1="182" y1="98" x2="194" y2="112" />
-        </g>
-      </svg>
-      <p class="mark-caption">Inside back neck. Oxide red. Nothing on the outside.</p>
-    </div>
-
-    <div class="mark-copy">
-      <p class="lead">Every garment carries the same detail: four stitches where the Bureau tag was cut out.</p>
-      <p>It is not a logo. It is the wound left behind when a garment stops being state property and starts being yours. You will not see it on the street. Whoever is wearing one knows it is there, and so do you.</p>
-      <ul class="spec-list">
-        <li><span>Placement</span><span>Inside back neck</span></li>
-        <li><span>Thread</span><span>Oxide red, four passes</span></li>
-        <li><span>Exterior branding</span><span>None</span></li>
-      </ul>
-    </div>
+<!-- THE MARK — full-bleed accent band -->
+<section class="band">
+  <div class="band-inner">
+    <p class="band-kicker">The detail</p>
+    <p class="band-line">Four red stitches at the inside back neck.</p>
+    <p class="band-copy">
+      No logo on the outside of any piece. The only marking is on the inside of the collar,
+      where a label would normally go. You know it's there. Nobody else has to.
+    </p>
   </div>
 </section>
 
-<!-- WORLD -->
-<section id="world" class="section section-world reveal">
-  <div class="section-head">
-    <span class="section-index">02</span>
-    <h2 class="section-title">Room 12</h2>
+<!-- PIECES -->
+<section id="pieces" class="section">
+  <div class="head">
+    <h2>The pieces</h2>
+    <p class="head-note">
+      Six, and only six. A small range means every piece gets sampled properly before it goes on
+      sale, and it's what the character actually wears in the videos.
+    </p>
   </div>
+  <div class="grid" id="grid"></div>
+</section>
 
-  <div class="world-grid">
-    <blockquote class="pull">
-      <p>“They gave you three shirts this year. Same as everyone.<br>This is the part that isn't yours.”</p>
-      <cite>Room 12</cite>
-    </blockquote>
+<!-- HOW IT WORKS -->
+<section id="how" class="section section-alt">
+  <div class="head">
+    <h2>How it works</h2>
+  </div>
+  <ol class="steps">
+    <li>
+      <h3>You order</h3>
+      <p>Pick a piece and a size. You pay once, at checkout, with VAT already included in the price you see. No customs surprises inside the EU.</p>
+    </li>
+    <li>
+      <h3>It gets made</h3>
+      <p>Your piece is printed and finished after you order it, by a production partner in the EU. Nothing sits in a warehouse, so nothing gets dumped at the end of a season.</p>
+    </li>
+    <li>
+      <h3>It ships to you</h3>
+      <p>Straight from the EU facility, usually within a week. Tracked. If something arrives wrong, it gets replaced &mdash; you don't pay twice.</p>
+    </li>
+  </ol>
+</section>
 
-    <div class="world-copy">
-      <p>Two floors under a laundry there is a bench, one warm lamp, and a man who has been doing this long enough to be bored of the risk. He has no politics. He thinks badly-made things are an insult, and he fixes them.</p>
-      <p>Everything here was issued to somebody. Reinforced, re-dyed, re-cut, and returned in a condition the Bureau would describe as <em>defaced</em>.</p>
+<!-- CHANNEL -->
+<section id="channel" class="section">
+  <div class="split">
+    <div>
+      <h2>The channel</h2>
+      <p class="lead">Short videos, one recurring character, and a joke you can wear.</p>
+      <p>Every video follows the same shape: he talks, it gets progressively more unhinged, and the last line he says is the line printed across the piece he's wearing. That's the whole format. The clothes aren't advertised in the videos &mdash; they're the punchline of them.</p>
+      <p>Posted to TikTok and YouTube Shorts. Nothing is filmed; the character is rendered, which is why he looks identical in every single video.</p>
     </div>
-
-    <div class="world-facts">
-      <div class="fact"><span class="fact-num">3</span><span class="fact-label">Garments issued per citizen, per year</span></div>
-      <div class="fact"><span class="fact-num">4</span><span class="fact-label">Official size bands. For everyone.</span></div>
-      <div class="fact"><span class="fact-num">9<em>s</em></span><span class="fact-label">To remove a collar tag. The whole crime.</span></div>
-    </div>
+    <ul class="facts">
+      <li><span>Format</span><span>Short video, one character</span></li>
+      <li><span>Length</span><span>25&ndash;35 seconds</span></li>
+      <li><span>Posted to</span><span>TikTok, YouTube Shorts</span></li>
+      <li><span>Status</span><span>Not launched</span></li>
+    </ul>
   </div>
 </section>
 
-<!-- WARDROBE -->
-<section id="wardrobe" class="section section-wardrobe reveal">
-  <div class="section-head">
-    <span class="section-index">03</span>
-    <h2 class="section-title">The wardrobe</h2>
-    <p class="section-note">Six pieces. He wears these and only these. Nothing is for sale yet.</p>
-  </div>
-
-  <div class="ward-grid" id="wardGrid">
-    <!-- injected by script.js -->
-  </div>
-</section>
-
-<!-- LIST -->
-<section id="list" class="section section-list reveal">
-  <div class="list-inner">
-    <span class="section-index">04</span>
-    <h2 class="list-title">When they ask for it back</h2>
-    <p class="list-sub">Six pieces, made once. The list is told first, and told before anyone else. No other use for your address.</p>
-
-    <form class="list-form" id="listForm" novalidate>
+<!-- JOIN -->
+<section id="join" class="section section-join">
+  <div class="join-inner">
+    <h2>Join the list</h2>
+    <p class="lead">One email when the first pieces go on sale. That's the entire purpose of this list.</p>
+    <form id="form" novalidate>
       <label class="sr-only" for="email">Email address</label>
-      <input type="email" id="email" name="email" placeholder="you@address" autocomplete="email" required>
-      <button type="submit" class="btn btn-primary">Add me</button>
-      <p class="form-msg" id="formMsg" role="status" aria-live="polite"></p>
+      <input type="email" id="email" name="email" placeholder="you@email.com" autocomplete="email" required>
+      <button type="submit" class="btn btn-solid">Add me</button>
+      <p class="msg" id="msg" role="status" aria-live="polite"></p>
     </form>
-
-    <p class="list-fine">Filed under Room 12. Not shared, not sold, not issued to anyone.</p>
+    <p class="fine">No newsletter, no resale, no third parties. Unsubscribe in one click.</p>
   </div>
 </section>
 
 </main>
 
-<footer class="footer">
-  <div class="footer-row">
-    <span class="footer-logo">Irregular</span>
-    <span class="footer-dim">Room 12 &middot; two floors under the laundry</span>
+<footer>
+  <div class="foot-row">
+    <span class="wordmark wordmark-sm">IRREGULAR</span>
+    <span class="foot-dim">Antwerp, BE</span>
   </div>
-  <div class="footer-row footer-row-small">
-    <span class="footer-dim">Bureau of Standard Dress accepts no correspondence.</span>
-    <span class="footer-dim">No outer label. Four stitches.</span>
+  <div class="foot-row foot-legal">
+    <span class="foot-dim">Not yet trading. No orders are being taken.</span>
+    <span class="foot-dim">&copy; 2026</span>
   </div>
 </footer>
 
