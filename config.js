@@ -51,7 +51,7 @@ const CONFIG = {
      Preview shows placeholder prices, which is fine while nobody
      can reach the site and misleading the moment they can.
      ---------------------------------------------------------- */
-  previewMode: true,
+  previewMode: false,
 
   /* ----------------------------------------------------------
      4. THE PIECES
