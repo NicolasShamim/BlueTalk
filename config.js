@@ -1,5 +1,5 @@
 /* ============================================================
-   IRREGULAR — shop configuration
+   SOLD ANYWAY — shop configuration
 
    This is the only file you edit to switch the shop on.
    Everything else reads from here.

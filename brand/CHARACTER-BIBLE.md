@@ -1,6 +1,6 @@
-# IRREGULAR — Character & Channel Bible
+# SOLD ANYWAY — Character & Channel Bible
 
-> **Working name.** `IRREGULAR` is a placeholder until domains and the TikTok handle
+> **Working name.** `SOLD ANYWAY` is a placeholder until domains and the TikTok handle
 > are checked. In the garment trade an *irregular* is a factory second — a flawed
 > item pulled from the line. In this world, it is also a person. Everything below
 > survives a rename; only the wordmark changes.

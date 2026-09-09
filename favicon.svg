@@ -1,7 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
   <rect width="64" height="64" fill="#0A0A09"/>
-  <rect x="18" y="14" width="28" height="5" fill="#E7E3D9"/>
-  <rect x="29" y="14" width="6"  height="36" fill="#E7E3D9"/>
-  <rect x="18" y="45" width="28" height="5" fill="#E7E3D9"/>
-  <rect x="18" y="54" width="28" height="3" fill="#A8321F"/>
+  <g transform="rotate(-6 32 32)">
+    <rect x="11" y="20" width="42" height="26" fill="none" stroke="#A8321F" stroke-width="4"/>
+    <text x="32" y="41" text-anchor="middle"
+          font-family="Georgia, 'Times New Roman', serif" font-style="italic"
+          font-size="26" fill="#E7E3D9">S</text>
+  </g>
 </svg>

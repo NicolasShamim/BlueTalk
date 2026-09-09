@@ -1,5 +1,5 @@
 /* ============================================================
-   IRREGULAR — shop
+   SOLD ANYWAY — shop
 
    Catalog, cart and checkout. Talks to the Fourthwall Storefront
    API when configured; falls back to CONFIG.pieces in preview.

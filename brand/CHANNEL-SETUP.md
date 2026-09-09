@@ -2,34 +2,42 @@
 
 Checked 9 September 2026. Platforms are the only real authority — confirm at signup.
 
-## 1. The name is settled by what's actually free
+## 1. The name
 
 | | |
 |---|---|
-| **irregular.cc** | ✅ available |
-| **@irregular.cc** on TikTok | ✅ free |
-| **@irregular.cc** on YouTube | ✅ free |
+| **soldanyway.com** | ✅ available |
+| **@soldanyway** on TikTok | ✅ free |
+| **@soldanyway** on YouTube | ✅ free |
 
-Also available: `irregular.store`, `irregular.shop`, `irregular.supply`,
-`wearirregular.com`, `theirregular.co`.
-Gone: `irregularlabel.com`, `lastcustomer.com`, `@irregular` and `@irregular.co` on
-TikTok (both dormant — 4 followers and 1 follower — but taken, and not worth chasing).
+Clean across all three, which is rare and is most of the argument.
 
-**Take `irregular.cc` and `@irregular.cc` on both platforms.**
+**Take `soldanyway.com` and `@soldanyway` on both platforms, the same day.**
 
-The handle *is* the domain. Every time the handle appears — under every video, in
-every comment, in every share — it is also the address. No "link in bio" needed for
-someone to know where to go. It also matches how borreltje.cc is already set up, so
-the registrar and DNS are familiar ground.
+The handle *is* the domain. Every time it appears — under every video, in every
+comment, in every share — it is also the address, so nobody needs to go hunting for
+a link in bio.
 
-**Register the domain first.** The whole thing hangs off that one name being free,
-and it costs a few euro to stop being a question.
+The name is also the second half of the brand's own sentence: the garment tag says
+*failed inspection*, the label says *sold anyway*. It carries the whole idea without
+a line of about-us copy, and it is a stance rather than a description, which is what
+people actually wear.
+
+### Checked and gone
+
+`irregulars.com`, `irregularco.com`, `irregularwear.com`, `irregulargoods.com`,
+`soldasseen.com`, `offcut.com`, `failedinspection.com`. On TikTok, `@irregular` and
+`@irregular.co` are both taken — dormant, but taken.
+
+Still free if a fallback is ever needed: `colderyear.com` with `@colderyear` free on
+both platforms, though naming the brand after one piece's line is a trap once the
+other five have their own.
 
 ## 2. Claiming the accounts
 
 ### TikTok
 
-Sign up, set the handle to `irregular.cc`, then **switch to a Business account**
+Sign up, set the handle to `soldanyway.com`, then **switch to a Business account**
 (Settings → Account → Switch to Business Account).
 
 The reason: personal accounts historically need around 1,000 followers before a
@@ -38,15 +46,15 @@ immediately. The trade-off is that Business accounts can only use TikTok's
 commercial music library — which costs this channel nothing, because the videos
 carry their own sound design and never sit on a trending audio.
 
-- **Name:** IRREGULAR
+- **Name:** SOLD ANYWAY
 - **Bio:** the line, then the address. Nothing else:
   > Garments that failed inspection.
-  > irregular.cc
-- **Link:** https://irregular.cc
+  > soldanyway.com
+- **Link:** https://soldanyway.com
 
 ### YouTube
 
-Create a channel, set the handle to `@irregular.cc`.
+Create a channel, set the handle to `@soldanyway`.
 
 - **Description:** same two lines, plus one sentence of what the channel is
 - **Links:** the site, shown on the channel banner
@@ -94,7 +102,7 @@ The on-screen text carries the video. The written caption is small:
 
 - One line, in the character's voice, that is **not** the line in the video. It gives
   people something to reply to.
-- Two or three tags at most. `#irregular` plus whatever the video is actually about.
+- Two or three tags at most. `#soldanyway` plus whatever the video is actually about.
   Not thirty. Not #fyp.
 - Never put the shop link in the caption of a video. The handle is the address; the
   bio is where the link lives. A caption that sells makes a video look like an ad,
@@ -107,8 +115,8 @@ then, and the format needs the reps as much as the algorithm does.
 
 ## 5. Order
 
-1. Register `irregular.cc`
-2. Claim `@irregular.cc` on TikTok and YouTube — same day, before something changes
+1. Register `soldanyway.com`
+2. Claim `@soldanyway` on TikTok and YouTube — same day, before something changes
 3. Set avatar, banner, bio, link
 4. Point the domain at the site with a `CNAME`
 5. Then make videos

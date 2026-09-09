@@ -1,5 +1,5 @@
 /* ============================================================
-   IRREGULAR
+   SOLD ANYWAY
    Committed dark. Bone on charcoal, one oxide red.
    Every colour is painted explicitly — the page never borrows
    a ground from the host.
@@ -66,9 +66,12 @@ p{ margin:0; }
 
 .wordmark{
   font-family:var(--f-disp); font-weight:400; font-size:17px;
-  letter-spacing:.3em; color:var(--bone);
+  letter-spacing:.26em; color:var(--bone); white-space:nowrap;
 }
-.wordmark-sm{ font-size:14px; }
+.wordmark-sm{ font-size:14px; letter-spacing:.22em; }
+@media (max-width:520px){
+  .wordmark{ font-size:14px; letter-spacing:.18em; }
+}
 .nav-right{ display:flex; align-items:center; gap:clamp(16px,3vw,30px); }
 
 .cart-btn{

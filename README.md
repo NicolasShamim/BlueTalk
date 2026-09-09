@@ -1,9 +1,9 @@
-# IRREGULAR
+# SOLD ANYWAY
 
 Character-led clothing label for a TikTok / YouTube Shorts channel, plus the site
 that sells the pieces.
 
-**`IRREGULAR` is a working name.** Domains and the handle have not been checked.
+**`SOLD ANYWAY` is a working name.** Domains and the handle have not been checked.
 Renaming touches the wordmark only.
 
 ## What's here

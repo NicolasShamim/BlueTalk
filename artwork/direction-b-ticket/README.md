@@ -9,10 +9,10 @@ it — that reads closer to a plain garment than to something anyone collects.
 This direction makes the graphic **a document rather than a slogan**: a factory
 quality-control ticket. Header and record number, an inspection heading, the line
 as the centrepiece, then the form fields — batch, lot, inspected, **result: FAIL** —
-and a stamp reading SOLD ANYWAY.
+and a stamp reading REJECTED — which the label on the neck answers.
 
-It earns the name. An *irregular* is a garment that failed inspection and was sold
-regardless, so the graphic is the literal paperwork of that. It also fills a chest
+It earns the name. The document says REJECTED; the brand is called SOLD ANYWAY.
+The graphic is the first half of the sentence and the label is the second. It also fills a chest
 the way the reference does, and every element is type or rule — no illustration to
 license, redraw, or keep consistent across six pieces.
 

@@ -30,7 +30,7 @@ an *irregular* is a garment that failed quality control and got sold regardless.
   shipped anyway."* Cut to product.
 - **As a garment** it sets in two lines across a chest and looks like a statement
   rather than a joke, which is what makes people actually wear it.
-- **As a brand** it explains IRREGULAR without a single sentence of about-us copy.
+- **As a brand** it explains SOLD ANYWAY without a single sentence of about-us copy.
 
 Set across two lines:
 
