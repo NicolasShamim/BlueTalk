@@ -48,7 +48,7 @@
 <main>
 
 <section class="pieces" id="pieces">
-  <h2 class="label">Five pieces</h2>
+  <h2 class="label" id="pieceCount">Five pieces</h2>
   <ul class="list" id="piecesList"></ul>
 </section>
 
@@ -59,8 +59,8 @@
 </section>
 
 <section class="join" id="list">
-  <h2 class="line line-sm">Nothing is<br>for sale yet</h2>
-  <p class="join-copy">Five pieces, made once. The list hears first.</p>
+  <h2 class="line line-sm">The rest<br>is not out yet</h2>
+  <p class="join-copy">Made once, then never again. The list hears first.</p>
 
   <form id="form" novalidate>
     <label class="sr-only" for="email">Email address</label>
@@ -81,6 +81,7 @@
 <!-- VIEWER -->
 <div class="viewer" id="viewer" hidden aria-hidden="true">
   <button type="button" class="viewer-close" id="viewerClose" aria-label="Close">&times;</button>
+  <span class="viewer-side" id="viewerSide">front</span>
   <figure class="viewer-stage">
     <img id="viewerFront" alt="">
     <img id="viewerBack" alt="">

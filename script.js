@@ -19,8 +19,6 @@ function renderPieces(){
   list.innerHTML = Shop.products().map((p, i) => {
     const variants = p.variants || [];
     const cheapest = variants.reduce((m, v) => (m === null || v.price < m ? v.price : m), null);
-    const firstV = variants[0] || {};
-    const img = (firstV.shots && firstV.shots[0]) || (p.images && p.images[0]) || '';
 
     // Colours in the order Fourthwall lists them, black first if present.
     const colours = [];
@@ -31,6 +29,12 @@ function renderPieces(){
     }
     colours.sort((a, b) => (/black/i.test(b.name) ? 1 : 0) - (/black/i.test(a.name) ? 1 : 0));
     const first = colours[0] ? colours[0].name : '';
+
+    // The plate shows the colourway the swatch says is selected — the first
+    // variant Fourthwall lists is a different colour, and showing that one
+    // made the big view look like it had ignored the choice.
+    const firstV = variants.find(v => (v.colour || '') === first) || variants[0] || {};
+    const img = (firstV.shots && firstV.shots[0]) || (p.images && p.images[0]) || '';
 
     const plate = img
       ? `<img src="${esc(img)}" alt="${esc(p.name)}" loading="lazy" data-plate>`
@@ -46,6 +50,7 @@ function renderPieces(){
                   aria-pressed="${k === 0}" title="${esc(c.name)}"
                   aria-label="${esc(c.name)}"><i style="background:${esc(c.swatch)}"></i></button>
         `).join('')}
+        <span class="sw-name" data-swname>${esc(first)}</span>
       </div>` : '';
 
     const sizes = variants.filter(v => (v.colour || '') === first);
@@ -111,6 +116,8 @@ function renderPieces(){
         const colour = sw.dataset.colour;
         group.querySelectorAll('.sw').forEach(s => s.setAttribute('aria-pressed', String(s === sw)));
         group.dataset.colour = colour;
+        const label = group.querySelector('[data-swname]');
+        if (label) label.textContent = colour;
 
         // Re-draw the sizes for this colour; the previous choice no longer applies.
         const product = Shop.products().find(x => String(x.id) === group.dataset.product);
@@ -141,6 +148,15 @@ function renderPieces(){
   });
 }
 
+/* The heading counted five pieces whatever the shop actually held. */
+function renderCount(){
+  const el = document.getElementById('pieceCount');
+  if (!el) return;
+  const n = Shop.products().length;
+  const word = ['No','One','Two','Three','Four','Five','Six','Seven','Eight','Nine','Ten'][n] || n;
+  el.textContent = `${word} piece${n === 1 ? '' : 's'}`;
+}
+
 /* --- viewer: the piece glides to the middle, then turns around ----- */
 function openViewer(product, variant){
   const v = document.getElementById('viewer');
@@ -160,14 +176,36 @@ function openViewer(product, variant){
 
   // it settles in the middle, then shows its back
   clearTimeout(openViewer._t);
+  clearTimeout(openViewer._s);
   v.classList.remove('turned');
-  if (shots[1]) openViewer._t = setTimeout(() => v.classList.add('turned'), 1150);
+  sideLabel('');
+  openViewer._s = setTimeout(() => sideLabel('front'), 520);
+  if (shots[1]) openViewer._t = setTimeout(() => {
+    v.classList.add('turned');
+    sideLabel('back');
+  }, 1900);
+}
+
+/* The word at the edge fades out before it changes, so 'front' never
+   turns into 'back' mid-air. */
+function sideLabel(text){
+  const el = document.getElementById('viewerSide');
+  if (!el) return;
+  clearTimeout(sideLabel._t);
+  el.classList.remove('in');
+  if (!text) { el.textContent = ''; return; }
+  sideLabel._t = setTimeout(() => {
+    el.textContent = text;
+    el.classList.add('in');
+  }, el.textContent ? 260 : 0);
 }
 
 function closeViewer(){
   const v = document.getElementById('viewer');
   if (!v || v.hidden) return;
   clearTimeout(openViewer._t);
+  clearTimeout(openViewer._s);
+  sideLabel('');
   v.classList.remove('open', 'turned');
   document.body.style.overflow = '';
   setTimeout(() => { v.hidden = true; v.setAttribute('aria-hidden', 'true'); }, 420);
@@ -179,9 +217,10 @@ function renderRack(){
   if (!list) return;
   const items = Shop.products();
   list.innerHTML = items.map((p, i) => {
-    const v = (p.variants || [])[0] || {};
+    const vs = p.variants || [];
+    const v = vs.find(x => /black/i.test(x.colour || '')) || vs[0] || {};
     const shot = (v.shots && v.shots[0]) || (p.images && p.images[0]) || '';
-    const tilt = [-3.5, 2, -1.5, 3, -2.5][i % 5];
+    const tilt = [-5, 3.5, -2.5, 4.5, -3.5][i % 5];
     return `<li class="hang" style="--tilt:${tilt}deg">
       <span class="hook" aria-hidden="true"></span>
       ${shot ? `<img src="${esc(shot)}" alt="${esc(p.name)}" loading="lazy">`
@@ -189,6 +228,17 @@ function renderRack(){
       <span class="hang-name">${esc(p.name)}</span>
     </li>`;
   }).join('');
+
+  // Hovering pushes the piece aside; letting go lets it swing itself still.
+  list.querySelectorAll('.hang').forEach(hang => {
+    hang.addEventListener('mouseenter', () => hang.classList.remove('swing'));
+    hang.addEventListener('mouseleave', () => {
+      hang.classList.remove('swing');
+      void hang.offsetWidth;          // restart the animation from the top
+      hang.classList.add('swing');
+    });
+    hang.addEventListener('animationend', () => hang.classList.remove('swing'));
+  });
 }
 
 /* --- cart ----------------------------------------------------- */
@@ -354,10 +404,12 @@ function waitlist(){
   Shop.seed();
   renderPieces();
   renderRack();
+  renderCount();
   syncCart();
 
   await Shop.init();
   renderPieces();
   renderRack();
+  renderCount();
   syncCart();
 })();

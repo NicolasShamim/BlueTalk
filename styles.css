@@ -9,8 +9,8 @@
   --ink:    #05060A;
   --ink-2:  #0E1016;
   --bone:   #E9E6DE;
-  --ash:    #8B8C93;
-  --dim:    #565963;
+  --ash:    #9698A1;
+  --dim:    #767986;
   --rule:   rgba(233,230,222,.10);
   --red:    #C4442D;
 
@@ -63,11 +63,13 @@ p{ margin:0; }
   position:fixed; inset:-12%; z-index:0; pointer-events:none;
   animation:drift 78s ease-in-out infinite alternate;
   background:
-    radial-gradient(46% 34% at 14% 6%,   rgba(70,120,220,.30), transparent 66%),
-    radial-gradient(40% 30% at 82% 22%,  rgba(150,72,190,.20), transparent 68%),
-    radial-gradient(52% 38% at 88% 82%,  rgba(214,74,44,.20),  transparent 70%),
-    radial-gradient(44% 34% at 32% 72%,  rgba(46,150,190,.15), transparent 70%),
-    radial-gradient(78% 60% at 50% 46%,  rgba(96,78,170,.13),  transparent 76%);
+    radial-gradient(44% 32% at 12% 3%,   rgba(64,130,255,.46), transparent 66%),
+    radial-gradient(38% 30% at 79% 15%,  rgba(176,74,224,.40), transparent 68%),
+    radial-gradient(48% 36% at 93% 64%,  rgba(255,106,58,.34), transparent 70%),
+    radial-gradient(40% 32% at 24% 66%,  rgba(38,190,216,.30), transparent 70%),
+    radial-gradient(34% 26% at 56% 92%,  rgba(236,72,142,.26), transparent 72%),
+    radial-gradient(88% 68% at 50% 44%,  rgba(88,64,192,.26),  transparent 78%),
+    linear-gradient(178deg, #090B1E 0%, #0A0917 52%, #150A1C 100%);
 }
 .sky::before{
   content:''; position:absolute; inset:0;
@@ -103,7 +105,7 @@ p{ margin:0; }
 }
 .sky::after{
   content:''; position:absolute; inset:0;
-  background:radial-gradient(118% 88% at 50% 44%, transparent 38%, rgba(3,4,9,.80) 100%);
+  background:radial-gradient(124% 94% at 50% 42%, transparent 46%, rgba(4,4,12,.60) 100%);
 }
 .haze{
   position:fixed; inset:-40%; z-index:0; pointer-events:none; opacity:.055;
@@ -216,7 +218,7 @@ nav, main, header, footer, .drawer, .drawer-scrim{ position:relative; z-index:1;
 }
 
 .p-body{ padding:16px 2px 0; display:flex; flex-direction:column; flex:1; }
-.p-head{ display:flex; justify-content:space-between; align-items:baseline; gap:14px; }
+.p-head{ display:flex; justify-content:space-between; align-items:baseline; gap:4px 14px; flex-wrap:wrap; }
 .p-name{
   margin:0; font-family:var(--f-disp); font-weight:300;
   font-size:clamp(17px,2vw,21px); letter-spacing:.08em;
@@ -226,6 +228,57 @@ nav, main, header, footer, .drawer, .drawer-scrim{ position:relative; z-index:1;
 .p-line{
   margin:9px 0 0; font-family:var(--f-disp); font-weight:200; font-style:italic;
   font-size:15.5px; letter-spacing:.01em; color:var(--ash);
+}
+
+
+/* --- buy: colourway, size, add ------------------------------- */
+/* The colour has to be readable without hovering, so the chip is
+   a real disc and the name is spelled out beside it. */
+.buy{ margin-top:auto; padding-top:18px; display:flex; flex-direction:column; gap:13px; }
+
+.colours{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+.sw{
+  width:21px; height:21px; padding:0; cursor:pointer;
+  background:none; border:1px solid var(--rule); border-radius:50%;
+  display:grid; place-items:center;
+  transition:border-color .25s ease, transform .25s ease;
+}
+.sw i{
+  display:block; width:13px; height:13px; border-radius:50%;
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,.4);
+}
+.sw:hover{ border-color:var(--ash); }
+.sw[aria-pressed="true"]{ border-color:var(--bone); transform:scale(1.08); }
+.sw-name{
+  margin-left:5px; font-family:var(--f-mono); font-size:10px;
+  letter-spacing:.2em; text-transform:uppercase; color:var(--ash);
+}
+
+.sizes{ display:flex; flex-wrap:wrap; gap:6px; }
+.size{
+  min-width:40px; padding:8px 10px; cursor:pointer;
+  background:rgba(233,230,222,.035); color:var(--ash);
+  border:1px solid var(--rule);
+  font-family:var(--f-mono); font-weight:300; font-size:10.5px;
+  letter-spacing:.14em; text-transform:uppercase;
+  transition:background .22s ease, color .22s ease, border-color .22s ease;
+}
+.size:hover:not(:disabled){ color:var(--bone); border-color:rgba(233,230,222,.26); }
+.size:disabled{ opacity:.3; cursor:default; text-decoration:line-through; }
+
+.buyrow{ display:flex; align-items:center; gap:14px; }
+.add{
+  padding:11px 26px; cursor:pointer;
+  background:none; color:var(--bone); border:1px solid rgba(233,230,222,.34);
+  font-family:var(--f-mono); font-size:10.5px; font-weight:400;
+  letter-spacing:.24em; text-transform:uppercase;
+  transition:background .25s ease, color .25s ease, border-color .25s ease;
+}
+.add:hover:not(:disabled){ background:var(--bone); color:#07080C; border-color:var(--bone); }
+.add:disabled{ color:var(--dim); border-color:var(--rule); cursor:default; }
+.added{
+  font-family:var(--f-mono); font-size:9.5px; letter-spacing:.24em;
+  text-transform:uppercase; color:var(--ash);
 }
 
 /* --- fragment ----------------------------------------------- */
@@ -413,12 +466,11 @@ footer{
 .prose a{ color:var(--bone); border-bottom:1px solid var(--red); }
 .prose .updated{ margin-top:clamp(40px,6vw,64px); font-size:12px; color:var(--dim); }
 
-/* --- selected size: unmistakable ---------------------------- */
+/* --- selected size: read as a shade, not a slab -------------- */
 .size[aria-pressed="true"]{
-  color:#07080C !important; background:var(--bone) !important;
-  border-color:var(--bone) !important; font-weight:600 !important;
-  transform:translateY(-2px) scale(1.06);
-  box-shadow:0 0 0 2px var(--bone), 0 8px 22px -6px rgba(233,230,222,.75);
+  background:rgba(233,230,222,.16);
+  color:var(--bone);
+  border-color:rgba(233,230,222,.46);
 }
 
 /* --- viewer -------------------------------------------------- */
@@ -426,26 +478,50 @@ footer{
 .viewer{
   position:fixed; inset:0; z-index:80;
   display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:clamp(18px,3.4vh,34px);
+  padding:clamp(52px,8vh,88px) clamp(20px,7vw,110px) clamp(30px,5vh,58px);
   background:rgba(4,5,9,.94); backdrop-filter:blur(10px);
   opacity:0; transition:opacity .38s ease;
 }
 .viewer.open{ opacity:1; }
+/* The stage is sized off the viewport height as well as its width, so the
+   caption sits under the garment instead of being pushed to the floor. */
 .viewer-stage{
-  position:relative; margin:0; width:min(74vw,520px); aspect-ratio:4/5;
+  position:relative; margin:0;
+  width:min(72vw,480px); height:min(54vh,560px); max-width:100%;
   transform:translateY(26px) scale(.86); opacity:0;
   transition:transform .82s cubic-bezier(.16,.84,.24,1), opacity .5s ease;
 }
+/* A black colourway on a black ground is a silhouette. This lights it. */
+.viewer-stage::before{
+  content:''; position:absolute; inset:-22% -20%; z-index:0;
+  background:radial-gradient(52% 48% at 50% 44%,
+    rgba(140,130,244,.30), rgba(120,86,204,.17) 36%,
+    rgba(92,66,164,.07) 62%, transparent 84%);
+  filter:blur(22px);
+}
 .viewer.open .viewer-stage{ transform:none; opacity:1; }
 .viewer-stage img{
-  position:absolute; inset:0; width:100%; height:100%; object-fit:contain;
+  position:absolute; inset:0; z-index:1; width:100%; height:100%; object-fit:contain;
   transition:opacity .85s ease, transform .85s ease;
   backface-visibility:hidden;
+  filter:drop-shadow(0 26px 40px rgba(0,0,0,.6));
 }
 #viewerBack{ opacity:0; transform:rotateY(-14deg) scale(.98); }
 .viewer.turned #viewerFront{ opacity:0; transform:rotateY(14deg) scale(.98); }
 .viewer.turned #viewerBack{ opacity:1; transform:none; }
+/* which face you are looking at, down the left edge */
+.viewer-side{
+  position:absolute; top:50%; left:calc(50% - min(36vw,240px) - 30px);
+  transform:translateY(-50%);
+  writing-mode:vertical-rl; text-orientation:mixed;
+  font-family:var(--f-mono); font-size:10px; font-weight:300;
+  letter-spacing:.44em; text-transform:uppercase; color:var(--ash);
+  opacity:0; transition:opacity .6s ease; pointer-events:none;
+}
+.viewer-side.in{ opacity:.62; }
 .viewer-cap{
-  margin-top:26px; text-align:center; opacity:0; transition:opacity .5s ease .3s;
+  margin:0; text-align:center; opacity:0; transition:opacity .5s ease .3s;
 }
 .viewer.open .viewer-cap{ opacity:1; }
 .viewer-cap span{
@@ -463,7 +539,7 @@ footer{
 }
 .viewer-close:hover{ color:var(--bone); }
 @media (prefers-reduced-motion:reduce){
-  .viewer, .viewer-stage, .viewer-stage img, .viewer-cap{ transition:none; }
+  .viewer, .viewer-stage, .viewer-stage img, .viewer-cap, .viewer-side{ transition:none; }
 }
 
 /* --- the rail ------------------------------------------------ */
@@ -486,10 +562,25 @@ footer{
 .hang{
   flex:0 0 auto; width:clamp(130px,17vw,200px);
   display:flex; flex-direction:column; align-items:center;
-  transform-origin:top center; transform:rotate(var(--tilt));
-  transition:transform .5s cubic-bezier(.2,.8,.3,1);
+  transform-origin:top center; transform:rotate(0deg);
+  transition:transform 1.05s cubic-bezier(.22,.66,.26,1);
+  will-change:transform;
 }
-.hang:hover{ transform:rotate(0deg) translateY(4px); }
+/* Pushed aside while you hold it, and it keeps swinging once you let go. */
+.hang:hover{ transform:rotate(var(--tilt)) translateY(3px); }
+.hang.swing{ animation:swing 2.15s cubic-bezier(.33,.06,.28,.98) both; }
+@keyframes swing{
+  0%   { transform:rotate(var(--tilt)) translateY(3px); }
+  22%  { transform:rotate(calc(var(--tilt) * -.5)); }
+  44%  { transform:rotate(calc(var(--tilt) * .26)); }
+  64%  { transform:rotate(calc(var(--tilt) * -.13)); }
+  82%  { transform:rotate(calc(var(--tilt) * .055)); }
+  100% { transform:rotate(0deg); }
+}
+@media (prefers-reduced-motion:reduce){
+  .hang{ transition:none; }
+  .hang.swing{ animation:none; }
+}
 .hook{
   width:15px; height:26px; margin-top:-13px;
   border:2px solid rgba(233,230,222,.55); border-top:0;
