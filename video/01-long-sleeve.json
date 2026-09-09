@@ -1,0 +1,19 @@
+{
+  "id": "01-long-sleeve",
+  "fps": 30,
+  "shots": [
+    { "clip": "01.mp4", "start": 0, "dur": 4.0, "caption": "" },
+    { "clip": "02.mp4", "start": 0, "dur": 4.0, "caption": "The heating in this building runs on a schedule from 1974" },
+    { "clip": "03.mp4", "start": 0, "dur": 4.0, "caption": "Every October, whether anyone is here or not" },
+    { "clip": "04.mp4", "start": 0, "dur": 5.0, "caption": "it comes on at six in the morning and does not stop until April" },
+    { "clip": "05.mp4", "start": 0, "dur": 4.0, "caption": "" },
+    { "clip": "06.mp4", "start": 0, "dur": 4.0, "caption": "I pay for all of it. I have asked them not to change it" },
+    { "clip": "07.mp4", "start": 0, "dur": 4.0, "caption": "They built me for a colder year" },
+    { "clip": "08.mp4", "start": 0, "dur": 3.0, "caption": "soldanyway.com" }
+  ],
+  "voice": "voice.wav",
+  "room":  "room-tone.wav",
+  "music": "bed.wav",
+  "musicDb": -21,
+  "roomDb": -26
+}
