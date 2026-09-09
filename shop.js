@@ -53,6 +53,8 @@ const Shop = (() => {
       variants: p.sizes.map(size => ({
         id: `preview-${i}-${size}`,
         size,
+        colour: 'Black',
+        swatch: '#0f0f10',
         price: p.price,
         currency: CONFIG.currency,
         inStock: true
@@ -86,18 +88,10 @@ const Shop = (() => {
     return (typeof c === 'string' ? c : c && c.name) || '';
   };
 
-  /* One button per size. Where a size exists in several colourways, take the
-     black one — the mockups on the site are black, and nobody should see a
-     black shirt and receive a white one. Stock beats colour. */
-  function dedupeSizes(variants){
-    const rank = v => (v.inStock ? 0 : 4) + (/black/i.test(v.colour || '') ? 0 : 2);
-    const bySize = new Map();
-    for (const v of variants) {
-      const seen = bySize.get(v.size);
-      if (!seen || rank(v) < rank(seen)) bySize.set(v.size, v);
-    }
-    return [...bySize.values()];
-  }
+  const swatchOf = v => {
+    const c = (v.attributes || {}).color;
+    return (c && c.swatch) || '#333';
+  };
 
   async function fromFourthwall(){
     const url = `${API}/collections/${encodeURIComponent(CONFIG.collectionSlug)}`
@@ -132,13 +126,14 @@ const Shop = (() => {
         // A product carries a variant per colour AND size, so the sizes
         // repeat once per colourway. Keep one button per size — the first
         // variant that offers it, preferring one in stock.
-        variants: dedupeSizes((p.variants || []).map(v => ({
+        variants: ((p.variants || []).map(v => ({
           id: v.id,
           size: sizeOf(v),
           price: Math.round((v.unitPrice?.value ?? 0) * 100),
           currency: v.unitPrice?.currency || CONFIG.currency,
           inStock: v.stock ? v.stock.type !== 'OUT_OF_STOCK' : true,
-          colour: colourOf(v)
+          colour: colourOf(v),
+          swatch: swatchOf(v)
         })))
       }));
   }

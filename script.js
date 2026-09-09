@@ -21,6 +21,16 @@ function renderPieces(){
     const cheapest = variants.reduce((m, v) => (m === null || v.price < m ? v.price : m), null);
     const img = (p.images && p.images[0]) || '';
 
+    // Colours in the order Fourthwall lists them, black first if present.
+    const colours = [];
+    for (const v of variants) {
+      if (!colours.some(c => c.name === v.colour)) {
+        colours.push({ name: v.colour || '', swatch: v.swatch || '#333' });
+      }
+    }
+    colours.sort((a, b) => (/black/i.test(b.name) ? 1 : 0) - (/black/i.test(a.name) ? 1 : 0));
+    const first = colours[0] ? colours[0].name : '';
+
     const plate = img
       ? `<img src="${esc(img)}" alt="${esc(p.name)}" loading="lazy">`
       : `<span class="plate-wait">Not yet released</span>`;
@@ -28,14 +38,29 @@ function renderPieces(){
     const price = sellable && cheapest !== null
       ? `<span class="p-price">${esc(Shop.money(cheapest))}</span>` : '';
 
+    const swatches = (sellable && colours.length > 1) ? `
+      <div class="colours" role="group" aria-label="Colour">
+        ${colours.map((c, k) => `
+          <button type="button" class="sw" data-colour="${esc(c.name)}"
+                  aria-pressed="${k === 0}" title="${esc(c.name)}"
+                  aria-label="${esc(c.name)}"><i style="background:${esc(c.swatch)}"></i></button>
+        `).join('')}
+      </div>` : '';
+
+    const sizes = variants.filter(v => (v.colour || '') === first);
     const buy = sellable ? `
-      <div class="buy" data-product="${esc(p.id)}">
-        ${variants.map(v => `
-          <button type="button" class="size" data-variant="${esc(v.id)}"
-                  aria-pressed="false" ${v.inStock ? '' : 'disabled'}
-                  aria-label="Size ${esc(v.size)}">${esc(v.size)}</button>`).join('')}
-        <button type="button" class="add" data-product="${esc(p.id)}" disabled>Add</button>
-        <span class="added" data-added="${esc(p.id)}"></span>
+      <div class="buy" data-product="${esc(p.id)}" data-colour="${esc(first)}">
+        ${swatches}
+        <div class="sizes">
+          ${sizes.map(v => `
+            <button type="button" class="size" data-variant="${esc(v.id)}"
+                    aria-pressed="false" ${v.inStock ? '' : 'disabled'}
+                    aria-label="Size ${esc(v.size)}">${esc(v.size)}</button>`).join('')}
+        </div>
+        <div class="buyrow">
+          <button type="button" class="add" data-product="${esc(p.id)}" disabled>Add</button>
+          <span class="added" data-added="${esc(p.id)}"></span>
+        </div>
       </div>` : '';
 
     return `
@@ -49,22 +74,44 @@ function renderPieces(){
       </li>`;
   }).join('');
 
-  list.querySelectorAll('.size').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const group = btn.closest('.buy');
-      group.querySelectorAll('.size').forEach(b => b.setAttribute('aria-pressed', String(b === btn)));
-      chosen.set(group.dataset.product, btn.dataset.variant);
-      group.querySelector('.add').disabled = false;
-      group.querySelector('[data-added]').textContent = '';
+  const wireSizes = group => {
+    group.querySelectorAll('.size').forEach(btn => {
+      btn.addEventListener('click', () => {
+        group.querySelectorAll('.size').forEach(b => b.setAttribute('aria-pressed', String(b === btn)));
+        chosen.set(group.dataset.product, btn.dataset.variant);
+        group.querySelector('.add').disabled = false;
+        group.querySelector('[data-added]').textContent = '';
+      });
     });
-  });
+  };
 
-  list.querySelectorAll('.add').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const variantId = chosen.get(btn.dataset.product);
+  list.querySelectorAll('.buy').forEach(group => {
+    wireSizes(group);
+
+    group.querySelectorAll('.sw').forEach(sw => {
+      sw.addEventListener('click', () => {
+        const colour = sw.dataset.colour;
+        group.querySelectorAll('.sw').forEach(s => s.setAttribute('aria-pressed', String(s === sw)));
+        group.dataset.colour = colour;
+
+        // Re-draw the sizes for this colour; the previous choice no longer applies.
+        const product = Shop.products().find(x => String(x.id) === group.dataset.product);
+        const forColour = (product.variants || []).filter(v => (v.colour || '') === colour);
+        group.querySelector('.sizes').innerHTML = forColour.map(v => `
+          <button type="button" class="size" data-variant="${esc(v.id)}"
+                  aria-pressed="false" ${v.inStock ? '' : 'disabled'}
+                  aria-label="Size ${esc(v.size)}">${esc(v.size)}</button>`).join('');
+        chosen.delete(group.dataset.product);
+        group.querySelector('.add').disabled = true;
+        wireSizes(group);
+      });
+    });
+
+    group.querySelector('.add').addEventListener('click', () => {
+      const variantId = chosen.get(group.dataset.product);
       if (variantId && Shop.add(variantId)) {
         syncCart();
-        const flag = btn.parentElement.querySelector('[data-added]');
+        const flag = group.querySelector('[data-added]');
         flag.textContent = 'Added';
         setTimeout(() => { flag.textContent = ''; }, 2200);
       }
