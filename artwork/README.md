@@ -13,7 +13,9 @@ One file per piece. Transparent PNG, rendered to each blank's exact print region
 ## The design
 
 Heavy condensed caps filling the chest, set on a full line so the words breathe.
-**The last word in oxide red** — the word the whole sentence turns on.
+**The word the sentence turns on is set in the sky** — a gradient running ember
+through magenta into violet, the same light the site sits under. DTF prints full
+colour, so the gradient goes onto the garment as drawn.
 
 Three tiers of small mono text carry the record, and each piece gets its own
 reason for failing:

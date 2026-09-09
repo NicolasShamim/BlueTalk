@@ -59,7 +59,8 @@ p{ margin:0; }
    body through the middle, an ember low right, all sitting under a
    vignette so the edges fall away. Fixed, so the page drifts through it. */
 .sky{
-  position:fixed; inset:0; z-index:0; pointer-events:none;
+  position:fixed; inset:-12%; z-index:0; pointer-events:none;
+  animation:drift 78s ease-in-out infinite alternate;
   background:
     radial-gradient(46% 34% at 14% 6%,   rgba(70,120,220,.30), transparent 66%),
     radial-gradient(40% 30% at 82% 22%,  rgba(150,72,190,.20), transparent 68%),
@@ -74,6 +75,30 @@ p{ margin:0; }
   opacity:.5;
   mask-image:radial-gradient(90% 70% at 50% 40%, #000 20%, transparent 88%);
   -webkit-mask-image:radial-gradient(90% 70% at 50% 40%, #000 20%, transparent 88%);
+  animation:twinkle 9s ease-in-out infinite alternate,
+            wander 140s linear infinite;
+}
+
+/* Slow enough to read as weather rather than as an effect. */
+@keyframes drift{
+  0%   { transform:translate3d(0,0,0) scale(1); }
+  50%  { transform:translate3d(1.6%,-1.1%,0) scale(1.045); }
+  100% { transform:translate3d(-1.2%,1.4%,0) scale(1.02); }
+}
+@keyframes twinkle{
+  0%   { opacity:.36; }
+  100% { opacity:.62; }
+}
+@keyframes wander{
+  from { background-position:0 0; }
+  to   { background-position:1400px 700px; }
+}
+@keyframes bloom{
+  0%   { text-shadow:0 0 60px rgba(233,230,222,.12), 0 0 150px rgba(120,130,200,.08); }
+  100% { text-shadow:0 0 92px rgba(233,230,222,.22), 0 0 200px rgba(140,120,220,.16); }
+}
+@media (prefers-reduced-motion:reduce){
+  .sky, .sky::before, .line{ animation:none; }
 }
 .sky::after{
   content:''; position:absolute; inset:0;
@@ -139,6 +164,7 @@ nav, main, header, footer, .drawer, .drawer-scrim{ position:relative; z-index:1;
 
 .line{
   text-shadow:0 0 70px rgba(233,230,222,.16), 0 0 160px rgba(120,130,200,.10);
+  animation:bloom 11s ease-in-out infinite alternate;
   font-family:var(--f-disp); font-weight:200;
   font-size:clamp(36px, 7vw, 92px);
   line-height:1.03; letter-spacing:.005em;
