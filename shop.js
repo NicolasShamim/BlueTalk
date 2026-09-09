@@ -204,24 +204,20 @@ const Shop = (() => {
 
     const token = encodeURIComponent(CONFIG.storefrontToken);
 
+    // The cart is created with its items in one call — POST /carts rejects a
+    // body without `items`, and there is no separate step to add them to an
+    // empty cart.
     const created = await fetch(`${API}/carts?storefront_token=${token}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ currency: CONFIG.currency })
-    });
-    if (!created.ok) throw new Error(`Could not open a cart (${created.status}).`);
-
-    const { id } = await created.json();
-    if (!id) throw new Error('Fourthwall did not return a cart id.');
-
-    const filled = await fetch(`${API}/carts/${id}/add?storefront_token=${token}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         items: cart.map(l => ({ variantId: l.variantId, quantity: l.qty }))
       })
     });
-    if (!filled.ok) throw new Error(`Could not fill the cart (${filled.status}).`);
+    if (!created.ok) throw new Error(`Could not open a cart (${created.status}).`);
+
+    const { id } = await created.json();
+    if (!id) throw new Error('Fourthwall did not return a cart id.');
 
     return `https://${CONFIG.shopDomain}/checkout/`
          + `?cartCurrency=${encodeURIComponent(CONFIG.currency)}`

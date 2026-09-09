@@ -19,7 +19,9 @@ const CONFIG = {
                         the address of your own Fourthwall shop, e.g.
                         "irregular.fourthwall.com". Still needed —
                         checkout cannot redirect without it.
-       currency         ISO code the cart is priced in
+       currency         ISO code the cart is priced in. Fourthwall prices
+                        this shop in USD, so this must be USD or the site
+                        shows a price the checkout will not honour.
 
      These two are filled in AT DEPLOY TIME from repository secrets
      (FOURTHWALL_STOREFRONT_TOKEN and FOURTHWALL_SHOP_DOMAIN) by
@@ -36,7 +38,7 @@ const CONFIG = {
   storefrontToken: '',
   collectionSlug:  'all',
   shopDomain:      '',
-  currency:        'EUR',
+  currency:        'USD',
 
   /* ----------------------------------------------------------
      2. WAITLIST
