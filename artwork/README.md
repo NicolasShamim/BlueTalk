@@ -12,9 +12,22 @@ One file per piece. Transparent PNG, rendered to each blank's exact print region
 
 ## The design
 
-Heavy condensed caps, stacked tight, filling the chest. **The last word in oxide
-red** — the word the whole sentence turns on. A small mono caption underneath
-carries the batch number and FAIL.
+Heavy condensed caps filling the chest, set on a full line so the words breathe.
+**The last word in oxide red** — the word the whole sentence turns on.
+
+Three tiers of small mono text carry the record, and each piece gets its own
+reason for failing:
+
+| Piece | Above | Below |
+|---|---|---|
+| Long Sleeve | LOT 12 — INSPECTED 06:00 | BATCH 0040 / FAIL · passed to the floor in error |
+| Heavyweight Tee | LOT 04 — DYE RUN 40 MIN | BATCH 0117 / FAIL · shade outside tolerance |
+| Hoodie | LOT 07 — ORDER UNCOLLECTED | BATCH 0083 / FAIL · consignee no longer trading |
+| Ribbed Neck Tee | LOT 09 — GRADED TO SPEC | BATCH 0154 / FAIL · measured long in the body |
+| Tote | LOT 02 — LOAD UNRATED | BATCH 0206 / FAIL · not withdrawn |
+
+Each reason is a small story that matches its line. The hoodie says *made for a
+place that closed*; its record says the consignee is no longer trading.
 
 Two earlier directions were rejected and are worth recording so they are not tried
 again. Plain italic type alone read as a blank rather than a graphic. The inspection

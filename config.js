@@ -64,6 +64,16 @@ const CONFIG = {
   previewMode: false,
 
   /* ----------------------------------------------------------
+     5. MOCKUPS
+
+     How many of each product's Fourthwall images to use. Their
+     flat / ghost mockups come first and the stock model shots
+     after, and the models cannot be changed — so 1 keeps the site
+     on flats only. Raise it once there are real photographs.
+     ---------------------------------------------------------- */
+  mockupCount: 1,
+
+  /* ----------------------------------------------------------
      4. THE PIECES
 
      Used for preview, and for the line + running order once live

@@ -104,7 +104,12 @@ const Shop = (() => {
         name: p.name,
         line: lineFor(p.name),
         available: true,
-        images: (p.images || []).map(i => i.url).filter(Boolean),
+        // Fourthwall returns the flat / ghost mockups first and the stock
+        // model shots after them. The models are fixed per blank and none of
+        // them match this brand, so the site shows flats only — index 0 —
+        // until there are real photographs to replace them.
+        images: (p.images || []).slice(0, CONFIG.mockupCount ?? 1)
+                  .map(i => i.transformedUrl || i.url).filter(Boolean),
         variants: (p.variants || []).map(v => ({
           id: v.id,
           size: sizeOf(v),
