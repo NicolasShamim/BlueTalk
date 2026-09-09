@@ -18,43 +18,42 @@ function renderPieces(){
 
   list.innerHTML = Shop.products().map((p, i) => {
     const variants = p.variants || [];
-    const cheapest = variants.reduce(
-      (min, v) => (min === null || v.price < min ? v.price : min), null);
+    const cheapest = variants.reduce((m, v) => (m === null || v.price < m ? v.price : m), null);
+    const img = (p.images && p.images[0]) || '';
 
-    const right = sellable && cheapest !== null
-      ? `<span class="price">${esc(Shop.money(cheapest))}</span>`
-      : `<span class="state">Unreleased</span>`;
+    const plate = img
+      ? `<img src="${esc(img)}" alt="${esc(p.name)}" loading="lazy">`
+      : `<span class="plate-wait">Not yet released</span>`;
+
+    const price = sellable && cheapest !== null
+      ? `<span class="p-price">${esc(Shop.money(cheapest))}</span>` : '';
 
     const buy = sellable ? `
       <div class="buy" data-product="${esc(p.id)}">
         ${variants.map(v => `
           <button type="button" class="size" data-variant="${esc(v.id)}"
                   aria-pressed="false" ${v.inStock ? '' : 'disabled'}
-                  aria-label="Size ${esc(v.size)}">${esc(v.size)}</button>
-        `).join('')}
+                  aria-label="Size ${esc(v.size)}">${esc(v.size)}</button>`).join('')}
         <button type="button" class="add" data-product="${esc(p.id)}" disabled>Add</button>
         <span class="added" data-added="${esc(p.id)}"></span>
       </div>` : '';
 
     return `
-      <li>
-        <span class="n">${String(i + 1).padStart(2, '0')}</span>
-        <span class="name">${esc(p.name)}</span>
-        ${right}
-        <span class="note">${esc(p.line)}</span>
-        ${buy}
+      <li class="piece">
+        <div class="plate">${plate}<span class="p-n">${String(i + 1).padStart(2, '0')}</span></div>
+        <div class="p-body">
+          <div class="p-head"><h3 class="p-name">${esc(p.name)}</h3>${price}</div>
+          <p class="p-line">${esc(p.line)}</p>
+          ${buy}
+        </div>
       </li>`;
   }).join('');
 
   list.querySelectorAll('.size').forEach(btn => {
     btn.addEventListener('click', () => {
       const group = btn.closest('.buy');
-      const productId = group.dataset.product;
-
-      group.querySelectorAll('.size').forEach(b =>
-        b.setAttribute('aria-pressed', String(b === btn)));
-
-      chosen.set(productId, btn.dataset.variant);
+      group.querySelectorAll('.size').forEach(b => b.setAttribute('aria-pressed', String(b === btn)));
+      chosen.set(group.dataset.product, btn.dataset.variant);
       group.querySelector('.add').disabled = false;
       group.querySelector('[data-added]').textContent = '';
     });
@@ -62,11 +61,8 @@ function renderPieces(){
 
   list.querySelectorAll('.add').forEach(btn => {
     btn.addEventListener('click', () => {
-      const productId = btn.dataset.product;
-      const variantId = chosen.get(productId);
-      if (!variantId) return;
-
-      if (Shop.add(variantId)) {
+      const variantId = chosen.get(btn.dataset.product);
+      if (variantId && Shop.add(variantId)) {
         syncCart();
         const flag = btn.parentElement.querySelector('[data-added]');
         flag.textContent = 'Added';

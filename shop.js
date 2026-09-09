@@ -48,6 +48,7 @@ const Shop = (() => {
       name: p.name,
       line: p.line,
       available: false,
+      images: [],
       variants: p.sizes.map(size => ({
         id: `preview-${i}-${size}`,
         size,
@@ -103,6 +104,7 @@ const Shop = (() => {
         name: p.name,
         line: lineFor(p.name),
         available: true,
+        images: (p.images || []).map(i => i.url).filter(Boolean),
         variants: (p.variants || []).map(v => ({
           id: v.id,
           size: sizeOf(v),

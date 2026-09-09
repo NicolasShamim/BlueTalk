@@ -78,11 +78,10 @@ const CONFIG = {
      that were here before do not, and cannot be made on demand.
      ---------------------------------------------------------- */
   pieces: [
-    { name: 'Long Sleeve',  line: 'They built me for a colder year',  price: 6500, sizes: ['S','M','L','XL','XXL'] },
+    { name: 'Long Sleeve',     line: 'They built me for a colder year',  price: 6500, sizes: ['S','M','L','XL','XXL'] },
     { name: 'Heavyweight Tee', line: 'I am the last one in this colour', price: 5500, sizes: ['S','M','L','XL','XXL'] },
-    { name: 'Hoodie',       line: 'Made for a place that closed',     price: 8500, sizes: ['S','M','L','XL','XXL'] },
-    { name: 'Crewneck',     line: 'I was somebody’s winter',          price: 7500, sizes: ['S','M','L','XL','XXL'] },
-    { name: 'Joggers',      line: 'This was cut for someone taller',  price: 7000, sizes: ['S','M','L','XL'] },
-    { name: 'Beanie',       line: 'I remember the sun being closer',  price: 3000, sizes: ['One size'] }
+    { name: 'Hoodie',          line: 'Made for a place that closed',     price: 8500, sizes: ['S','M','L','XL','XXL'] },
+    { name: 'Ribbed Neck Tee', line: 'This was cut for someone taller',  price: 5500, sizes: ['S','M','L','XL','XXL'] },
+    { name: 'Tote',            line: 'It was heavier on the way back',   price: 4000, sizes: ['One size'] }
   ]
 };
