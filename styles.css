@@ -412,3 +412,99 @@ footer{
   padding:2px 0 2px 18px; margin-bottom:8px; }
 .prose a{ color:var(--bone); border-bottom:1px solid var(--red); }
 .prose .updated{ margin-top:clamp(40px,6vw,64px); font-size:12px; color:var(--dim); }
+
+/* --- selected size: unmistakable ---------------------------- */
+.size[aria-pressed="true"]{
+  color:#07080C !important; background:var(--bone) !important;
+  border-color:var(--bone) !important; font-weight:600 !important;
+  transform:translateY(-2px) scale(1.06);
+  box-shadow:0 0 0 2px var(--bone), 0 8px 22px -6px rgba(233,230,222,.75);
+}
+
+/* --- viewer -------------------------------------------------- */
+.viewer[hidden]{ display:none !important; }   /* display:flex would defeat [hidden] */
+.viewer{
+  position:fixed; inset:0; z-index:80;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  background:rgba(4,5,9,.94); backdrop-filter:blur(10px);
+  opacity:0; transition:opacity .38s ease;
+}
+.viewer.open{ opacity:1; }
+.viewer-stage{
+  position:relative; margin:0; width:min(74vw,520px); aspect-ratio:4/5;
+  transform:translateY(26px) scale(.86); opacity:0;
+  transition:transform .82s cubic-bezier(.16,.84,.24,1), opacity .5s ease;
+}
+.viewer.open .viewer-stage{ transform:none; opacity:1; }
+.viewer-stage img{
+  position:absolute; inset:0; width:100%; height:100%; object-fit:contain;
+  transition:opacity .85s ease, transform .85s ease;
+  backface-visibility:hidden;
+}
+#viewerBack{ opacity:0; transform:rotateY(-14deg) scale(.98); }
+.viewer.turned #viewerFront{ opacity:0; transform:rotateY(14deg) scale(.98); }
+.viewer.turned #viewerBack{ opacity:1; transform:none; }
+.viewer-cap{
+  margin-top:26px; text-align:center; opacity:0; transition:opacity .5s ease .3s;
+}
+.viewer.open .viewer-cap{ opacity:1; }
+.viewer-cap span{
+  display:block; font-family:var(--f-disp); font-weight:300; font-size:20px;
+  letter-spacing:.1em; text-transform:uppercase; color:var(--bone);
+}
+.viewer-cap em{
+  display:block; margin-top:8px; font-family:var(--f-disp); font-style:italic;
+  font-weight:200; font-size:16px; color:var(--ash);
+}
+.viewer-close{
+  position:absolute; top:22px; right:26px; z-index:2;
+  background:none; border:0; color:var(--ash); font-size:34px; line-height:1;
+  cursor:pointer; transition:color .2s;
+}
+.viewer-close:hover{ color:var(--bone); }
+@media (prefers-reduced-motion:reduce){
+  .viewer, .viewer-stage, .viewer-stage img, .viewer-cap{ transition:none; }
+}
+
+/* --- the rail ------------------------------------------------ */
+.rack{
+  max-width:var(--maxw); margin:0 auto;
+  padding:clamp(50px,8vw,96px) var(--pad) clamp(56px,9vw,110px);
+  border-top:1px solid var(--rule); position:relative;
+}
+.rail{
+  height:3px; margin:clamp(26px,4vw,44px) 0 0;
+  background:linear-gradient(90deg, transparent, rgba(233,230,222,.5) 8%, rgba(233,230,222,.5) 92%, transparent);
+  box-shadow:0 1px 10px rgba(233,230,222,.18);
+}
+.hangers{
+  list-style:none; margin:0; padding:0;
+  display:flex; gap:clamp(10px,2vw,26px); align-items:flex-start;
+  overflow-x:auto; scrollbar-width:none;
+}
+.hangers::-webkit-scrollbar{ display:none; }
+.hang{
+  flex:0 0 auto; width:clamp(130px,17vw,200px);
+  display:flex; flex-direction:column; align-items:center;
+  transform-origin:top center; transform:rotate(var(--tilt));
+  transition:transform .5s cubic-bezier(.2,.8,.3,1);
+}
+.hang:hover{ transform:rotate(0deg) translateY(4px); }
+.hook{
+  width:15px; height:26px; margin-top:-13px;
+  border:2px solid rgba(233,230,222,.55); border-top:0;
+  border-radius:0 0 50% 50%;
+}
+.hang img{
+  width:100%; aspect-ratio:4/5; object-fit:contain; display:block;
+  filter:saturate(.85) contrast(1.05) drop-shadow(0 18px 26px rgba(0,0,0,.55));
+}
+.hang-wait{
+  width:100%; aspect-ratio:4/5; display:flex; align-items:center; justify-content:center;
+  border:1px solid var(--rule); font-family:var(--f-mono); font-size:10px;
+  letter-spacing:.16em; text-transform:uppercase; color:var(--dim); text-align:center; padding:8px;
+}
+.hang-name{
+  margin-top:10px; font-family:var(--f-mono); font-size:9.5px;
+  letter-spacing:.2em; text-transform:uppercase; color:var(--dim);
+}

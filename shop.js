@@ -55,6 +55,7 @@ const Shop = (() => {
         size,
         colour: 'Black',
         swatch: '#0f0f10',
+        shots: [],
         price: p.price,
         currency: CONFIG.currency,
         inStock: true
@@ -133,7 +134,9 @@ const Shop = (() => {
           currency: v.unitPrice?.currency || CONFIG.currency,
           inStock: v.stock ? v.stock.type !== 'OUT_OF_STOCK' : true,
           colour: colourOf(v),
-          swatch: swatchOf(v)
+          swatch: swatchOf(v),
+          // each colourway carries its own front and back shot
+          shots: (v.images || []).map(i => i.transformedUrl || i.url).filter(Boolean)
         })))
       }));
   }

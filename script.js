@@ -19,7 +19,8 @@ function renderPieces(){
   list.innerHTML = Shop.products().map((p, i) => {
     const variants = p.variants || [];
     const cheapest = variants.reduce((m, v) => (m === null || v.price < m ? v.price : m), null);
-    const img = (p.images && p.images[0]) || '';
+    const firstV = variants[0] || {};
+    const img = (firstV.shots && firstV.shots[0]) || (p.images && p.images[0]) || '';
 
     // Colours in the order Fourthwall lists them, black first if present.
     const colours = [];
@@ -32,7 +33,7 @@ function renderPieces(){
     const first = colours[0] ? colours[0].name : '';
 
     const plate = img
-      ? `<img src="${esc(img)}" alt="${esc(p.name)}" loading="lazy">`
+      ? `<img src="${esc(img)}" alt="${esc(p.name)}" loading="lazy" data-plate>`
       : `<span class="plate-wait">Not yet released</span>`;
 
     const price = sellable && cheapest !== null
@@ -85,6 +86,23 @@ function renderPieces(){
     });
   };
 
+  list.querySelectorAll('.piece').forEach(li => {
+    const plate = li.querySelector('.plate');
+    if (!plate) return;
+    if (li.querySelector('[data-plate]')) plate.style.cursor = 'zoom-in';
+    plate.addEventListener('click', () => {
+      const group = li.querySelector('.buy');
+      const id = group ? group.dataset.product : null;
+      const product = Shop.products().find(x => String(x.id) === String(id)) ||
+                      Shop.products()[[...list.children].indexOf(li)];
+      if (!product) return;
+      const colour = group ? group.dataset.colour : '';
+      const variant = (product.variants || []).find(v => (v.colour || '') === colour)
+                   || (product.variants || [])[0];
+      openViewer(product, variant);
+    });
+  });
+
   list.querySelectorAll('.buy').forEach(group => {
     wireSizes(group);
 
@@ -104,6 +122,10 @@ function renderPieces(){
         chosen.delete(group.dataset.product);
         group.querySelector('.add').disabled = true;
         wireSizes(group);
+
+        const plateImg = group.closest('.piece').querySelector('[data-plate]');
+        const shot = forColour[0] && forColour[0].shots && forColour[0].shots[0];
+        if (plateImg && shot) plateImg.src = shot;
       });
     });
 
@@ -117,6 +139,56 @@ function renderPieces(){
       }
     });
   });
+}
+
+/* --- viewer: the piece glides to the middle, then turns around ----- */
+function openViewer(product, variant){
+  const v = document.getElementById('viewer');
+  const front = document.getElementById('viewerFront');
+  const back  = document.getElementById('viewerBack');
+  const shots = (variant && variant.shots) || [];
+  if (!shots.length) return;
+
+  front.src = shots[0];
+  back.src  = shots[1] || shots[0];
+  document.getElementById('viewerName').textContent = product.name;
+  document.getElementById('viewerLine').textContent = product.line || '';
+
+  v.hidden = false; v.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+  requestAnimationFrame(() => v.classList.add('open'));
+
+  // it settles in the middle, then shows its back
+  clearTimeout(openViewer._t);
+  v.classList.remove('turned');
+  if (shots[1]) openViewer._t = setTimeout(() => v.classList.add('turned'), 1150);
+}
+
+function closeViewer(){
+  const v = document.getElementById('viewer');
+  if (!v || v.hidden) return;
+  clearTimeout(openViewer._t);
+  v.classList.remove('open', 'turned');
+  document.body.style.overflow = '';
+  setTimeout(() => { v.hidden = true; v.setAttribute('aria-hidden', 'true'); }, 420);
+}
+
+/* --- the rail ------------------------------------------------------ */
+function renderRack(){
+  const list = document.getElementById('rackList');
+  if (!list) return;
+  const items = Shop.products();
+  list.innerHTML = items.map((p, i) => {
+    const v = (p.variants || [])[0] || {};
+    const shot = (v.shots && v.shots[0]) || (p.images && p.images[0]) || '';
+    const tilt = [-3.5, 2, -1.5, 3, -2.5][i % 5];
+    return `<li class="hang" style="--tilt:${tilt}deg">
+      <span class="hook" aria-hidden="true"></span>
+      ${shot ? `<img src="${esc(shot)}" alt="${esc(p.name)}" loading="lazy">`
+             : `<span class="hang-wait">${esc(p.name)}</span>`}
+      <span class="hang-name">${esc(p.name)}</span>
+    </li>`;
+  }).join('');
 }
 
 /* --- cart ----------------------------------------------------- */
@@ -267,8 +339,12 @@ function waitlist(){
   $('#drawerClose').addEventListener('click', closeDrawer);
   $('#drawerScrim').addEventListener('click', closeDrawer);
   $('#checkoutBtn').addEventListener('click', goToCheckout);
+  document.getElementById('viewerClose').addEventListener('click', closeViewer);
+  document.getElementById('viewer').addEventListener('click', e => {
+    if (e.target.id === 'viewer') closeViewer();
+  });
   document.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && !$('#drawer').hidden) closeDrawer();
+    if (e.key === 'Escape') { closeViewer(); if (!$('#drawer').hidden) closeDrawer(); }
   });
 
   waitlist();
@@ -277,9 +353,11 @@ function waitlist(){
   // The page is never blank while a network call is in flight.
   Shop.seed();
   renderPieces();
+  renderRack();
   syncCart();
 
   await Shop.init();
   renderPieces();
+  renderRack();
   syncCart();
 })();

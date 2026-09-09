@@ -52,13 +52,10 @@
   <ul class="list" id="piecesList"></ul>
 </section>
 
-<section class="fragment">
-  <blockquote>
-    <p>Everything here was made wrong on purpose.</p>
-    <p>The cotton is heavier than it needs to be. The colour is garment-dyed, so it
-      comes out slightly different every run. Nothing on the outside says who made it.</p>
-    <p>None of it passed. All of it shipped.</p>
-  </blockquote>
+<section class="rack" id="rack">
+  <h2 class="label">On the rail</h2>
+  <div class="rail" aria-hidden="true"></div>
+  <ul class="hangers" id="rackList"></ul>
 </section>
 
 <section class="join" id="list">
@@ -80,6 +77,16 @@
   <a href="privacy.html" class="dim">Privacy</a>
   <span class="dim">Antwerp</span>
 </footer>
+
+<!-- VIEWER -->
+<div class="viewer" id="viewer" hidden aria-hidden="true">
+  <button type="button" class="viewer-close" id="viewerClose" aria-label="Close">&times;</button>
+  <figure class="viewer-stage">
+    <img id="viewerFront" alt="">
+    <img id="viewerBack" alt="">
+  </figure>
+  <figcaption class="viewer-cap"><span id="viewerName"></span><em id="viewerLine"></em></figcaption>
+</div>
 
 <!-- CART -->
 <div class="drawer-scrim" id="drawerScrim" hidden></div>
