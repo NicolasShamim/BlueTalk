@@ -31,10 +31,10 @@ const face = `
 const print = (W, H, img, line, lot, batch, reason, s) => `<style>${face}
  .c{width:${W}px;height:${H}px;box-sizing:border-box;position:relative;
     display:flex;flex-direction:column;align-items:center;justify-content:center;
-    padding:0 ${Math.round(W*.04)}px;color:#E9E6DE;overflow:hidden}
- .lot{font-family:'JB',monospace;font-size:${34*s}px;letter-spacing:.44em;
+    padding:0 ${Math.round(W*.005)}px;color:#E9E6DE;overflow:hidden}
+  .lot{font-family:'JB',monospace;font-size:${38*s}px;letter-spacing:.44em;
       opacity:.45;margin-bottom:${Math.round(H*.022)}px}
- .frame{position:relative;width:${Math.round(W*.86)}px;aspect-ratio:4/3.1}
+ .frame{position:relative;width:${Math.round(W*.99)}px;aspect-ratio:4/3.25}
  .bloom{position:absolute;inset:-30%;
    background:
      radial-gradient(42% 40% at 32% 30%, rgba(244,112,58,.60), transparent 68%),
@@ -47,11 +47,11 @@ const print = (W, H, img, line, lot, batch, reason, s) => `<style>${face}
    mask-image:radial-gradient(58% 64% at 50% 44%, #000 34%, transparent 100%);}
  .grain{position:absolute;inset:0;opacity:.10;mix-blend-mode:overlay;
    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
- .line{font-family:'CG',serif;font-style:italic;font-size:${112*s}px;line-height:1.16;
-   text-align:center;margin-top:${Math.round(H*.030)}px;max-width:${Math.round(W*.82)}px}
+ .line{font-family:'CG',serif;font-style:italic;font-size:${132*s}px;line-height:1.16;
+   text-align:center;margin-top:${Math.round(H*.026)}px;max-width:${Math.round(W*.90)}px}
  .rule{width:${Math.round(W*.22)}px;height:${Math.max(2,Math.round(2.4*s))}px;background:#E9E6DE;
    opacity:.34;margin:${Math.round(H*.026)}px 0 ${Math.round(H*.018)}px}
- .rec{font-family:'JB',monospace;font-size:${30*s}px;letter-spacing:.40em;opacity:.60}
+ .rec{font-family:'JB',monospace;font-size:${34*s}px;letter-spacing:.40em;opacity:.60}
  .rec2{font-family:'JB',monospace;font-size:${25*s}px;letter-spacing:.32em;opacity:.38;
    margin-top:${Math.round(H*.010)}px}
 </style>
