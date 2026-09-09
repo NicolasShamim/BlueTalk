@@ -10,35 +10,46 @@ One file per piece. Transparent PNG, rendered to each blank's exact print region
 | `ribbed-tee` | This was cut for someone **taller** | 2250×2700 |
 | `tote` | It was heavier on the way **back** | 1500×1500 |
 
-## The design
+## The design — image-led, not type-led
 
-Heavy condensed caps filling the chest, set on a full line so the words breathe.
-**The word the sentence turns on is set in the sky** — a gradient running ember
-through magenta into violet, the same light the site sits under. DTF prints full
-colour, so the gradient goes onto the garment as drawn.
+**His portrait is the graphic.** The line sits under it, smaller. That is how the
+reference works: a large image carrying the piece, with a sentence beneath it in a
+quieter face, and a word or two doing the shouting.
 
-Three tiers of small mono text carry the record, and each piece gets its own
-reason for failing:
+```
+        [ portrait, treated, filling most of the chest ]
 
-| Piece | Above | Below |
-|---|---|---|
-| Long Sleeve | LOT 12 — INSPECTED 06:00 | BATCH 0040 / FAIL · passed to the floor in error |
-| Heavyweight Tee | LOT 04 — DYE RUN 40 MIN | BATCH 0117 / FAIL · shade outside tolerance |
-| Hoodie | LOT 07 — ORDER UNCOLLECTED | BATCH 0083 / FAIL · consignee no longer trading |
-| Ribbed Neck Tee | LOT 09 — GRADED TO SPEC | BATCH 0154 / FAIL · measured long in the body |
-| Tote | LOT 02 — LOAD UNRATED | BATCH 0206 / FAIL · not withdrawn |
+            They built me for a colder year          ← italic serif, small
+        LOT 12 · BATCH 0040 / FAIL · IN ERROR        ← mono, smaller still
+```
 
-Each reason is a small story that matches its line. The hoodie says *made for a
-place that closed*; its record says the consignee is no longer trading.
+### Why the type-only versions failed
 
-Two earlier directions were rejected and are worth recording so they are not tried
-again. Plain italic type alone read as a blank rather than a graphic. The inspection
-ticket that followed was conceptually right and visually dead — a bordered box with
-one line in it is a document, and nobody wears a document.
+Three attempts, three lessons, recorded so they are not repeated:
 
-What this version fixes: weight. The reference brands work because their type
-shouts. A delicate serif whispers, which is wrong on a chest even when the words are
-good. The sentence still does the work; it just arrives with force now.
+1. **Plain italic line.** Read as a blank, not a graphic.
+2. **Inspection ticket.** A bordered box with one line in it is a document, and
+   nobody wears a document.
+3. **Heavy stacked caps.** Better — it finally had weight — but still just words on
+   cotton. The reference brands are carried by an image; ours had nothing to look at.
+
+The missing ingredient was never typography. It was a picture, and now there is one.
+
+### Treatment
+
+The portrait is not dropped in raw. It gets the same light the site sits under:
+high contrast, cool shadows, and a nebula bloom behind the head — ember through
+magenta into violet — so it reads as printed artwork rather than a photograph on a
+shirt. Bone highlights, deep blacks that disappear into a dark garment.
+
+DTF prints full colour, so the bloom goes down as drawn.
+
+### The words
+
+The full sentence stays. It was always the hook, and shrinking it to two words
+throws away the thing people actually respond to. It simply stops being the whole
+design and becomes the caption to the picture — which is exactly the arrangement on
+the reference shirt.
 
 ## Still missing
 
