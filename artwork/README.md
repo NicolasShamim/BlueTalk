@@ -1,38 +1,33 @@
 # Print artwork
 
-One file per piece, per ink. Ready to upload to Fourthwall as the front print.
+One file per piece. Transparent PNG, rendered to each blank's exact print region.
 
-| File | Line |
-|---|---|
-| `long-sleeve` | They built me for a colder year |
-| `heavyweight-tee` | I am the last one in this colour |
-| `hoodie` | Made for a place that closed |
-| `crewneck` | I was somebody's winter |
-| `joggers` | This was cut for someone taller |
-| `beanie` | I remember the sun being closer |
+| File | Line | Region |
+|---|---|---|
+| `long-sleeve` | They built me for a colder **year** | 2250×2700 |
+| `heavyweight-tee` | I am the last one in this **colour** | 2250×2700 |
+| `hoodie` | Made for a place that **closed** | 2250×2700 |
+| `ribbed-tee` | This was cut for someone **taller** | 2250×2700 |
+| `tote` | It was heavier on the way **back** | 1500×1500 |
 
-**`--bone`** (`#E7E3D9`) for dark and mid-tone garments.
-**`--ink`** (`#17181B`) for light ones.
+## The design
 
-## Specification
+Heavy condensed caps, stacked tight, filling the chest. **The last word in oxide
+red** — the word the whole sentence turns on. A small mono caption underneath
+carries the batch number and FAIL.
 
-- 3600 × 1800px — 12 × 6 inches at 300dpi, inside a standard DTG chest area
-- Transparent background (PNG), so the garment colour shows through
-- Cormorant Garamond italic, 300px, centred on two lines
+Two earlier directions were rejected and are worth recording so they are not tried
+again. Plain italic type alone read as a blank rather than a graphic. The inspection
+ticket that followed was conceptually right and visually dead — a bordered box with
+one line in it is a document, and nobody wears a document.
 
-## Why this typeface
+What this version fixes: weight. The reference brands work because their type
+shouts. A delicate serif whispers, which is wrong on a chest even when the words are
+good. The sentence still does the work; it just arrives with force now.
 
-The line has to read as a confession rather than a slogan, so it is set the way a
-line of poetry is set: a high-contrast serif, italic, generous leading, no caps and
-no ornament. It carries the same engraved feel as the reference brand's shirt
-without borrowing its look.
+## Still missing
 
-Set large. On the reference product the text spans most of the chest — that is what
-makes it read as a statement instead of a pocket print. Do not shrink it to a
-tasteful little block.
-
-## Re-rendering
-
-The lines live in `config.js`; these files are rendered from the same wording. If a
-line changes, the artwork has to be re-rendered to match — nothing generates them
-automatically at build time.
+An **illustrated element** — the equivalent of the reference brand's dragon. That
+needs image generation or an illustrator, and everything here is constructed from
+type because that is what can be made without either. It is a real limit, not a
+style choice.

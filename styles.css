@@ -6,13 +6,13 @@
    ============================================================ */
 
 :root{
-  --ink:    #0A0A09;
-  --ink-2:  #121211;
-  --bone:   #E7E3D9;
-  --ash:    #8E8A80;
-  --dim:    #55524B;
-  --rule:   rgba(231,227,217,.11);
-  --red:    #A8321F;
+  --ink:    #07080C;
+  --ink-2:  #0E1016;
+  --bone:   #E9E6DE;
+  --ash:    #8B8C93;
+  --dim:    #565963;
+  --rule:   rgba(233,230,222,.10);
+  --red:    #C4442D;
 
   --f-disp: 'Oswald', 'Archivo Narrow', 'Arial Narrow', sans-serif;
   --f-mono: 'JetBrains Mono', ui-monospace, Menlo, monospace;
@@ -29,6 +29,7 @@ html{ scroll-behavior:smooth; overflow-x:hidden; }
 body{
   margin:0;
   background:var(--ink);
+  position:relative;
   color:var(--bone);
   font-family:var(--f-mono);
   font-weight:300;
@@ -53,12 +54,34 @@ p{ margin:0; }
 }
 .dim{ color:var(--dim); }
 
+/* --- ambient ------------------------------------------------- */
+/* Depth rather than colour: one cold source high left, one ember low
+   right, and a vignette pulling the edges down. Fixed, so the page
+   drifts through the light instead of carrying it along. */
+.sky{
+  position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(58% 44% at 16% 8%,  rgba(86,116,190,.20), transparent 68%),
+    radial-gradient(52% 40% at 88% 78%, rgba(196,68,45,.13),  transparent 70%),
+    radial-gradient(70% 55% at 50% 42%, rgba(120,110,180,.07), transparent 75%);
+}
+.sky::after{
+  content:''; position:absolute; inset:0;
+  background:radial-gradient(120% 90% at 50% 45%, transparent 42%, rgba(4,5,8,.72) 100%);
+}
+.haze{
+  position:fixed; inset:-40%; z-index:0; pointer-events:none; opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+nav, main, header, footer, .drawer, .drawer-scrim{ position:relative; z-index:1; }
+
 /* --- nav ---------------------------------------------------- */
 #nav{
   position:sticky; top:0; z-index:20;
   display:flex; align-items:center; justify-content:space-between;
   padding:20px var(--pad);
-  background:var(--ink);
+  background:rgba(7,8,12,.72);
+  backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
   border-bottom:1px solid transparent;
   transition:border-color .3s;
 }
@@ -105,6 +128,7 @@ p{ margin:0; }
 .define em{ font-style:normal; color:var(--dim); }
 
 .line{
+  text-shadow:0 0 70px rgba(233,230,222,.16), 0 0 160px rgba(120,130,200,.10);
   font-family:var(--f-disp); font-weight:200;
   font-size:clamp(36px, 7vw, 92px);
   line-height:1.03; letter-spacing:.005em;
@@ -135,6 +159,7 @@ p{ margin:0; }
 .plate{
   position:relative; aspect-ratio:4/5; overflow:hidden;
   background:var(--ink-2); border:1px solid var(--rule);
+  box-shadow:0 24px 60px -30px rgba(0,0,0,.9);
   display:flex; align-items:center; justify-content:center;
 }
 .plate img{
