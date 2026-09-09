@@ -23,13 +23,14 @@
 
 *,*::before,*::after{ box-sizing:border-box; }
 
-html{ scroll-behavior:smooth; overflow-x:hidden; }
+html{ scroll-behavior:smooth; overflow-x:hidden; overscroll-behavior:none; }
 @media (prefers-reduced-motion:reduce){ html{ scroll-behavior:auto; } }
 
 body{
   margin:0;
   background:var(--ink);
   position:relative;
+  overscroll-behavior:none;
   color:var(--bone);
   font-family:var(--f-mono);
   font-weight:300;
