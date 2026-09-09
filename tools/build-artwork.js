@@ -34,18 +34,18 @@ const print = (W, H, img, line, lot, batch, reason, s) => `<style>${face}
     padding:0 ${Math.round(W*.005)}px;color:#E9E6DE;overflow:hidden}
   .lot{font-family:'JB',monospace;font-size:${38*s}px;letter-spacing:.44em;
       opacity:.45;margin-bottom:${Math.round(H*.022)}px}
- .frame{position:relative;width:${Math.round(W*.99)}px;aspect-ratio:4/3.25}
- .bloom{position:absolute;inset:-30%;
+ .frame{position:relative;width:${Math.round(W*.92)}px;aspect-ratio:1;
+   border-radius:50%;overflow:hidden;box-shadow:0 0 0 ${Math.max(3,Math.round(7*s))}px #E9E6DE;}
+ .bloom{position:absolute;inset:0;
    background:
      radial-gradient(42% 40% at 32% 30%, rgba(244,112,58,.60), transparent 68%),
      radial-gradient(40% 40% at 70% 34%, rgba(232,68,111,.52), transparent 70%),
      radial-gradient(46% 44% at 52% 72%, rgba(122,82,216,.52), transparent 72%);
-   filter:blur(${Math.round(58*s)}px);opacity:.9;}
+   filter:blur(${Math.round(30*s)}px);opacity:.85;mix-blend-mode:screen;}
  .port{position:absolute;inset:0;background:url('data:image/png;base64,${img}') center/cover no-repeat;
    filter:contrast(1.20) saturate(.62) brightness(1.02);
-   -webkit-mask-image:radial-gradient(58% 64% at 50% 44%, #000 34%, transparent 100%);
-   mask-image:radial-gradient(58% 64% at 50% 44%, #000 34%, transparent 100%);}
- .grain{position:absolute;inset:0;opacity:.10;mix-blend-mode:overlay;
+   background-size:150%;background-position:50% 22%;}
+ .grain{position:absolute;inset:0;opacity:.12;mix-blend-mode:overlay;
    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
  .line{font-family:'CG',serif;font-style:italic;font-size:${132*s}px;line-height:1.16;
    text-align:center;margin-top:${Math.round(H*.026)}px;max-width:${Math.round(W*.90)}px}
