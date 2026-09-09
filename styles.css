@@ -124,8 +124,9 @@ nav, main, header, footer, .drawer, .drawer-scrim{ position:relative; z-index:1;
 #nav.stuck{ border-bottom-color:var(--rule); }
 
 .wordmark{
-  font-family:var(--f-disp); font-weight:400; font-size:17px;
-  letter-spacing:.26em; color:var(--bone); white-space:nowrap;
+  font-family:var(--f-disp); font-weight:400; font-size:19px;
+  letter-spacing:.22em; color:var(--bone); white-space:nowrap;
+  text-transform:lowercase;
 }
 .wordmark-sm{ font-size:14px; letter-spacing:.22em; }
 @media (max-width:520px){
