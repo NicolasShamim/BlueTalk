@@ -14,6 +14,7 @@ const STORE_KEY = 'irregular.cart.v1';
 const Shop = (() => {
 
   let catalog = [];
+  let realCatalog = false;   // true only when products came from Fourthwall
   let cart = load();
 
   /* --- persistence ------------------------------------------ */
@@ -131,6 +132,7 @@ const Shop = (() => {
     if (!live()) { catalog = fromPreview(); return catalog; }
     try {
       catalog = await fromFourthwall();
+      realCatalog = catalog.length > 0;
       // A configured store with nothing published yet returns an empty
       // list. Show the pieces as unreleased rather than an empty page —
       // they flip to buyable on their own once products go live.
@@ -142,6 +144,7 @@ const Shop = (() => {
       // A dead store must not take the whole page down with it.
       console.error('[shop] falling back to preview:', err);
       catalog = fromPreview();
+      realCatalog = false;
     }
     return catalog;
   }
@@ -229,6 +232,7 @@ const Shop = (() => {
 
   return {
     seed, init, checkout, add, setQty, remove, clear,
+    isReal: () => realCatalog,
     lines, count, total, money, live,
     products: () => catalog
   };

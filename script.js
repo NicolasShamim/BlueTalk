@@ -14,7 +14,7 @@ function renderPieces(){
   const list = $('#piecesList');
   if (!list) return;
 
-  const sellable = Shop.live() || CONFIG.previewMode;
+  const sellable = Shop.isReal() || CONFIG.previewMode;
 
   list.innerHTML = Shop.products().map((p, i) => {
     const variants = p.variants || [];
@@ -108,7 +108,7 @@ function renderCart(){
 function syncCart(){
   const n = Shop.count();
   $('#cartN').textContent = n;
-  $('#cartBtn').hidden = !(Shop.live() || CONFIG.previewMode);
+  $('#cartBtn').hidden = !(Shop.isReal() || CONFIG.previewMode);
   renderCart();
 }
 
