@@ -479,7 +479,7 @@ footer{
    caption sits under the garment instead of being pushed to the floor. */
 .viewer-stage{
   position:relative; margin:0;
-  width:min(72vw,480px); height:min(54vh,560px); max-width:100%;
+  width:min(72vw,480px); height:min(47vh,540px); max-width:100%;
   transform:translateY(26px) scale(.86); opacity:0;
   transition:transform .82s cubic-bezier(.16,.84,.24,1), opacity .5s ease;
 }
@@ -490,27 +490,78 @@ footer{
     rgba(140,130,244,.30), rgba(120,86,204,.17) 36%,
     rgba(92,66,164,.07) 62%, transparent 84%);
   filter:blur(22px);
+  /* it spills well past the stage, and a glow must not swallow the
+     clicks meant for the controls underneath it */
+  pointer-events:none;
 }
 .viewer.open .viewer-stage{ transform:none; opacity:1; }
+
+/* Two boxes, so the two gestures do not fight over one transform:
+   the clip holds the enlargement in, the lens does the enlarging,
+   and the images keep the turn for themselves. */
+.viewer-clip{
+  position:absolute; inset:0; z-index:1; cursor:zoom-in;
+}
+.viewer.zoomed .viewer-clip{ overflow:hidden; cursor:zoom-out; touch-action:none; }
+.viewer-lens{
+  position:absolute; inset:0;
+  --zs:1; --ox:50%; --oy:50%;
+  transform-origin:var(--ox) var(--oy);
+  transition:transform .55s cubic-bezier(.2,.7,.3,1);
+  will-change:transform;
+}
+/* transform-origin is deliberately outside the transition: while you are
+   already close, moving the pointer should pan at once, not catch up. */
+.viewer.zoomed .viewer-lens{ transform:scale(var(--zs)); }
+
 .viewer-stage img{
-  position:absolute; inset:0; z-index:1; width:100%; height:100%; object-fit:contain;
+  position:absolute; inset:0; width:100%; height:100%; object-fit:contain;
   transition:opacity .85s ease, transform .85s ease;
   backface-visibility:hidden;
   filter:drop-shadow(0 26px 40px rgba(0,0,0,.6));
 }
+.viewer.zoomed .viewer-stage img{ filter:none; }
 #viewerBack{ opacity:0; transform:rotateY(-14deg) scale(.98); }
 .viewer.turned #viewerFront{ opacity:0; transform:rotateY(14deg) scale(.98); }
 .viewer.turned #viewerBack{ opacity:1; transform:none; }
-/* which face you are looking at, down the left edge */
-.viewer-side{
-  position:absolute; top:50%; left:calc(50% - min(36vw,240px) - 30px);
-  transform:translateY(-50%);
-  writing-mode:vertical-rl; text-orientation:mixed;
-  font-family:var(--f-mono); font-size:10px; font-weight:300;
-  letter-spacing:.44em; text-transform:uppercase; color:var(--ash);
-  opacity:0; transition:opacity .6s ease; pointer-events:none;
+
+/* --- viewer controls: which side, which colour, how close ----- */
+.viewer-bar{
+  position:relative; z-index:2;
+  display:flex; align-items:center; justify-content:center;
+  gap:clamp(12px,2.6vw,26px); flex-wrap:wrap;
+  opacity:0; transition:opacity .5s ease .24s;
 }
-.viewer-side.in{ opacity:.62; }
+.viewer.open .viewer-bar{ opacity:1; }
+.faces{ display:flex; border:1px solid var(--rule); }
+.face{
+  padding:9px 17px; cursor:pointer;
+  background:none; color:var(--dim); border:0; border-right:1px solid var(--rule);
+  font-family:var(--f-mono); font-weight:300; font-size:10px;
+  letter-spacing:.22em; text-transform:uppercase;
+  transition:background .25s ease, color .25s ease;
+}
+.face:last-child{ border-right:0; }
+.face:hover:not(:disabled){ color:var(--bone); }
+.face[aria-pressed="true"]{ background:rgba(233,230,222,.16); color:var(--bone); }
+.face:disabled{ opacity:.32; cursor:default; }
+
+.viewer-colours{ display:flex; align-items:center; gap:8px; }
+.viewer-colours[hidden]{ display:none; }
+
+.zoom{
+  padding:9px 17px; cursor:pointer;
+  background:none; color:var(--ash); border:1px solid var(--rule);
+  font-family:var(--f-mono); font-weight:300; font-size:10px;
+  letter-spacing:.22em; text-transform:uppercase;
+  transition:background .25s ease, color .25s ease, border-color .25s ease;
+}
+.zoom:hover{ color:var(--bone); border-color:rgba(233,230,222,.3); }
+.zoom[aria-pressed="true"]{
+  background:rgba(233,230,222,.16); color:var(--bone);
+  border-color:rgba(233,230,222,.46);
+}
+
 .viewer-cap{
   margin:0; text-align:center; opacity:0; transition:opacity .5s ease .3s;
 }
@@ -530,7 +581,8 @@ footer{
 }
 .viewer-close:hover{ color:var(--bone); }
 @media (prefers-reduced-motion:reduce){
-  .viewer, .viewer-stage, .viewer-stage img, .viewer-cap, .viewer-side{ transition:none; }
+  .viewer, .viewer-stage, .viewer-stage img, .viewer-cap,
+  .viewer-bar, .viewer-lens{ transition:none; }
 }
 
 /* --- the rail ------------------------------------------------ */
@@ -554,12 +606,23 @@ footer{
   flex:0 0 auto; width:clamp(130px,17vw,200px);
   display:flex; flex-direction:column; align-items:center;
   transform-origin:top center; transform:rotate(0deg);
-  transition:transform 1.05s cubic-bezier(.22,.66,.26,1);
+  transition:transform .55s cubic-bezier(.22,.66,.26,1);
   will-change:transform;
 }
-/* Pushed aside while you hold it, and it keeps swinging once you let go. */
+/* Pushed aside while you hold it, and it keeps swinging once you let go.
+   Both halves of the gesture are animations with the same easing, so
+   taking hold has the weight that letting go always had — a transition
+   into the tilt arrived dead, with none of the give of a hanging thing. */
 .hang:hover{ transform:rotate(var(--tilt)) translateY(3px); }
+.hang.pull{ animation:pull .92s cubic-bezier(.33,.06,.28,.98) both; }
 .hang.swing{ animation:swing 2.15s cubic-bezier(.33,.06,.28,.98) both; }
+@keyframes pull{
+  0%   { transform:rotate(0deg); }
+  40%  { transform:rotate(calc(var(--tilt) * 1.16)) translateY(4.2px); }
+  64%  { transform:rotate(calc(var(--tilt) * .9))   translateY(2.4px); }
+  84%  { transform:rotate(calc(var(--tilt) * 1.04)) translateY(3.3px); }
+  100% { transform:rotate(var(--tilt)) translateY(3px); }
+}
 @keyframes swing{
   0%   { transform:rotate(var(--tilt)) translateY(3px); }
   22%  { transform:rotate(calc(var(--tilt) * -.5)); }
@@ -570,7 +633,7 @@ footer{
 }
 @media (prefers-reduced-motion:reduce){
   .hang{ transition:none; }
-  .hang.swing{ animation:none; }
+  .hang.swing, .hang.pull{ animation:none; }
 }
 .hook{
   width:15px; height:26px; margin-top:-13px;
@@ -590,6 +653,8 @@ footer{
   margin-top:10px; font-family:var(--f-mono); font-size:9.5px;
   letter-spacing:.2em; text-transform:uppercase; color:var(--dim);
 }
+/* A piece you can take a closer look at, on the grid or on the rail. */
+.open-able, .hang.open-able img{ cursor:zoom-in; }
 
 
 /* assets/sky.jpg is rendered, not hand-drawn: fractal-noise cloud masked

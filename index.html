@@ -82,12 +82,26 @@
 <!-- VIEWER -->
 <div class="viewer" id="viewer" hidden aria-hidden="true">
   <button type="button" class="viewer-close" id="viewerClose" aria-label="Close">&times;</button>
-  <span class="viewer-side" id="viewerSide">front</span>
-  <figure class="viewer-stage">
-    <img id="viewerFront" alt="">
-    <img id="viewerBack" alt="">
-  </figure>
-  <figcaption class="viewer-cap"><span id="viewerName"></span><em id="viewerLine"></em></figcaption>
+
+  <div class="viewer-stage">
+    <div class="viewer-clip" id="viewerClip">
+      <div class="viewer-lens" id="viewerLens">
+        <img id="viewerFront" alt="">
+        <img id="viewerBack" alt="">
+      </div>
+    </div>
+  </div>
+
+  <div class="viewer-bar">
+    <div class="faces" role="group" aria-label="Which side">
+      <button type="button" class="face" data-face="front" aria-pressed="true">Front</button>
+      <button type="button" class="face" data-face="back" aria-pressed="false">Back</button>
+    </div>
+    <div class="viewer-colours" id="viewerColours" role="group" aria-label="Colour"></div>
+    <button type="button" class="zoom" id="viewerZoom" aria-pressed="false">Zoom in</button>
+  </div>
+
+  <div class="viewer-cap"><span id="viewerName"></span><em id="viewerLine"></em></div>
 </div>
 
 <!-- CART -->

@@ -88,12 +88,20 @@ const CONFIG = {
      Every piece here exists in the Fourthwall catalog — see
      brand/PRODUCT-LINE.md. The jacket, vest and utility trouser
      that were here before do not, and cannot be made on demand.
+
+     The order below is the order the site shows them in, on the
+     grid and on the rail — Fourthwall returns them in its own
+     order and does not know about ours.
+
+     `colour` is the colourway a piece opens on. Match it to the
+     colour name in Fourthwall; anything it does not recognise
+     falls back to the first colour the product lists.
      ---------------------------------------------------------- */
   pieces: [
-    { name: 'Long Sleeve',     line: 'They built me for a colder year',  price: 6500, sizes: ['S','M','L','XL','XXL'] },
-    { name: 'Heavyweight Tee', line: 'Made for a place that closed'  , price: 2900, sizes: ['S','M','L','XL','XXL'] },
-    { name: 'Hoodie',          line: 'I was somebody\u2019s winter',        price: 8500, sizes: ['S','M','L','XL','XXL'] },
-    { name: 'Ribbed Neck Tee', line: 'This was cut for someone taller',  price: 5500, sizes: ['S','M','L','XL','XXL'] },
-    { name: 'Tote',            line: 'It was heavier on the way back',   price: 4000, sizes: ['One size'] }
+    { name: 'Heavyweight Tee', line: 'Made for a place that closed',    price: 2900, colour: 'Crunchberry', sizes: ['S','M','L','XL','XXL'] },
+    { name: 'Hoodie',          line: 'I was somebody\u2019s winter',      price: 8500, colour: 'Black',       sizes: ['S','M','L','XL','XXL'] },
+    { name: 'Long Sleeve',     line: 'They built me for a colder year', price: 6500, colour: 'White',       sizes: ['S','M','L','XL','XXL'] },
+    { name: 'Tote',            line: 'It was heavier on the way back',  price: 4000, colour: 'Black',       sizes: ['One size'] },
+    { name: 'Ribbed Neck Tee', line: 'This was cut for someone taller', price: 5500, colour: 'Black',       sizes: ['S','M','L','XL','XXL'] }
   ]
 };

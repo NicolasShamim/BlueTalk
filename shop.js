@@ -53,7 +53,7 @@ const Shop = (() => {
       variants: p.sizes.map(size => ({
         id: `preview-${i}-${size}`,
         size,
-        colour: 'Black',
+        colour: p.colour || 'Black',
         swatch: '#0f0f10',
         shots: [],
         price: p.price,
@@ -63,13 +63,27 @@ const Shop = (() => {
     }));
   }
 
-  // The line for each piece lives in CONFIG, not in Fourthwall.
-  const lineFor = name => {
-    const match = CONFIG.pieces.find(
+  // The line, the running order and the opening colourway all live in
+  // CONFIG, not in Fourthwall. Fourthwall knows about price and stock.
+  const entryFor = name => CONFIG.pieces.find(
+    p => p.name.toLowerCase() === String(name).toLowerCase()
+  );
+
+  const lineFor = name => (entryFor(name) || {}).line || '';
+
+  const defaultColour = name => (entryFor(name) || {}).colour || '';
+
+  /* Where a piece sits on the page. Anything CONFIG has not heard of
+     goes to the back rather than jumping the queue. */
+  const orderOf = name => {
+    const i = CONFIG.pieces.findIndex(
       p => p.name.toLowerCase() === String(name).toLowerCase()
     );
-    return match ? match.line : '';
+    return i < 0 ? CONFIG.pieces.length : i;
   };
+
+  const inOrder = list =>
+    list.slice().sort((a, b) => orderOf(a.name) - orderOf(b.name));
 
   // Fourthwall returns variant options as an attributes/options bag
   // whose exact key has changed before now. Look for a size-ish one
@@ -111,7 +125,7 @@ const Shop = (() => {
       clearTimeout(timer);
     }
 
-    return (data.results || [])
+    return inOrder((data.results || [])
       .filter(p => p.type !== 'BUNDLE')
       .map(p => ({
         id: p.id,
@@ -138,7 +152,7 @@ const Shop = (() => {
           // each colourway carries its own front and back shot
           shots: (v.images || []).map(i => i.transformedUrl || i.url).filter(Boolean)
         })))
-      }));
+      })));
   }
 
   /* Fills the catalog with the local pieces so the page can paint
@@ -249,7 +263,7 @@ const Shop = (() => {
   return {
     seed, init, checkout, add, setQty, remove, clear,
     isReal: () => realCatalog,
-    lines, count, total, money, live,
+    lines, count, total, money, live, defaultColour,
     products: () => catalog
   };
 })();
