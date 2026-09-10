@@ -32,8 +32,16 @@ while IFS=$'\t' read -r clip dur cap; do
   n=$((n+1)); pad=$(printf "%02d" $n); src="$CLIPS/$clip"
   if [ ! -f "$src" ]; then
     echo "  [$pad] missing $clip -> black hold ${dur}s"
-    "$FF" -nostdin -y -hide_banner -loglevel error -f lavfi -i "color=c=black:s=1440x1080:r=30" \
-      -t "$dur" -pix_fmt yuv420p "$TMP/s$pad.mp4"
+    # The hold keeps its caption. Without it a part-finished build is just
+    # black, and the whole point of holds is reading the shape early.
+    if [ -f "$TMP/cap$pad.png" ]; then
+      "$FF" -nostdin -y -hide_banner -loglevel error -f lavfi -i "color=c=black:s=1440x1080:r=30" \
+        -i "$TMP/cap$pad.png" -t "$dur" \
+        -filter_complex "[0:v][1:v]overlay=0:0" -r 30 -pix_fmt yuv420p "$TMP/s$pad.mp4"
+    else
+      "$FF" -nostdin -y -hide_banner -loglevel error -f lavfi -i "color=c=black:s=1440x1080:r=30" \
+        -t "$dur" -pix_fmt yuv420p "$TMP/s$pad.mp4"
+    fi
   else
     echo "  [$pad] $clip ${dur}s"
     VF="scale=1440:1080:force_original_aspect_ratio=increase,crop=1440:1080,$GRADE"

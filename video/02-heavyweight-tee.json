@@ -1,0 +1,20 @@
+{
+  "id": "02-heavyweight-tee",
+  "fps": 30,
+  "shots": [
+    { "clip": "01.mp4", "start": 0, "dur": 4.0, "caption": "" },
+    { "clip": "02.mp4", "start": 0, "dur": 4.0, "caption": "The chef would not write anything down" },
+    { "clip": "03.mp4", "start": 0, "dur": 4.0, "caption": "You told him what you liked in September" },
+    { "clip": "04.mp4", "start": 0, "dur": 4.0, "caption": "and he remembered it in March" },
+    { "clip": "05.mp4", "start": 0, "dur": 4.0, "caption": "" },
+    { "clip": "06.mp4", "start": 0, "dur": 4.0, "caption": "Fourteen years. He never once asked my name" },
+    { "clip": "07.mp4", "start": 0, "dur": 3.0, "caption": "That is service" },
+    { "clip": "08.mp4", "start": 0, "dur": 4.0, "caption": "Made for a place that closed" },
+    { "clip": "09.mp4", "start": 0, "dur": 3.0, "caption": "soldanyway.com" }
+  ],
+  "voice": "voice.wav",
+  "room":  "room-tone.wav",
+  "music": "bed.wav",
+  "musicDb": -21,
+  "roomDb": -26
+}

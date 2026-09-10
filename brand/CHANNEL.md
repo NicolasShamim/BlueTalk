@@ -89,6 +89,21 @@ instead of an animation. Do not skip this to save an afternoon.
 
 ## 5. Ten scripts
 
+> **Which line belongs to which piece.** The lines were reassigned when the shop was
+> built, so the headings below no longer match `config.js`. `config.js` is the source
+> of truth — it is what the site and the print files say. Current pairing:
+>
+> | Piece | Line | Script to shoot |
+> |---|---|---|
+> | Long Sleeve | *They built me for a colder year* | 1, or 7 |
+> | Heavyweight Tee | *Made for a place that closed* | 3 |
+> | Hoodie | *I was somebody's winter* | 4 |
+> | Ribbed Neck Tee | *This was cut for someone taller* | 5 |
+> | Tote | *It was heavier on the way back* | not written yet |
+>
+> Script 2 (*I am the last one in this colour*) is unattached — good writing with no
+> piece behind it. Keep it for a colourway drop.
+
 Each ends on the line printed on the piece being sold. `[ ]` are shots.
 
 ---

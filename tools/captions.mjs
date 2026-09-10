@@ -11,8 +11,8 @@ const page = txt => `<style>
  html,body{margin:0;background:transparent}
  .c{width:1440px;height:1080px;display:flex;align-items:flex-end;justify-content:center;
     padding:0 90px 130px;box-sizing:border-box}
- .t{font-family:'Liberation Sans','Arial',sans-serif;font-weight:700;font-size:52px;
-    line-height:1.22;color:#fff;text-align:center;max-width:1120px;
+ .t{font-family:'Liberation Sans','Arial',sans-serif;font-weight:700;font-size:60px;
+    line-height:1.2;color:#fff;text-align:center;max-width:1180px;
     text-shadow:0 0 5px #000,0 0 5px #000,3px 3px 0 #000,-3px 3px 0 #000,3px -3px 0 #000,-3px -3px 0 #000;}
 </style><div class="c"><div class="t">${txt.replace(/&/g,'&amp;').replace(/</g,'&lt;')}</div></div>`;
 
