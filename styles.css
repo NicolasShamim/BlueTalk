@@ -98,6 +98,7 @@ p{ margin:0; }
 }
 @media (prefers-reduced-motion:reduce){
   .sky, .stars, .bokeh, .sparkle, .line{ animation:none; }
+  .kaspar, .kaspar img{ transition:none; }
 }
 .scrim{
   position:fixed; inset:0; z-index:0; pointer-events:none;
@@ -196,6 +197,30 @@ nav, main, header, footer, .drawer, .drawer-scrim{ position:relative; z-index:1;
 .line span{ display:block; }
 .line span:last-child{ color:var(--ash); }
 .line-sm{ font-size:clamp(32px,5.4vw,68px); }
+
+.hero-row{
+  display:flex; align-items:center; justify-content:space-between;
+  gap:clamp(20px,4vw,56px);
+}
+.kaspar{
+  position:relative; flex:0 0 auto;
+  width:clamp(120px,17vw,230px); aspect-ratio:900/715;
+  filter:drop-shadow(0 18px 46px rgba(3,4,12,.75));
+  transition:filter .6s ease;
+}
+.kaspar:hover{ filter:drop-shadow(0 18px 56px rgba(196,68,45,.30)); }
+.kaspar img{
+  position:absolute; inset:0; width:100%; height:100%;
+  object-fit:contain; transition:opacity .6s cubic-bezier(.2,.7,.3,1);
+}
+.kaspar-grin{ opacity:0; }
+.kaspar:hover .kaspar-grin{ opacity:1; }
+.kaspar:hover .kaspar-serious{ opacity:0; }
+
+@media (max-width:720px){
+  .hero-row{ flex-direction:column-reverse; align-items:center; text-align:center; gap:clamp(18px,5vw,32px); }
+  .kaspar{ width:clamp(140px,42vw,220px); }
+}
 
 .hero-foot{
   margin-top:clamp(30px,5vw,52px);
@@ -324,8 +349,10 @@ nav, main, header, footer, .drawer, .drawer-scrim{ position:relative; z-index:1;
 }
 .join-copy{ margin-top:22px; color:var(--ash); max-width:44ch; }
 
+.join-links{ display:flex; flex-wrap:wrap; gap:12px 28px; margin-top:30px; }
+
 .join-link{
-  display:inline-block; margin-top:30px; padding-bottom:5px;
+  display:inline-block; padding-bottom:5px;
   font-family:var(--f-mono); font-size:11px; font-weight:400;
   letter-spacing:.24em; text-transform:uppercase; color:var(--bone);
   border-bottom:1px solid var(--red);
@@ -336,7 +363,7 @@ nav, main, header, footer, .drawer, .drawer-scrim{ position:relative; z-index:1;
 /* --- footer ------------------------------------------------- */
 footer{
   max-width:var(--maxw); margin:0 auto;
-  display:flex; justify-content:space-between; align-items:baseline; gap:16px;
+  display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:10px 16px;
   padding:clamp(34px,5vw,60px) var(--pad);
   border-top:1px solid var(--rule);
   font-size:10px; letter-spacing:.2em; text-transform:uppercase;
