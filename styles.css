@@ -177,7 +177,10 @@ nav, main, header, footer, .drawer, .drawer-scrim{ position:relative; z-index:1;
    to run wider than the rest of the page's content column. */
 .hero{
   max-width:1360px; margin:0 auto;
-  padding:clamp(56px,12vw,150px) var(--pad) clamp(60px,11vw,140px);
+  /* The portrait now carries most of the section's height on its own,
+     so the padding that used to hold that space is cut down —
+     otherwise the page below just gets pushed further away. */
+  padding:clamp(36px,5vw,72px) var(--pad) clamp(32px,4vw,56px);
 }
 
 .define{
