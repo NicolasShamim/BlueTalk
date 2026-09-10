@@ -7,12 +7,16 @@ Checked 9 September 2026. Platforms are the only real authority — confirm at s
 | | |
 |---|---|
 | **soldanyway.com** | ✅ available |
-| **@soldanyway** on TikTok | ✅ free |
-| **@soldanyway** on YouTube | ✅ free |
+| **@kasparvale** on TikTok | ✅ free |
+| **@kasparvale** on YouTube | ✅ free |
 
 Clean across all three, which is rare and is most of the argument.
 
-**Take `soldanyway.com` and `@soldanyway` on both platforms, the same day.**
+**Take `soldanyway.com` and `@kasparvale` on both platforms, the same day.
+
+> Taken: `@kasparvale` on TikTok, checked 10 Sep 2026 — the account exists and is
+> yours. `@soldanyway` is still unclaimed on TikTok if you ever want it as a
+> redirect handle; the character's name is the one in use.**
 
 The handle *is* the domain. Every time it appears — under every video, in every
 comment, in every share — it is also the address, so nobody needs to go hunting for
@@ -54,7 +58,7 @@ carry their own sound design and never sit on a trending audio.
 
 ### YouTube
 
-Create a channel, set the handle to `@soldanyway`.
+Create a channel, set the handle to `@kasparvale`.
 
 - **Description:** same two lines, plus one sentence of what the channel is
 - **Links:** the site, shown on the channel banner
@@ -116,7 +120,7 @@ then, and the format needs the reps as much as the algorithm does.
 ## 5. Order
 
 1. Register `soldanyway.com`
-2. Claim `@soldanyway` on TikTok and YouTube — same day, before something changes
+2. Claim `@kasparvale` on TikTok and YouTube — same day, before something changes
 3. Set avatar, banner, bio, link
 4. Point the domain at the site with a `CNAME`
 5. Then make videos

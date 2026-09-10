@@ -326,58 +326,6 @@ async function goToCheckout(){
   }
 }
 
-/* --- waitlist -------------------------------------------------- */
-function waitlist(){
-  const form = $('#form'), input = $('#email'), msg = $('#msg');
-  if (!form) return;
-
-  const say = (text, state) => {
-    msg.textContent = text;
-    msg.className = 'msg' + (state ? ' ' + state : '');
-  };
-  const valid = v => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim());
-
-  input.addEventListener('input', () => {
-    input.classList.remove('err');
-    if (msg.classList.contains('bad')) say('');
-  });
-
-  form.addEventListener('submit', async e => {
-    e.preventDefault();
-    const email = input.value.trim();
-
-    if (!valid(email)) {
-      input.classList.add('err');
-      say('Check that address.', 'bad');
-      input.focus();
-      return;
-    }
-    if (!CONFIG.waitlistEndpoint) {
-      say('The list is not open yet. Nothing was saved.', 'bad');
-      return;
-    }
-
-    const btn = form.querySelector('button');
-    btn.disabled = true;
-    say('Adding…');
-
-    try {
-      const res = await fetch(CONFIG.waitlistEndpoint, {
-        method: 'POST',
-        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email })
-      });
-      if (!res.ok) throw new Error(res.status);
-      form.reset();
-      say('You are on the list.', 'good');
-    } catch {
-      say('That did not go through. Try again.', 'bad');
-    } finally {
-      btn.disabled = false;
-    }
-  });
-}
-
 /* --- boot ------------------------------------------------------ */
 (async function boot(){
   const nav = $('#nav');
@@ -396,8 +344,6 @@ function waitlist(){
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') { closeViewer(); if (!$('#drawer').hidden) closeDrawer(); }
   });
-
-  waitlist();
 
   // Paint the pieces straight away, then upgrade to the live catalog.
   // The page is never blank while a network call is in flight.

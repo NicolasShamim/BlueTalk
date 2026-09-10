@@ -305,33 +305,14 @@ nav, main, header, footer, .drawer, .drawer-scrim{ position:relative; z-index:1;
 }
 .join-copy{ margin-top:22px; color:var(--ash); max-width:44ch; }
 
-#form{ display:flex; flex-wrap:wrap; gap:10px; margin-top:34px; max-width:520px; }
-#form input{
-  flex:1 1 240px; min-width:0; padding:14px 16px;
-  background:var(--ink-2); color:var(--bone);
-  border:1px solid var(--rule);
-  font-family:var(--f-mono); font-weight:300; font-size:13.5px;
-  transition:border-color .25s;
-}
-#form input::placeholder{ color:var(--dim); }
-#form input:focus{ outline:none; border-color:var(--ash); }
-#form input.err{ border-color:var(--red); }
-#form button{
-  padding:14px 30px; cursor:pointer;
-  background:var(--red); color:#F6F0EC; border:1px solid var(--red);
+.join-link{
+  display:inline-block; margin-top:30px; padding-bottom:5px;
   font-family:var(--f-mono); font-size:11px; font-weight:400;
-  letter-spacing:.2em; text-transform:uppercase;
-  transition:opacity .2s;
+  letter-spacing:.24em; text-transform:uppercase; color:var(--bone);
+  border-bottom:1px solid var(--red);
+  transition:color .25s ease, border-color .25s ease;
 }
-#form button:hover{ opacity:.86; }
-#form button:disabled{ opacity:.5; cursor:default; }
-
-.msg{
-  flex:1 1 100%; min-height:20px; margin-top:2px;
-  font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--dim);
-}
-.msg.bad{ color:var(--red); }
-.msg.good{ color:var(--bone); }
+.join-link:hover{ color:var(--red); border-color:var(--bone); }
 
 /* --- footer ------------------------------------------------- */
 footer{
@@ -434,15 +415,6 @@ footer{
 .drawer-msg.bad{ color:var(--red); }
 
 /* --- responsive --------------------------------------------- */
-@media (max-width:620px){
-  .list li{ grid-template-columns:1.9rem 1fr; }
-  .price{ grid-column:2; margin-top:6px; }
-  .state{ grid-column:2; margin-top:10px; }
-  .note{ margin-top:8px; }
-  #form input,
-  #form button{ flex:1 1 100%; }
-}
-
 
 /* --- prose page ---------------------------------------------- */
 .prose{
