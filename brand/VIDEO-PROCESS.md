@@ -98,95 +98,17 @@ ending upgrades to the real garment and every video after it has it.
 
 Three videos of the character, posted, beats one perfect video three weeks from now.
 
-## 5. Video one — shot list
+## 5. Video one — the prompts
 
-Nine entries, ~31 seconds. Generate a still for each, then animate it.
+Nine shots, ~34 seconds. **Kling takes one prompt per generation** — there is no way
+to hand it a document, so this is eighteen generations: nine stills, then nine
+animations of those stills.
 
-Script, in full:
+Every prompt, pre-assembled with the style block and ready to paste, is in
+**`brand/videos/02-heavyweight-tee.md`**. Work down that file.
 
-> The chef would not write anything down. You told him what you liked in September
-> and he remembered it in March. **[He sits. Crosses his legs.]** Fourteen years. He
-> never once asked my name. **[Small satisfaction.]** That is service. **[Beat. To
-> lens.]** Made for a place that closed.
-
----
-
-**01 · 0:00–0:04 · the lounge** — *no caption, no voice for the first second*
-
-> *Image:* Wide. An empty airport lounge at dusk, immaculate — low leather seating in
-> rows, a lit bar, floor-to-ceiling glass. Beyond the glass, an empty apron: no
-> aircraft, no vehicles, no people. One man in a black heavyweight t-shirt sits alone
-> in the middle of the seating, small in frame.
->
-> *Motion:* Locked off. Nothing moves but a slow drift of reflection across the glass.
-
-**02 · 0:04–0:08 · him** — `The chef would not write anything down`
-
-> *Image:* Medium, chest up, three-quarter left. The lounge behind him thrown out of
-> focus. Black heavyweight t-shirt, small print at the chest. Glasses pushed up into
-> his hair.
->
-> *Motion:* He breathes. One slow blink. Nothing else.
-
-**03 · 0:08–0:12 · the counter** — `You told him what you liked in September`
-
-> *Image:* Insert. A long buffet counter, lit from above, polished, completely bare —
-> no food, no plates, no staff. Warm light pooling on empty steel.
->
-> *Motion:* Very slow drift left. No cut.
-
-**04 · 0:12–0:16 · he sits** — `and he remembered it in March`
-
-> *Image:* Wider than 02, from the side. He lowers himself into a lounge chair and
-> crosses his legs, entirely unhurried. The t-shirt reads clearly at this distance.
->
-> *Motion:* The single movement of sitting, then stillness.
-
-**05 · 0:16–0:20 · the shirt** — *no caption* · **the product shot, unannounced**
-
-> *Image:* Close insert on his chest and one hand, smoothing the front of the black
-> heavyweight t-shirt once. The garment fills two thirds of frame; the print is
-> legible but not centred.
->
-> *Motion:* The hand only. One small precise adjustment.
-
-**06 · 0:20–0:24 · fourteen years** — `Fourteen years. He never once asked my name`
-
-> *Image:* Medium again, a little closer than 02. Same framing, same light.
->
-> *Motion:* Very slow push in. He looks slightly off-lens.
-
-**07 · 0:24–0:27 · service** — `That is service`
-
-> *Image:* Same as 06. The faintest satisfaction crossing his face — not a smile.
->
-> *Motion:* Almost none. A held look.
-
-**08 · 0:27–0:31 · to lens** — `Made for a place that closed`
-
-> *Image:* He turns to face the lens dead on. Total confidence, no irony.
->
-> *Motion:* The turn, then held. This is the last frame anyone remembers — spend
-> credits here.
-
-**09 · 0:31–0:34 · card** — `soldanyway.com`
-
-> No generation. Black frame, the URL. The build handles it as a hold.
-
----
-
-### Naming
-
-`video/clips/01.mp4` … `09.mp4`, matching the numbers above. Anything missing
-becomes a black hold, so partial is fine.
-
-### Then
-
-```
-bash tools/build-video.sh video/02-heavyweight-tee.json
-```
-
-Out come `video/out/02-heavyweight-tee-4x3.mp4` (master) and `-9x16.mp4` (upload).
+Start with shot **02**, not 01 — it is the one that proves the character holds. If
+his face is wrong there, nothing after it is worth generating.
 
 ## 6. Posting
 
