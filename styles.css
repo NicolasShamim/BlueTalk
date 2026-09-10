@@ -172,8 +172,11 @@ nav, main, header, footer, .drawer, .drawer-scrim{ position:relative; z-index:1;
 .nav-link:hover{ color:var(--bone); }
 
 /* --- hero --------------------------------------------------- */
+/* Wider than --maxw on purpose: the portrait needs real room to fill
+   next to the title, and the hero is the one section that can afford
+   to run wider than the rest of the page's content column. */
 .hero{
-  max-width:var(--maxw); margin:0 auto;
+  max-width:1360px; margin:0 auto;
   padding:clamp(56px,12vw,150px) var(--pad) clamp(60px,11vw,140px);
 }
 
@@ -202,9 +205,10 @@ nav, main, header, footer, .drawer, .drawer-scrim{ position:relative; z-index:1;
   display:flex; align-items:center; justify-content:space-between;
   gap:clamp(20px,4vw,56px);
 }
+.hero-row .line{ flex:0 0 auto; }
 .kaspar{
-  position:relative; flex:0 0 auto;
-  width:clamp(120px,17vw,230px); aspect-ratio:900/715;
+  position:relative; flex:1 1 380px; min-width:220px; max-width:660px;
+  aspect-ratio:900/715;
   filter:drop-shadow(0 18px 46px rgba(3,4,12,.75));
   transition:filter .6s ease;
 }
@@ -219,7 +223,7 @@ nav, main, header, footer, .drawer, .drawer-scrim{ position:relative; z-index:1;
 
 @media (max-width:720px){
   .hero-row{ flex-direction:column-reverse; align-items:center; text-align:center; gap:clamp(18px,5vw,32px); }
-  .kaspar{ width:clamp(140px,42vw,220px); }
+  .kaspar{ flex:0 0 auto; width:clamp(180px,58vw,300px); max-width:300px; }
 }
 
 .hero-foot{
