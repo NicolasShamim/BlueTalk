@@ -216,7 +216,6 @@ function openViewer(product, colour){
   view.product = product;
   view.touched = false;
   view.scale = 2.6;
-  setHolo(false);
 
   $('#viewerName').textContent = product.name;
   $('#viewerLine').textContent = product.line || '';
@@ -224,18 +223,12 @@ function openViewer(product, colour){
   setFace('front');
   dressViewer(use);
   setZoom(false, 50, 50);
+  setHolo(true);   // it opens already turning; a click grounds it
 
   const v = $('#viewer');
   v.hidden = false; v.setAttribute('aria-hidden', 'false');
   document.body.style.overflow = 'hidden';
   requestAnimationFrame(() => v.classList.add('open'));
-
-  // It settles in the middle and shows you its back — unless you have
-  // already taken the controls, in which case it stays where you put it.
-  clearTimeout(openViewer._t);
-  openViewer._t = setTimeout(() => {
-    if (!view.touched && shotsFor(view.product, view.colour).length > 1) setFace('back');
-  }, 1900);
 }
 
 /* Hangs a colourway in the viewer without disturbing the face you are
@@ -376,7 +369,6 @@ function wireViewer(){
 function closeViewer(){
   const v = $('#viewer');
   if (!v || v.hidden) return;
-  clearTimeout(openViewer._t);
   setZoom(false, 50, 50);
   v.classList.remove('open', 'turned');
   document.body.style.overflow = '';

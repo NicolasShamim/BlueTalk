@@ -44,8 +44,9 @@ jobs:
           FW_DOMAIN: ${{ secrets.FOURTHWALL_SHOP_DOMAIN }}
         run: |
           mkdir -p _site
-          cp index.html privacy.html styles.css script.js shop.js config.js favicon.svg og.png _site/
+          cp index.html privacy.html factory.html styles.css script.js shop.js config.js favicon.svg og.png _site/
           mkdir -p _site/assets && cp assets/* _site/assets/
+          mkdir -p _site/factory && cp factory/* _site/factory/
           [ -f CNAME ] && cp CNAME _site/ || true
 
           # Inject the shop credentials that are deliberately kept out of
