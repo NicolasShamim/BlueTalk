@@ -4,13 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>sold anyway — the factory</title>
-<meta name="description" content="Sketches, case files, and the forms that failed them.">
+<meta name="description" content="Walk the workshop. Click what's on the desk to read the case file.">
 <link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="icon" href="assets/favicon-16.png" sizes="16x16" type="image/png">
 <link rel="icon" href="assets/favicon-512.png" sizes="512x512" type="image/png">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <meta property="og:title" content="sold anyway — the factory">
-<meta property="og:description" content="Sketches, case files, and the forms that failed them.">
+<meta property="og:description" content="Walk the workshop. Click what's on the desk to read the case file.">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -43,102 +43,53 @@
   </div>
 </header>
 
-<section class="factory-interlude">
-  <div class="factory-interlude-bg" aria-hidden="true"></div>
-  <div class="factory-interlude-scrim" aria-hidden="true"></div>
-  <p class="factory-interlude-line">Every rejection gets typed up the same way. Stamped, filed, and never revisited.</p>
-</section>
-
 <main>
 
-<section class="cases" id="cases">
-  <h2 class="label">Case files</h2>
-  <ul class="case-grid" id="caseGrid">
+<section class="factory-scene" id="scene">
+  <p class="label scene-label">On the desk</p>
+  <p class="scene-hint">Everything that got rejected is still filed here. Click what's on the desk.</p>
 
-    <li class="case">
-      <figure class="case-sketch">
-        <img src="factory/sketch-long-sleeve.png" alt="Pattern sketch of the Long Sleeve" loading="lazy">
-      </figure>
-      <div class="case-file">
-        <div class="case-head">
-          <h3 class="case-piece">Long Sleeve</h3>
-          <span class="case-lot">LOT 03 · BATCH 0041</span>
-        </div>
-        <p class="case-specialist"><strong>Wilfred</strong> — shirts. Forty years, and he's never once used a machine to tie a buttonhole.</p>
-        <p class="case-verdict"><span class="case-stamp">Failed inspection</span>Buttonhole tolerance exceeds Directive 94/EC-7, Annex C. Hand-tied closures cannot be logged as consistent.</p>
-        <p class="case-quote">A man's whole life's work doesn't stop being correct just because a form disagrees with it.</p>
-        <a class="case-watch" href="https://www.tiktok.com/@kasparvale" target="_blank" rel="noopener">Watch the case &rarr;</a>
-      </div>
-    </li>
+  <div class="scene-frame">
+    <img src="factory/backdrop-forms-desk.png" alt="A desk covered in stamped inspection forms, a typewriter and rolled patterns" class="scene-img">
 
-    <li class="case">
-      <figure class="case-sketch">
-        <img src="factory/sketch-hoodie.png" alt="Pattern sketch of the Hoodie" loading="lazy">
-      </figure>
-      <div class="case-file">
-        <div class="case-head">
-          <h3 class="case-piece">Hoodie</h3>
-          <span class="case-lot">LOT 07 · BATCH 0044</span>
-        </div>
-        <p class="case-specialist"><strong>Bertram</strong> — wool fuller. Forty years, and he's never once used a machine to do it.</p>
-        <p class="case-verdict"><span class="case-stamp">Failed inspection</span>Fabric-safety form has no field for untreated wool. A chemical that was never used cannot be certified absent.</p>
-        <p class="case-quote">A fabric doesn't need a chemical to prove it's safe. It needed one four hundred years before the form did.</p>
-        <a class="case-watch" href="https://www.tiktok.com/@kasparvale" target="_blank" rel="noopener">Watch the case &rarr;</a>
-      </div>
-    </li>
-
-    <li class="case">
-      <figure class="case-sketch">
-        <img src="factory/sketch-heavyweight-tee.png" alt="Pattern sketch of the Heavyweight Tee" loading="lazy">
-      </figure>
-      <div class="case-file">
-        <div class="case-head">
-          <h3 class="case-piece">Heavyweight Tee</h3>
-          <span class="case-lot">LOT 12 · BATCH 0040</span>
-        </div>
-        <p class="case-specialist"><strong>Corwin</strong> — loom-minder. Thirty-one years on the same shuttle loom, the one the mill never replaced.</p>
-        <p class="case-verdict"><span class="case-stamp">Failed inspection</span>Fabric weight was logged by hand before the mill's line shut down. No digital lot record, so origin can't be certified.</p>
-        <p class="case-quote">The loom didn't stop being right the day the mill stopped being open.</p>
-        <span class="case-pending">Case pending</span>
-      </div>
-    </li>
-
-    <li class="case">
-      <figure class="case-sketch">
-        <img src="factory/sketch-ribbed-neck-tee.png" alt="Pattern sketch of the Ribbed Neck Tee" loading="lazy">
-      </figure>
-      <div class="case-file">
-        <div class="case-head">
-          <h3 class="case-piece">Ribbed Neck Tee</h3>
-          <span class="case-lot">LOT 09 · BATCH 0038</span>
-        </div>
-        <p class="case-specialist"><strong>Osric</strong> — pattern cutter. Cuts every piece by hand, to how the body actually sits, not how the chart says it should.</p>
-        <p class="case-verdict"><span class="case-stamp">Failed inspection</span>Garment dimensions deviate from the printed size chart by a hand-cutter's tolerance. Non-conforming, regardless of fit.</p>
-        <p class="case-quote">The chart describes an average body. Osric was cutting for yours.</p>
-        <span class="case-pending">Case pending</span>
-      </div>
-    </li>
-
-    <li class="case">
-      <figure class="case-sketch">
-        <img src="factory/sketch-tote.png" alt="Pattern sketch of the Tote" loading="lazy">
-      </figure>
-      <div class="case-file">
-        <div class="case-head">
-          <h3 class="case-piece">Tote</h3>
-          <span class="case-lot">LOT 05 · BATCH 0037</span>
-        </div>
-        <p class="case-specialist"><strong>Hollis</strong> — canvas waxer. Twenty-six years hand-rubbing the same beeswax blend into raw canvas.</p>
-        <p class="case-verdict"><span class="case-stamp">Failed inspection</span>Waterproofing agent isn't listed in the approved solvent registry. Beeswax and tallow are not on file.</p>
-        <p class="case-quote">The registry has a box for chemicals. It has never had one for bees.</p>
-        <span class="case-pending">Case pending</span>
-      </div>
-    </li>
-
-  </ul>
+    <button type="button" class="hotspot" style="--x:15%; --y:14%" data-case="long-sleeve" aria-haspopup="dialog">
+      <span class="hotspot-dot"></span><span class="hotspot-label">Long Sleeve</span>
+    </button>
+    <button type="button" class="hotspot" style="--x:25%; --y:43%" data-case="hoodie" aria-haspopup="dialog">
+      <span class="hotspot-dot"></span><span class="hotspot-label">Hoodie</span>
+    </button>
+    <button type="button" class="hotspot" style="--x:61%; --y:44%" data-case="heavyweight-tee" aria-haspopup="dialog">
+      <span class="hotspot-dot"></span><span class="hotspot-label">Heavyweight Tee</span>
+    </button>
+    <button type="button" class="hotspot" style="--x:42%; --y:60%" data-case="ribbed-neck-tee" aria-haspopup="dialog">
+      <span class="hotspot-dot"></span><span class="hotspot-label">Ribbed Neck Tee</span>
+    </button>
+    <button type="button" class="hotspot" style="--x:79%; --y:45%" data-case="tote" aria-haspopup="dialog">
+      <span class="hotspot-dot"></span><span class="hotspot-label">Tote</span>
+    </button>
+  </div>
 </section>
 
 </main>
+
+<div class="case-modal" id="caseModal" hidden aria-hidden="true">
+  <div class="case-modal-scrim" id="caseModalScrim"></div>
+  <div class="case-modal-panel" role="dialog" aria-modal="true" aria-labelledby="caseModalTitle">
+    <button type="button" class="case-modal-close" id="caseModalClose" aria-label="Close">&times;</button>
+    <img class="case-modal-sketch" id="caseModalSketch" alt="">
+    <div class="case-modal-body">
+      <div class="case-head">
+        <h3 class="case-piece" id="caseModalTitle"></h3>
+        <span class="case-lot" id="caseModalLot"></span>
+      </div>
+      <p class="case-specialist" id="caseModalSpecialist"></p>
+      <p class="case-verdict"><span class="case-stamp">Failed inspection</span><span id="caseModalReason"></span></p>
+      <p class="case-quote" id="caseModalQuote"></p>
+      <a class="case-watch" id="caseModalWatch" target="_blank" rel="noopener" hidden>Watch the case &rarr;</a>
+      <span class="case-pending" id="caseModalPending" hidden>Case pending</span>
+    </div>
+  </div>
+</div>
 
 <footer>
   <span class="wordmark wordmark-sm">sold anyway</span>
@@ -155,6 +106,94 @@ const nav = document.getElementById('nav');
 const onScroll = () => nav.classList.toggle('stuck', window.scrollY > 8);
 onScroll();
 window.addEventListener('scroll', onScroll, { passive: true });
+
+const CASES = {
+  'long-sleeve': {
+    piece: 'Long Sleeve', lot: 'LOT 03 · BATCH 0041',
+    sketch: 'factory/sketch-long-sleeve.png',
+    specialist: '<strong>Wilfred</strong> — shirts. Forty years, and he’s never once used a machine to tie a buttonhole.',
+    reason: 'Buttonhole tolerance exceeds Directive 94/EC-7, Annex C. Hand-tied closures cannot be logged as consistent.',
+    quote: 'A man’s whole life’s work doesn’t stop being correct just because a form disagrees with it.',
+    watch: 'https://www.tiktok.com/@kasparvale'
+  },
+  'hoodie': {
+    piece: 'Hoodie', lot: 'LOT 07 · BATCH 0044',
+    sketch: 'factory/sketch-hoodie.png',
+    specialist: '<strong>Bertram</strong> — wool fuller. Forty years, and he’s never once used a machine to do it.',
+    reason: 'Fabric-safety form has no field for untreated wool. A chemical that was never used cannot be certified absent.',
+    quote: 'A fabric doesn’t need a chemical to prove it’s safe. It needed one four hundred years before the form did.',
+    watch: 'https://www.tiktok.com/@kasparvale'
+  },
+  'heavyweight-tee': {
+    piece: 'Heavyweight Tee', lot: 'LOT 12 · BATCH 0040',
+    sketch: 'factory/sketch-heavyweight-tee.png',
+    specialist: '<strong>Corwin</strong> — loom-minder. Thirty-one years on the same shuttle loom, the one the mill never replaced.',
+    reason: 'Fabric weight was logged by hand before the mill’s line shut down. No digital lot record, so origin can’t be certified.',
+    quote: 'The loom didn’t stop being right the day the mill stopped being open.',
+    watch: null
+  },
+  'ribbed-neck-tee': {
+    piece: 'Ribbed Neck Tee', lot: 'LOT 09 · BATCH 0038',
+    sketch: 'factory/sketch-ribbed-neck-tee.png',
+    specialist: '<strong>Osric</strong> — pattern cutter. Cuts every piece by hand, to how the body actually sits, not how the chart says it should.',
+    reason: 'Garment dimensions deviate from the printed size chart by a hand-cutter’s tolerance. Non-conforming, regardless of fit.',
+    quote: 'The chart describes an average body. Osric was cutting for yours.',
+    watch: null
+  },
+  'tote': {
+    piece: 'Tote', lot: 'LOT 05 · BATCH 0037',
+    sketch: 'factory/sketch-tote.png',
+    specialist: '<strong>Hollis</strong> — canvas waxer. Twenty-six years hand-rubbing the same beeswax blend into raw canvas.',
+    reason: 'Waterproofing agent isn’t listed in the approved solvent registry. Beeswax and tallow are not on file.',
+    quote: 'The registry has a box for chemicals. It has never had one for bees.',
+    watch: null
+  }
+};
+
+const modal = document.getElementById('caseModal');
+let lastFocus = null;
+
+function openCase(id){
+  const c = CASES[id];
+  if (!c) return;
+  lastFocus = document.activeElement;
+
+  document.getElementById('caseModalSketch').src = c.sketch;
+  document.getElementById('caseModalSketch').alt = 'Pattern sketch of the ' + c.piece;
+  document.getElementById('caseModalTitle').textContent = c.piece;
+  document.getElementById('caseModalLot').textContent = c.lot;
+  document.getElementById('caseModalSpecialist').innerHTML = c.specialist;
+  document.getElementById('caseModalReason').textContent = c.reason;
+  document.getElementById('caseModalQuote').textContent = c.quote;
+
+  const watch = document.getElementById('caseModalWatch');
+  const pending = document.getElementById('caseModalPending');
+  if (c.watch) { watch.href = c.watch; watch.hidden = false; pending.hidden = true; }
+  else { watch.hidden = true; pending.hidden = false; }
+
+  modal.hidden = false;
+  modal.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+  requestAnimationFrame(() => modal.classList.add('open'));
+  document.getElementById('caseModalClose').focus();
+}
+
+function closeCase(){
+  if (modal.hidden) return;
+  modal.classList.remove('open');
+  document.body.style.overflow = '';
+  setTimeout(() => { modal.hidden = true; modal.setAttribute('aria-hidden', 'true'); }, 300);
+  if (lastFocus) lastFocus.focus();
+}
+
+document.querySelectorAll('.hotspot').forEach(btn => {
+  btn.addEventListener('click', () => openCase(btn.dataset.case));
+});
+document.getElementById('caseModalClose').addEventListener('click', closeCase);
+document.getElementById('caseModalScrim').addEventListener('click', closeCase);
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && !modal.hidden) closeCase();
+});
 </script>
 </body>
 </html>

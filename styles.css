@@ -551,7 +551,7 @@ footer{
 .viewer-stage img{
   position:absolute; inset:0; width:100%; height:100%; object-fit:contain;
   transition:opacity .85s ease, transform .85s ease;
-  backface-visibility:hidden;
+  backface-visibility:hidden; -webkit-backface-visibility:hidden;
   filter:drop-shadow(0 26px 40px rgba(0,0,0,.6));
 }
 .viewer.zoomed .viewer-stage img{ filter:none; }
@@ -640,8 +640,10 @@ footer{
 .holo:disabled, .face:disabled ~ .holo, .zoom:disabled{ opacity:.35; cursor:default; }
 
 .viewer.holo .viewer-lens{
-  transform-style:preserve-3d;
-  animation:holoSpin 7s linear infinite;
+  transform-style:preserve-3d; -webkit-transform-style:preserve-3d;
+  /* the negative delay starts it already part-turned — at 0deg the
+     turn is invisible for a moment, which reads as "not spinning" */
+  animation:holoSpin 5s linear infinite; animation-delay:-0.6s;
 }
 .viewer.holo .viewer-stage img{
   opacity:1 !important; transform:none !important;   /* backface-visibility does the hiding now */
@@ -791,54 +793,92 @@ footer{
 }
 .factory-hero-copy .hero-foot{ text-shadow:0 1px 6px rgba(3,4,12,.9); }
 
-.factory-interlude{
-  position:relative; overflow:hidden;
-  min-height:clamp(200px, 28vh, 300px);
-  display:flex; align-items:center; justify-content:center;
-  border-top:1px solid var(--rule);
-}
-.factory-interlude-bg{
-  position:absolute; inset:0; z-index:0;
-  background:#0a0704 url("factory/backdrop-forms-desk.png") center 42%/cover no-repeat;
-}
-.factory-interlude-scrim{ position:absolute; inset:0; z-index:1; background:rgba(5,6,10,.64); }
-.factory-interlude-line{
-  position:relative; z-index:2; max-width:52ch; margin:0 auto;
-  padding:0 var(--pad); text-align:center;
-  font-family:var(--f-disp); font-style:italic; font-weight:200;
-  font-size:clamp(17px,2.4vw,23px); line-height:1.5; color:var(--bone);
-  text-shadow:0 2px 10px rgba(3,4,12,.9), 0 0 40px rgba(3,4,12,.7);
-}
-
-/* --- case files -------------------------------------------------- */
-.cases{
-  position:relative; max-width:var(--maxw); margin:0 auto;
+/* --- the desk scene -------------------------------------------------
+   The case files do not get their own cards — they lie where the
+   photograph already put them. Hotspots are positioned as percentages
+   of the *image*, not the frame, so the frame locks to the image's own
+   aspect ratio (object-fit:contain, never cover) and a hotspot never
+   drifts off the paper it is supposed to be sitting on. */
+.factory-scene{
+  max-width:var(--maxw); margin:0 auto;
   padding:clamp(50px,8vw,96px) var(--pad) clamp(70px,10vw,120px);
   border-top:1px solid var(--rule);
 }
-.case-grid{
-  list-style:none; margin:clamp(28px,4vw,48px) 0 0; padding:0;
-  display:grid; gap:clamp(28px,4vw,44px);
-  grid-template-columns:repeat(auto-fill,minmax(340px,1fr));
+.scene-label{ margin-bottom:8px; }
+.scene-hint{
+  margin:0 0 clamp(22px,3.4vw,34px); font-size:12.5px; color:var(--ash);
 }
-.case{
-  display:flex; flex-direction:column;
-  background:var(--ink-2); border:1px solid var(--rule);
-  box-shadow:0 24px 60px -30px rgba(0,0,0,.9);
+.scene-frame{
+  position:relative; width:100%; aspect-ratio:1312/816;
+  background:#0a0704; border:1px solid var(--rule); overflow:hidden;
+  box-shadow:0 30px 70px -30px rgba(0,0,0,.9);
 }
-.case-sketch{
-  margin:0; aspect-ratio:16/9; overflow:hidden;
-  background:#d9d0bb;   /* the sketch paper's own tone, while it loads */
-  border-bottom:1px solid var(--rule);
-}
-.case-sketch img{
-  width:100%; height:100%; object-fit:cover; display:block;
-  filter:sepia(.06) contrast(1.02);
-  transition:transform .6s cubic-bezier(.2,.7,.3,1);
-}
-.case:hover .case-sketch img{ transform:scale(1.035); }
+.scene-img{ position:absolute; inset:0; width:100%; height:100%; object-fit:contain; }
 
-.case-file{ padding:clamp(20px,3vw,30px); display:flex; flex-direction:column; gap:14px; }
+.hotspot{
+  position:absolute; left:var(--x); top:var(--y); transform:translate(-50%,-50%);
+  display:flex; flex-direction:column; align-items:center; gap:8px;
+  background:none; border:0; padding:12px; margin:-12px; cursor:pointer;
+}
+.hotspot-dot{
+  width:13px; height:13px; border-radius:50%; background:rgba(196,68,45,.92);
+  box-shadow:0 0 0 4px rgba(196,68,45,.22), 0 0 16px rgba(196,68,45,.65);
+  animation:hotspotPulse 2.6s ease-in-out infinite;
+}
+.hotspot:hover .hotspot-dot, .hotspot:focus-visible .hotspot-dot{ background:var(--bone); }
+@keyframes hotspotPulse{
+  0%,100%{ box-shadow:0 0 0 4px rgba(196,68,45,.22), 0 0 16px rgba(196,68,45,.65); }
+  50%{ box-shadow:0 0 0 9px rgba(196,68,45,.08), 0 0 26px rgba(196,68,45,.85); }
+}
+.hotspot-label{
+  opacity:0; transform:translateY(3px); transition:opacity .2s ease, transform .2s ease;
+  font-family:var(--f-mono); font-size:9.5px; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--bone); background:rgba(5,6,10,.88); border:1px solid var(--rule);
+  padding:4px 9px; white-space:nowrap; pointer-events:none;
+}
+.hotspot:hover .hotspot-label, .hotspot:focus-visible .hotspot-label{ opacity:1; transform:none; }
+@media (prefers-reduced-motion:reduce){ .hotspot-dot{ animation:none; } }
+
+/* --- case modal: the file, picked up off the desk ------------------- */
+.case-modal[hidden]{ display:none !important; }
+.case-modal{
+  position:fixed; inset:0; z-index:80;
+  display:flex; align-items:center; justify-content:center;
+  padding:clamp(18px,5vw,60px);
+}
+.case-modal-scrim{
+  position:absolute; inset:0; background:rgba(4,5,9,.88);
+  backdrop-filter:blur(9px); -webkit-backdrop-filter:blur(9px);
+  opacity:0; transition:opacity .3s ease;
+}
+.case-modal.open .case-modal-scrim{ opacity:1; }
+.case-modal-panel{
+  position:relative; z-index:1; width:min(720px,100%); max-height:88vh; overflow:auto;
+  display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);
+  background:var(--ink-2); border:1px solid var(--rule);
+  box-shadow:0 40px 90px -30px rgba(0,0,0,.92);
+  transform:translateY(18px) scale(.97); opacity:0;
+  transition:transform .4s cubic-bezier(.16,.84,.24,1), opacity .3s ease;
+}
+.case-modal.open .case-modal-panel{ transform:none; opacity:1; }
+@media (max-width:640px){ .case-modal-panel{ grid-template-columns:1fr; } }
+@media (prefers-reduced-motion:reduce){
+  .case-modal-scrim, .case-modal-panel{ transition:none; }
+}
+
+.case-modal-sketch{
+  width:100%; height:100%; min-height:200px; object-fit:cover; display:block;
+  background:#d9d0bb;
+}
+.case-modal-close{
+  position:absolute; top:12px; right:12px; z-index:2;
+  width:32px; height:32px; display:flex; align-items:center; justify-content:center;
+  background:rgba(5,6,10,.62); border:0; color:var(--ash);
+  font-size:22px; line-height:1; cursor:pointer; transition:color .2s;
+}
+.case-modal-close:hover{ color:var(--bone); }
+
+.case-modal-body{ padding:clamp(22px,3.4vw,32px); display:flex; flex-direction:column; gap:14px; }
 .case-head{
   display:flex; align-items:baseline; justify-content:space-between; gap:10px;
   flex-wrap:wrap;
