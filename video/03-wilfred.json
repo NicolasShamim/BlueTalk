@@ -1,13 +1,15 @@
 {
   "id": "03-wilfred",
   "fps": 30,
+  "width": 1080,
+  "height": 1920,
   "shots": [
-    { "clip": "wilfred-01.mp4", "start": 0, "dur": 7.08, "caption": "My boy Wilfred makes shirts. Not many people left who can." },
-    { "clip": "wilfred-02.mp4", "start": 0, "dur": 6.5,  "caption": "New competition out of China does it for a tenth of the price. Fine." },
-    { "clip": "wilfred-03.mp4", "start": 0, "dur": 9.68, "caption": "What actually finished him was the regulations. He ties a buttonhole how his hands know it, not how the form says it should look." },
-    { "clip": "wilfred-04.mp4", "start": 0, "dur": 3.5,  "caption": "So on paper, every piece he makes fails." },
-    { "clip": "wilfred-05.mp4", "start": 0, "dur": 2.75, "caption": "I told him: sell it anyway." },
-    { "clip": "wilfred-06.mp4", "start": 0, "dur": 5.97, "caption": "A man's whole life's work doesn't stop being correct just because a form disagrees with it." },
+    { "clip": "wilfred-01.mp4", "start": 0, "dur": 6.9,  "caption": "My boy Wilfred makes shirts. Not many people left who can." },
+    { "clip": "wilfred-02.mp4", "start": 0, "dur": 6.32, "caption": "New competition out of China does it for a tenth of the price. Fine." },
+    { "clip": "wilfred-03.mp4", "start": 0, "dur": 9.5,  "caption": "What actually finished him was the regulations. He ties a buttonhole how his hands know it, not how the form says it should look." },
+    { "clip": "wilfred-04.mp4", "start": 0, "dur": 3.32, "caption": "So on paper, every piece he makes fails." },
+    { "clip": "wilfred-05.mp4", "start": 0, "dur": 2.57, "caption": "I told him: sell it anyway." },
+    { "clip": "wilfred-06.mp4", "start": 0, "dur": 5.79, "caption": "A man's whole life's work doesn't stop being correct just because a form disagrees with it." },
     { "clip": "wilfred-07.mp4", "start": 0, "dur": 5.33, "caption": "You want a guy for your next shirt? Hop over to soldanyway.com." }
   ],
   "voice": "voice.wav",

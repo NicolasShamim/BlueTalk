@@ -6,8 +6,9 @@
 #
 #  Takes the clips named in the spec from video/clips/, applies
 #  one consistent grade, burns the captions in, lays voice, room
-#  tone and music underneath, and writes a 4:3 master plus a
-#  9:16 upload copy to video/out/.
+#  tone and music underneath, and writes a master (at the spec's
+#  own width/height, default 1440x1080) plus a 9:16 upload copy
+#  to video/out/.
 #
 #  Missing clips become black holds, so a part-finished video
 #  still assembles. Missing audio is simply skipped.
@@ -21,6 +22,8 @@ CLIPS="$ROOT/video/clips"; OUT="$ROOT/video/out"; TMP="$(mktemp -d)"
 mkdir -p "$OUT"
 J(){ python3 -c "import json,sys;print(json.load(open(sys.argv[1])).get(sys.argv[2],sys.argv[3]))" "$SPEC" "$1" "$2"; }
 ID=$(J id video)
+W=$(J width 1440)
+H=$(J height 1080)
 
 # One grade for every shot, so a batch cuts together as one thing.
 GRADE="eq=contrast=1.13:brightness=-0.030:saturation=0.82,colorbalance=rs=-0.04:gs=-0.01:bs=0.06:rm=0.03:bm=-0.03,vignette=PI/5,noise=alls=7:allf=t+u,unsharp=3:3:0.4"
@@ -35,16 +38,16 @@ while IFS=$'\t' read -r clip dur cap; do
     # The hold keeps its caption. Without it a part-finished build is just
     # black, and the whole point of holds is reading the shape early.
     if [ -f "$TMP/cap$pad.png" ]; then
-      "$FF" -nostdin -y -hide_banner -loglevel error -f lavfi -i "color=c=black:s=1440x1080:r=30" \
+      "$FF" -nostdin -y -hide_banner -loglevel error -f lavfi -i "color=c=black:s=${W}x${H}:r=30" \
         -i "$TMP/cap$pad.png" -t "$dur" \
         -filter_complex "[0:v][1:v]overlay=0:0" -r 30 -pix_fmt yuv420p "$TMP/s$pad.mp4"
     else
-      "$FF" -nostdin -y -hide_banner -loglevel error -f lavfi -i "color=c=black:s=1440x1080:r=30" \
+      "$FF" -nostdin -y -hide_banner -loglevel error -f lavfi -i "color=c=black:s=${W}x${H}:r=30" \
         -t "$dur" -pix_fmt yuv420p "$TMP/s$pad.mp4"
     fi
   else
     echo "  [$pad] $clip ${dur}s"
-    VF="scale=1440:1080:force_original_aspect_ratio=increase,crop=1440:1080,$GRADE"
+    VF="scale=${W}:${H}:force_original_aspect_ratio=increase,crop=${W}:${H},$GRADE"
     if [ -f "$TMP/cap$pad.png" ]; then
       "$FF" -nostdin -y -hide_banner -loglevel error -i "$src" -i "$TMP/cap$pad.png" -t "$dur" \
         -filter_complex "[0:v]$VF[v];[v][1:v]overlay=0:0" -r 30 -an -pix_fmt yuv420p "$TMP/s$pad.mp4"
@@ -70,14 +73,23 @@ if [ "$i" -gt 0 ]; then
   CH="$(IFS=';'; echo "${FILTS[*]}")"
   "$FF" -nostdin -y -hide_banner -loglevel error -i "$TMP/video.mp4" "${INPUTS[@]}" \
     -filter_complex "$CH;${MIX}amix=inputs=$i:duration=first:dropout_transition=0[m]" \
-    -map 0:v -map "[m]" -shortest -c:v copy -c:a aac -b:a 192k "$OUT/$ID-4x3.mp4"
+    -map 0:v -map "[m]" -shortest -c:v copy -c:a aac -b:a 192k "$OUT/$ID-master.mp4"
 else
-  cp "$TMP/video.mp4" "$OUT/$ID-4x3.mp4"
+  cp "$TMP/video.mp4" "$OUT/$ID-master.mp4"
 fi
 
-# 9:16 upload copy — the 4:3 frame centred, nothing cropped away.
-"$FF" -nostdin -y -hide_banner -loglevel error -i "$OUT/$ID-4x3.mp4" \
-  -vf "scale=1080:810,pad=1080:1920:0:555:black" -c:a copy "$OUT/$ID-9x16.mp4"
+# Vertical delivery copy. If the master is already taller than wide (a
+# spec built with width/height for shorts/TikTok), it just needs the
+# canvas padded up to a clean 1080x1920 — never cropped, so nothing of
+# the shot is lost. If the master is wider than tall (the old 4:3 specs),
+# letterbox it into the vertical frame the same way as before.
+if [ "$H" -ge "$W" ]; then
+  "$FF" -nostdin -y -hide_banner -loglevel error -i "$OUT/$ID-master.mp4" \
+    -vf "scale=1080:-2,pad=1080:1920:0:(1920-ih)/2:black" -c:a copy "$OUT/$ID-9x16.mp4"
+else
+  "$FF" -nostdin -y -hide_banner -loglevel error -i "$OUT/$ID-master.mp4" \
+    -vf "scale=1080:810,pad=1080:1920:0:555:black" -c:a copy "$OUT/$ID-9x16.mp4"
+fi
 
 rm -rf "$TMP"
-echo "written: video/out/$ID-4x3.mp4  and  $ID-9x16.mp4"
+echo "written: video/out/$ID-master.mp4  and  $ID-9x16.mp4"
