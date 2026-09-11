@@ -794,29 +794,38 @@ footer{
 .factory-hero-copy .hero-foot{ text-shadow:0 1px 6px rgba(3,4,12,.9); }
 
 /* --- the desk scene -------------------------------------------------
-   The case files do not get their own cards — they lie where the
-   photograph already put them. Hotspots are positioned as percentages
-   of the *image*, not the frame, so the frame locks to the image's own
-   aspect ratio (object-fit:contain, never cover) and a hotspot never
-   drifts off the paper it is supposed to be sitting on. */
-.factory-scene{
-  max-width:var(--maxw); margin:0 auto;
-  padding:clamp(50px,8vw,96px) var(--pad) clamp(70px,10vw,120px);
-  border-top:1px solid var(--rule);
-}
-.scene-label{ margin-bottom:8px; }
-.scene-hint{
-  margin:0 0 clamp(22px,3.4vw,34px); font-size:12.5px; color:var(--ash);
-}
+   Full-bleed and object-fit:cover for the immersive feel — which means
+   the visible crop shifts with viewport size, so a hotspot can't just
+   sit at a fixed left/top %. Each one instead stores where it belongs
+   on the *image itself* (data-nx/data-ny, 0-1 of the native 1312x816)
+   and factory.html's layoutHotspots() works out the matching pixel
+   inside the cropped render, on load and on resize. */
+.factory-scene{ border-top:1px solid var(--rule); }
 .scene-frame{
-  position:relative; width:100%; aspect-ratio:1312/816;
-  background:#0a0704; border:1px solid var(--rule); overflow:hidden;
-  box-shadow:0 30px 70px -30px rgba(0,0,0,.9);
+  position:relative; overflow:hidden;
+  width:100%; background:#0a0704;
+  /* height is set in px by factory.html's layoutScene() — from the
+     frame's own width, capped at the viewport height, never the
+     other way round, so the photo is always shown at full width */
 }
-.scene-img{ position:absolute; inset:0; width:100%; height:100%; object-fit:contain; }
+.scene-img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+.scene-scrim{
+  position:absolute; inset:0;
+  background:linear-gradient(0deg, var(--ink) 0%, rgba(5,6,10,.6) 20%, rgba(5,6,10,.12) 42%, transparent 60%);
+}
+.scene-copy{
+  position:absolute; z-index:2; left:0; right:0; bottom:0;
+  max-width:1360px; margin:0 auto;
+  padding:0 var(--pad) clamp(48px,7vw,84px);
+}
+.scene-copy .label{ text-shadow:0 1px 6px rgba(3,4,12,.9); }
+.scene-hint{
+  margin:8px 0 0; font-size:12.5px; color:var(--ash);
+  text-shadow:0 1px 6px rgba(3,4,12,.9);
+}
 
 .hotspot{
-  position:absolute; left:var(--x); top:var(--y); transform:translate(-50%,-50%);
+  position:absolute; left:0; top:0; transform:translate(-50%,-50%); z-index:3;
   display:flex; flex-direction:column; align-items:center; gap:8px;
   background:none; border:0; padding:12px; margin:-12px; cursor:pointer;
 }
