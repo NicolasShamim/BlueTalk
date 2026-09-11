@@ -206,7 +206,7 @@ function renderCount(){
 }
 
 /* --- viewer: the piece glides in, and you can turn it and go close -- */
-const view = { product:null, colour:'', face:'front', zoom:false, scale:2.6, touched:false };
+const view = { product:null, colour:'', face:'front', zoom:false, scale:2.6, touched:false, holo:false, hasBack:false };
 
 function openViewer(product, colour){
   if (!product) return;
@@ -216,6 +216,7 @@ function openViewer(product, colour){
   view.product = product;
   view.touched = false;
   view.scale = 2.6;
+  setHolo(false);
 
   $('#viewerName').textContent = product.name;
   $('#viewerLine').textContent = product.line || '';
@@ -250,9 +251,10 @@ function dressViewer(colour){
     $('#viewerBack').src  = shots[1] || shots[0];
   }
 
+  view.hasBack = shots.length >= 2;
   const back = $('.face[data-face="back"]');
-  back.disabled = shots.length < 2;
-  if (back.disabled && view.face === 'back') setFace('front');
+  back.disabled = view.holo || !view.hasBack;
+  if (!view.hasBack && view.face === 'back') setFace('front');
 
   document.querySelectorAll('#viewerColours .sw').forEach(s =>
     s.setAttribute('aria-pressed', String(s.dataset.colour === colour)));
@@ -299,6 +301,24 @@ function setZoom(on, ox, oy){
   const btn = $('#viewerZoom');
   btn.setAttribute('aria-pressed', String(view.zoom));
   btn.textContent = view.zoom ? 'Zoom out' : 'Zoom in';
+  $('#viewerZoom').disabled = view.holo;
+}
+
+/* --- hologram: same two plates, spun on their own edge instead of
+   swapped — zoom and manual face-turning make no sense mid-spin, so
+   the three controls take turns rather than fight over the image. */
+function setHolo(on){
+  view.holo = !!on;
+  $('#viewer').classList.toggle('holo', view.holo);
+
+  const btn = $('#viewerHolo');
+  btn.setAttribute('aria-pressed', String(view.holo));
+  btn.textContent = view.holo ? 'Stop spin' : 'Hologram';
+
+  $('#viewerZoom').disabled = view.holo;
+  $('.face[data-face="front"]').disabled = view.holo;
+  $('.face[data-face="back"]').disabled = view.holo || !view.hasBack;
+  if (view.holo && view.zoom) setZoom(false, 50, 50);
 }
 
 function pointAt(e){
@@ -322,6 +342,7 @@ function wireViewer(){
 
   clip.addEventListener('click', e => {
     view.touched = true;
+    if (view.holo) { setHolo(false); return; }   // a click grounds it
     const [x, y] = pointAt(e);
     setZoom(!view.zoom, x, y);
   });
@@ -344,6 +365,11 @@ function wireViewer(){
   $('#viewerZoom').addEventListener('click', () => {
     view.touched = true;
     setZoom(!view.zoom, 50, 50);
+  });
+
+  $('#viewerHolo').addEventListener('click', () => {
+    view.touched = true;
+    setHolo(!view.holo);
   });
 }
 
@@ -507,13 +533,14 @@ async function goToCheckout(){
   document.addEventListener('keydown', e => {
     const viewerOpen = !$('#viewer').hidden;
     if (e.key === 'Escape') {
-      // Step back out of the zoom first; the piece stays where it is.
-      if (viewerOpen && view.zoom) setZoom(false, 50, 50);
+      // Step back out of the spin, then the zoom; the piece stays where it is.
+      if (viewerOpen && view.holo) setHolo(false);
+      else if (viewerOpen && view.zoom) setZoom(false, 50, 50);
       else if (viewerOpen) closeViewer();
       else if (!$('#drawer').hidden) closeDrawer();
       return;
     }
-    if (viewerOpen && (e.key === 'ArrowLeft' || e.key === 'ArrowRight')) {
+    if (viewerOpen && !view.holo && (e.key === 'ArrowLeft' || e.key === 'ArrowRight')) {
       const back = $('.face[data-face="back"]');
       if (back.disabled) return;
       view.touched = true;
