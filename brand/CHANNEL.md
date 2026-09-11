@@ -4,6 +4,11 @@ Supersedes `CHARACTER-BIBLE.md`, which was written before the reference channel 
 been watched and aims at the wrong thing. Keep that file for the production
 discipline; ignore its tone.
 
+> **§2, §3, §5, §6 (the character, the engine, the ten scripts, the writing
+> rules) are superseded by `SELL-ANYWAY.md`** — the melancholy engine tested
+> weak. The format spec (§4), production order (§7), and reference analysis
+> (§1) below still hold.
+
 ---
 
 ## 1. What the reference actually does
