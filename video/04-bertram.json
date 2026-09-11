@@ -1,0 +1,20 @@
+{
+  "id": "04-bertram",
+  "fps": 30,
+  "width": 1080,
+  "height": 1920,
+  "shots": [
+    { "clip": "bertram-01.mp4", "start": 0, "dur": 5.62,  "caption": "My boy Bertram fulls wool. Forty years, and he's never once used a machine to do it." },
+    { "clip": "bertram-02.mp4", "start": 0, "dur": 4.645, "caption": "Cheap synthetic fleece out of China for a tenth of the price. Fine." },
+    { "clip": "bertram-03.mp4", "start": 0, "dur": 10.22, "caption": "What actually finished him was the certification. The form's built for synthetic fabric, it doesn't have a box for wool that was never chemically treated, so it can't be marked safe." },
+    { "clip": "bertram-04.mp4", "start": 0, "dur": 4.97,  "caption": "So on paper, every hoodie he makes fails a test it was never built for." },
+    { "clip": "bertram-05.mp4", "start": 0, "dur": 2.57,  "caption": "I told him: sell it anyway." },
+    { "clip": "bertram-06.mp4", "start": 0, "dur": 6.47,  "caption": "A fabric doesn't need a chemical to prove it's safe. It needed one four hundred years before the form did." },
+    { "clip": "bertram-07.mp4", "start": 0, "dur": 4.15,  "caption": "You want a guy for your next hoodie? Hop over to soldanyway.com." }
+  ],
+  "voice": "voice-bertram.wav",
+  "room":  "",
+  "music": "",
+  "musicDb": -21,
+  "roomDb": -26
+}
